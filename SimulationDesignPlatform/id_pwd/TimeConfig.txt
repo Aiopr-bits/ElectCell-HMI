@@ -1,0 +1,1 @@
+yyyy/MM/dd dddd tt hh:mm
