@@ -139,9 +139,9 @@ namespace SimulationDesignPlatform.UserControls
                 row["p"] = Data.ps[i].p;
                 row["l_l"] = Data.ps[i].l_l;
                 row["l_g"] = Data.ps[i].l_g;
-                row["x_h2"] = Data.ps[i].x_h2;
-                row["x_o2"] = Data.ps[i].x_o2;
-                row["x_h2o"] = Data.ps[i].x_h2o;
+                row["n_h2"] = Data.ps[i].n_h2;
+                row["n_o2"] = Data.ps[i].n_o2;
+                row["v_t"] = Data.ps[i].v_t;
 
                 dataTable02.Rows.Add(row);
             }

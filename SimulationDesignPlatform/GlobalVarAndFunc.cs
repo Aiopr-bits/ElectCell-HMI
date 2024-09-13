@@ -13,7 +13,7 @@ namespace SimulationDesignPlatform
 	//ps参数
 	public class PsData
 	{
-		public double n, v, p, l_l, l_g, x_h2, x_o2, x_h2o;
+		public double n, v, p, l_l, l_g, n_h2, n_o2, v_t;
 		public int num;
 		public PsData()
 		{
@@ -24,7 +24,7 @@ namespace SimulationDesignPlatform
 	//ps参数
 	public class FaultPsData
 	{
-		public double n, v, p, l_l, l_g, x_h2, x_o2, x_h2o;
+		public double n, v, p, l_l, l_g, n_h2, n_o2, v_t;
 		public int num;
 		public bool is_fault, is_result;
 	}
@@ -206,7 +206,7 @@ namespace SimulationDesignPlatform
                 for (int i = 0; i < Data.n_ps; i++)
                 {
                     file.WriteLine(Data.ps[i].num.ToString() + ',' + Data.ps[i].n.ToString() + ',' + Data.ps[i].v.ToString() + ',' + Data.ps[i].p.ToString() + ',' + Data.ps[i].l_l.ToString() + ','
-                         + Data.ps[i].l_g.ToString() + ',' + Data.ps[i].x_h2.ToString() + ',' + Data.ps[i].x_o2.ToString() + ',' + Data.ps[i].x_h2o.ToString() + ',');
+                         + Data.ps[i].l_g.ToString() + ',' + Data.ps[i].n_h2.ToString() + ',' + Data.ps[i].n_o2.ToString() + ',' + Data.ps[i].v_t.ToString() + ',');
                 }
                 file.WriteLine("###########################,,,,,,,,,,,,,,,");
                 file.WriteLine("# 工艺参数,,,,,,,,,,,,,,,");
@@ -409,17 +409,17 @@ namespace SimulationDesignPlatform
 		public static FlowData[] flow = new FlowData[n_flow_max]; //全局变量，存储
 		public static FlowData[] flow_f = new FlowData[n_flow_max]; //全局变量，存储
 
-		public const int n_faultflow_max = 42;//faultflow参数
+		public const int n_faultflow_max = 1000;//faultflow参数
 		public static FaultFlowData[] faultflow = new FaultFlowData[n_faultflow_max]; //全局变量，存储
 
-		public const int n_ps_max = 13;//ps参数
+		public const int n_ps_max = 1000;//ps参数
 		public static PsData[] ps = new PsData[n_ps_max]; //全局变量，存储
 		public static PsData[] ps_f = new PsData[n_ps_max]; //全局变量，存储
 
-		public const int n_faultps_max = 13;//faultps参数
+		public const int n_faultps_max = 1000;//faultps参数
 		public static FaultPsData[] faultps = new FaultPsData[n_faultps_max]; //全局变量，存储
 
-		public const int n_node_max = 3;//部件参数
+		public const int n_node_max = 1000;//部件参数
 		public static NodeData[] ele = new NodeData[n_node_max]; //电解槽  数组---多个
 		public static NodeData Cathode_separator = new NodeData();//阴极分离器
 		public static NodeData Anode_separator = new NodeData();//阳极分离器
@@ -427,7 +427,7 @@ namespace SimulationDesignPlatform
 		public static NodeData Cathode_valve = new NodeData();//阴极阀门
 		public static NodeData Anode_valve = new NodeData();//阳极阀门
 
-		public const int n_case_max = 10;//工况参数
+		public const int n_case_max = 1000;//工况参数
 		public static CaseData[] case_data = new CaseData[n_case_max]; //全局变量，存储
 
 		public static string openFile, saveFile, fileName, filePath, exePath, casePath, caseUsePath, newFolderPath, newFolderName;  // 文件名，包含路径，用于存储文件

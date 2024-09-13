@@ -296,12 +296,12 @@ namespace SimulationDesignPlatform.UserControls
 			dataGridView3.Columns["l_l"].ReadOnly = true;
 			dataGridView3.Columns["l_g"].HeaderText = "l_g";
 			dataGridView3.Columns["l_g"].ReadOnly = true;
-			dataGridView3.Columns["x_h2"].HeaderText = "x_h2";
+			dataGridView3.Columns["n_h2"].HeaderText = "n_h2";
 			dataGridView3.Columns["x_h2"].ReadOnly = true;
-			dataGridView3.Columns["x_o2"].HeaderText = "x_o2";
+			dataGridView3.Columns["n_o2"].HeaderText = "n_o2";
 			dataGridView3.Columns["x_o2"].ReadOnly = true;
-			dataGridView3.Columns["x_h2o"].HeaderText = "x_h2o";
-			dataGridView3.Columns["x_h2o"].ReadOnly = true;
+			dataGridView3.Columns["v_t"].HeaderText = "v_t";
+			dataGridView3.Columns["v_t"].ReadOnly = true;
 			dataGridView3.Columns["is_zhuru"].HeaderText = "是否故障注入";
 			dataGridView3.Columns["is_result"].HeaderText = "是否查看结果";
 
@@ -319,9 +319,9 @@ namespace SimulationDesignPlatform.UserControls
 				row["p"] = Data.faultps[i].p;
 				row["l_l"] = Data.faultps[i].l_l;
 				row["l_g"] = Data.faultps[i].l_g;
-				row["x_h2"] = Data.faultps[i].x_h2;
-				row["x_o2"] = Data.faultps[i].x_o2;
-				row["x_h2o"] = Data.faultps[i].x_h2o;
+				row["n_h2"] = Data.faultps[i].n_h2;
+				row["n_o2"] = Data.faultps[i].n_o2;
+				row["v_t"] = Data.faultps[i].v_t;
 				row["is_zhuru"] = Data.faultps[i].is_fault;
 				row["is_result"] = Data.faultps[i].is_result;
 				if (Data.faultps[i].num > 0)
@@ -343,9 +343,9 @@ namespace SimulationDesignPlatform.UserControls
 			dataTable01.Columns.Add("p", typeof(double));
 			dataTable01.Columns.Add("l_l", typeof(double));
 			dataTable01.Columns.Add("l_g", typeof(double));
-			dataTable01.Columns.Add("x_h2", typeof(double));
-			dataTable01.Columns.Add("x_o2", typeof(double));
-			dataTable01.Columns.Add("x_h2o", typeof(double));
+			dataTable01.Columns.Add("n_h2", typeof(double));
+			dataTable01.Columns.Add("n_o2", typeof(double));
+			dataTable01.Columns.Add("v_t", typeof(double));
 
 			// 设置DataGridView的DataSource  
 			dataGridView4.DataSource = dataTable01;
@@ -358,9 +358,9 @@ namespace SimulationDesignPlatform.UserControls
 			dataGridView4.Columns["p"].HeaderText = "p";
 			dataGridView4.Columns["l_l"].HeaderText = "l_l";
 			dataGridView4.Columns["l_g"].HeaderText = "l_g";
-			dataGridView4.Columns["x_h2"].HeaderText = "x_h2";
-			dataGridView4.Columns["x_o2"].HeaderText = "x_o2";
-			dataGridView4.Columns["x_h2o"].HeaderText = "x_h2o";
+			dataGridView4.Columns["n_h2"].HeaderText = "n_h2";
+			dataGridView4.Columns["n_o2"].HeaderText = "n_o2";
+			dataGridView4.Columns["v_t"].HeaderText = "v_t";
 
 			for (int i = 0; i < Data.n_ps; i++)
 			{
@@ -372,9 +372,9 @@ namespace SimulationDesignPlatform.UserControls
 				row["p"] = Data.ps_f[i].p;
 				row["l_l"] = Data.ps_f[i].l_l;
 				row["l_g"] = Data.ps_f[i].l_g;
-				row["x_h2"] = Data.ps_f[i].x_h2;
-				row["x_o2"] = Data.ps_f[i].x_o2;
-				row["x_h2o"] = Data.ps_f[i].x_h2o;
+				row["n_h2"] = Data.ps_f[i].n_h2;
+				row["n_o2"] = Data.ps_f[i].n_o2;
+				row["v_t"] = Data.ps_f[i].v_t;
 
 				if (Data.ps_f[i].num != 0)
 				{
@@ -409,9 +409,9 @@ namespace SimulationDesignPlatform.UserControls
 				Data.faultps[i].p = (double)dataGridView3.Rows[i].Cells[3].Value;
 				Data.faultps[i].l_l = (double)dataGridView3.Rows[i].Cells[4].Value;
 				Data.faultps[i].l_g = (double)dataGridView3.Rows[i].Cells[5].Value;
-				Data.faultps[i].x_h2 = (double)dataGridView3.Rows[i].Cells[6].Value;
-				Data.faultps[i].x_o2 = (double)dataGridView3.Rows[i].Cells[7].Value;
-				Data.faultps[i].x_h2o = (double)dataGridView3.Rows[i].Cells[8].Value;
+				Data.faultps[i].n_h2 = (double)dataGridView3.Rows[i].Cells[6].Value;
+				Data.faultps[i].n_o2 = (double)dataGridView3.Rows[i].Cells[7].Value;
+				Data.faultps[i].v_t = (double)dataGridView3.Rows[i].Cells[8].Value;
 				Data.faultps[i].is_fault = (bool)dataGridView3.Rows[i].Cells[9].Value;
 				Data.faultps[i].is_result = (bool)dataGridView3.Rows[i].Cells[10].Value;
 				if (Data.faultps[i].is_fault || Data.faultps[i].is_result)
@@ -422,9 +422,9 @@ namespace SimulationDesignPlatform.UserControls
 					Data.ps_f[a].p = Data.faultps[i].p;
 					Data.ps_f[a].l_l = Data.faultps[i].l_l;
 					Data.ps_f[a].l_g = Data.faultps[i].l_g;
-					Data.ps_f[a].x_h2 = Data.faultps[i].x_h2;
-					Data.ps_f[a].x_o2 = Data.faultps[i].x_o2;
-					Data.ps_f[a].x_h2o = Data.faultps[i].x_h2o;
+					Data.ps_f[a].n_h2 = Data.faultps[i].n_h2;
+					Data.ps_f[a].n_o2 = Data.faultps[i].n_o2;
+					Data.ps_f[a].v_t = Data.faultps[i].v_t;
 					a++;
 				}
 			}
@@ -450,9 +450,9 @@ namespace SimulationDesignPlatform.UserControls
 					Data.ps_f[i].p = Convert.ToDouble(dataGridView2.Rows[i].Cells[3].Value);
 					Data.ps_f[i].l_l = Convert.ToDouble(dataGridView2.Rows[i].Cells[4].Value);
 					Data.ps_f[i].l_g = Convert.ToDouble(dataGridView2.Rows[i].Cells[5].Value);
-					Data.ps_f[i].x_h2 = Convert.ToInt32(dataGridView2.Rows[i].Cells[6].Value);
-					Data.ps_f[i].x_o2 = Convert.ToInt32(dataGridView2.Rows[i].Cells[7].Value);
-					Data.ps_f[i].x_h2o = Convert.ToInt32(dataGridView2.Rows[i].Cells[8].Value);
+					Data.ps_f[i].n_h2 = Convert.ToInt32(dataGridView2.Rows[i].Cells[6].Value);
+					Data.ps_f[i].n_o2 = Convert.ToInt32(dataGridView2.Rows[i].Cells[7].Value);
+					Data.ps_f[i].v_t = Convert.ToInt32(dataGridView2.Rows[i].Cells[8].Value);
 				}
 
 			}

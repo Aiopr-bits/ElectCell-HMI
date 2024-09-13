@@ -99,9 +99,9 @@ namespace SimulationDesignPlatform.UserControls
             dataGridView1.Columns["p"].HeaderText = "压强";
             dataGridView1.Columns["l_l"].HeaderText = "液体高度";
             dataGridView1.Columns["l_g"].HeaderText = "气体高度";
-            dataGridView1.Columns["x_h2"].HeaderText = "氢气";
-            dataGridView1.Columns["x_o2"].HeaderText = "氧气";
-            dataGridView1.Columns["x_h2o"].HeaderText = "水";
+            dataGridView1.Columns["n_h2"].HeaderText = "氢气";
+            dataGridView1.Columns["n_o2"].HeaderText = "氧气";
+            dataGridView1.Columns["v_t"].HeaderText = "水";
 
             for (int i = 0; i < Data.n_ps; i++)
             {
@@ -113,9 +113,9 @@ namespace SimulationDesignPlatform.UserControls
                 row["p"] = Data.ps[i].p;
                 row["l_l"] = Data.ps[i].l_l;
                 row["l_g"] = Data.ps[i].l_g;
-                row["x_h2"] = Data.ps[i].x_h2;
-                row["x_o2"] = Data.ps[i].x_o2;
-                row["x_h2o"] = Data.ps[i].x_h2o;
+                row["n_h2"] = Data.ps[i].n_h2;
+                row["n_o2"] = Data.ps[i].n_o2;
+                row["v_t"] = Data.ps[i].v_t;
 
                 dataTable01.Rows.Add(row);
             }
@@ -147,9 +147,9 @@ namespace SimulationDesignPlatform.UserControls
                 Data.ps[i].p = (double)dataGridView1.Rows[i].Cells[3].Value;
                 Data.ps[i].l_l = (double)dataGridView1.Rows[i].Cells[4].Value;
                 Data.ps[i].l_g = (double)dataGridView1.Rows[i].Cells[5].Value;
-                Data.ps[i].x_h2 = (double)dataGridView1.Rows[i].Cells[6].Value;
-                Data.ps[i].x_o2 = (double)dataGridView1.Rows[i].Cells[7].Value;
-                Data.ps[i].x_h2o = (double)dataGridView1.Rows[i].Cells[8].Value;
+                Data.ps[i].n_h2 = (double)dataGridView1.Rows[i].Cells[6].Value;
+                Data.ps[i].n_o2 = (double)dataGridView1.Rows[i].Cells[7].Value;
+                Data.ps[i].v_t = (double)dataGridView1.Rows[i].Cells[8].Value;
             }
 
             //点了保存按钮进⼊

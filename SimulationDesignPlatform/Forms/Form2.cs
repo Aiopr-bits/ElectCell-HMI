@@ -947,13 +947,9 @@ namespace SimulationDesignPlatform.Forms
 							Data.ps[i].p = double.Parse(tmp[3]);
 							Data.ps[i].l_l = double.Parse(tmp[4]);
 							Data.ps[i].l_g = double.Parse(tmp[5]);
-							Data.ps[i].x_h2 = double.Parse(tmp[6]);
-							Data.ps[i].x_o2 = double.Parse(tmp[7]);
-							Data.ps[i].x_h2o = double.Parse(tmp[8]);
-							Console.WriteLine("num = {0} ,n = {1}, v = {2}, p = {3}, l_l = {4}, l_g = {5}, " +
-							"x_h2 = {6}, x_o2 = {7}, x_h2o = {8}",
-							Data.ps[i].num, Data.ps[i].n, Data.ps[i].v, Data.ps[i].p, Data.ps[i].l_l, Data.ps[i].l_g, Data.ps[i].x_h2,
-							Data.ps[i].x_o2, Data.ps[i].x_h2o);
+							Data.ps[i].n_h2 = double.Parse(tmp[6]);
+							Data.ps[i].n_o2 = double.Parse(tmp[7]);
+							Data.ps[i].v_t = double.Parse(tmp[8]);
 						}
 					}
 					nextLine = sR1.ReadLine(); //# 工艺参数
@@ -1339,9 +1335,9 @@ namespace SimulationDesignPlatform.Forms
 						Data.faultps[b].p = Data.ps[i].p;
 						Data.faultps[b].l_l = Data.ps[i].l_l;
 						Data.faultps[b].l_g = Data.ps[i].l_g;
-						Data.faultps[b].x_h2 = Data.ps[i].x_h2;
-						Data.faultps[b].x_o2 = Data.ps[i].x_o2;
-						Data.faultps[b].x_h2o = Data.ps[i].x_h2o;
+						Data.faultps[b].n_h2 = Data.ps[i].n_h2;
+						Data.faultps[b].n_o2 = Data.ps[i].n_o2;
+						Data.faultps[b].v_t = Data.ps[i].v_t;
 						Data.faultps[b].is_fault = false;
 						Data.faultps[b].is_result = false;
 						b++;

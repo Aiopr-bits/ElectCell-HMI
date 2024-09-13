@@ -214,9 +214,9 @@ namespace SimulationDesignPlatform.UserControls
             dataTable01.Columns.Add("p", typeof(double));
             dataTable01.Columns.Add("l_l", typeof(double));
             dataTable01.Columns.Add("l_g", typeof(double));
-            dataTable01.Columns.Add("x_h2", typeof(double));
-            dataTable01.Columns.Add("x_o2", typeof(double));
-            dataTable01.Columns.Add("x_h2o", typeof(double));
+            dataTable01.Columns.Add("n_h2", typeof(double));
+            dataTable01.Columns.Add("n_o2", typeof(double));
+            dataTable01.Columns.Add("v_t", typeof(double));
 
             // 设置DataGridView的DataSource  
             dataGridView4.DataSource = dataTable01;
@@ -229,9 +229,9 @@ namespace SimulationDesignPlatform.UserControls
             dataGridView4.Columns["p"].HeaderText = "p";
             dataGridView4.Columns["l_l"].HeaderText = "l_l";
             dataGridView4.Columns["l_g"].HeaderText = "l_g";
-            dataGridView4.Columns["x_h2"].HeaderText = "x_h2";
-            dataGridView4.Columns["x_o2"].HeaderText = "x_o2";
-            dataGridView4.Columns["x_h2o"].HeaderText = "x_h2o";
+            dataGridView4.Columns["n_h2"].HeaderText = "n_h2";
+            dataGridView4.Columns["n_o2"].HeaderText = "n_o2";
+            dataGridView4.Columns["v_t"].HeaderText = "v_t";
 
             for (int i = 0; i < Data.n_ps; i++)
             {
@@ -243,9 +243,9 @@ namespace SimulationDesignPlatform.UserControls
                 row["p"] = Data.ps[i].p;
                 row["l_l"] = Data.ps[i].l_l;
                 row["l_g"] = Data.ps[i].l_g;
-                row["x_h2"] = Data.ps[i].x_h2;
-                row["x_o2"] = Data.ps[i].x_o2;
-                row["x_h2o"] = Data.ps[i].x_h2o;
+                row["x_h2"] = Data.ps[i].n_h2;
+                row["x_o2"] = Data.ps[i].n_o2;
+                row["x_h2o"] = Data.ps[i].v_t;
 
                 dataTable01.Rows.Add(row);
             }
