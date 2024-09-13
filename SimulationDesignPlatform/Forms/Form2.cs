@@ -867,14 +867,16 @@ namespace SimulationDesignPlatform.Forms
 						flag = flag && bool.TryParse(tmp[5], out Data.cal_mini_2);
 						flag = flag && bool.TryParse(tmp[6], out Data.use_ff_static);
 						flag = flag && bool.TryParse(tmp[7], out Data.IsMixed_circleType);
-						flag = flag && bool.TryParse(tmp[8], out Data.cal_superSat_fickTrans);
-						flag = flag && bool.TryParse(tmp[9], out Data.ec_pump_independent);
-						Console.WriteLine("cal_current = {0} ,cal_valve = {1}, cal_pump = {2}, cal_balance_pipe = {3}, cal_mini_1 = {4}, cal_mini_2 = {5}, " +
-							"use_ff_static = {6}, IsMixed_circleType = {7}, cal_superSat_fickTrans = {8},  ec_pump_independent = {9}",
-							Data.cal_current, Data.cal_valve, Data.cal_pump, Data.cal_balance_pipe, Data.cal_mini_1, Data.cal_mini_2, Data.use_ff_static,
-							Data.IsMixed_circleType, Data.cal_superSat_fickTrans, Data.ec_pump_independent);
 					}
-					nextLine = sR1.ReadLine(); //# 几何参数
+                    nextLine = sR1.ReadLine(); //# 控制参数
+                    nextLine = sR1.ReadLine(); //# 控制参数
+                    {
+                        string[] tmp = nextLine.Split(',');
+                        flag = flag && bool.TryParse(tmp[0], out Data.cal_superSat_fickTrans);
+                        flag = flag && bool.TryParse(tmp[1], out Data.cal_ShellTube_heatExchanger);
+                        flag = flag && bool.TryParse(tmp[2], out Data.cal_Ele_heater);
+                    }
+                    nextLine = sR1.ReadLine(); //# 几何参数
 					nextLine = sR1.ReadLine(); //# 几何参数
 					nextLine = sR1.ReadLine(); //# 几何参数
 					nextLine = sR1.ReadLine(); //# 几何参数

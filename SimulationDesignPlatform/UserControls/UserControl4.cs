@@ -132,7 +132,6 @@ namespace SimulationDesignPlatform.UserControls
 			row["use_ff_static"] = Data.use_ff_static;
 			row["IsMixed_circleType"] = Data.IsMixed_circleType;
 			row["cal_superSat_fickTrans"] = Data.cal_superSat_fickTrans;
-			row["ec_pump_independent"] = Data.ec_pump_independent;
 
 			dataTable01.Rows.Add(row);
 		}
@@ -199,7 +198,6 @@ namespace SimulationDesignPlatform.UserControls
 				dataGridView1.Rows.Add(GenerateRow(i++, "use_ff_static", Data.use_ff_static, "-", "管路摩擦系数定值", true));
 				dataGridView1.Rows.Add(GenerateRow(i++, "IsMixed_circleType", Data.IsMixed_circleType, "-", "循环泵混合模式", true));
 				dataGridView1.Rows.Add(GenerateRow(i++, "cal_superSat_fickTrans", Data.cal_superSat_fickTrans, "-", "是否计算饱和分压", true));
-				dataGridView1.Rows.Add(GenerateRow(i++, "ec_pump_independent", Data.ec_pump_independent, "-", "电解槽泵独立计算", true));
 			}
 			else
 			{
@@ -214,7 +212,6 @@ namespace SimulationDesignPlatform.UserControls
 				dataGridView1[2, i++].Value = Data.use_ff_static;
 				dataGridView1[2, i++].Value = Data.IsMixed_circleType;
 				dataGridView1[2, i++].Value = Data.cal_superSat_fickTrans;
-				dataGridView1[2, i++].Value = Data.ec_pump_independent;
 			}
 		}
 
@@ -278,7 +275,6 @@ namespace SimulationDesignPlatform.UserControls
 			Data.use_ff_static = (bool)dataGridView1[2, i++].Value;
 			Data.IsMixed_circleType = (bool)dataGridView1[2, i++].Value;
 			Data.cal_superSat_fickTrans = (bool)dataGridView1[2, i++].Value;
-			Data.ec_pump_independent = (bool)dataGridView1[2, i++].Value;
 
 			//GetDatabase();
 

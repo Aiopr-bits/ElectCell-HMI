@@ -94,8 +94,9 @@ namespace SimulationDesignPlatform
 			a_cell, A_mem, thickness_mem, porosity_mem, tortuosity_mem, wt_KOHsln, k, D_h2, D_o2, k_x_h2, k_x_o2, eps_h2_Darcy,
 			eps_o2_Darcy, tao_b, FC_flash, R, T, eta, M_h2, M_o2, M_koh, M_h2o, rho_h2o, rho_h2, rho_o2, rho_sln_koh, g, Re24_0,
 			mu, Area_hx, massFlowRate_cw, cv1, cv2, P_cathode_sep_out, P_anode_sep_out, P_env;
-		public static bool cal_current, cal_valve, cal_pump, cal_balance_pipe, cal_mini_1, cal_mini_2, use_ff_static, IsMixed_circleType, cal_superSat_fickTrans, ec_pump_independent;
-		public static bool multi_case;//多工况计算
+		public static bool cal_current, cal_valve, cal_pump, cal_balance_pipe, cal_mini_1, cal_mini_2, use_ff_static, IsMixed_circleType;
+        public static bool cal_superSat_fickTrans, cal_ShellTube_heatExchanger, cal_Ele_heater;
+        public static bool multi_case;//多工况计算
 		public static string fzxt_name, user_name, user_password, case_name;//用户登录用户名，密码
 		public static string imagePath;
 
@@ -180,7 +181,7 @@ namespace SimulationDesignPlatform
                 file.WriteLine(Data.start_time.ToString() + ',' + Data.end_time.ToString() + ',' + Data.delta_t.ToString() + ',');
                 file.WriteLine("cal_current,cal_valve,cal_pump,cal_balance_pipe,cal_mini_1,cal_mini_2,use_ff_static,IsMixed_circleType,cal_superSat_fickTrans,ec_pump_independent,,");
                 file.WriteLine(Data.cal_current.ToString() + ',' + Data.cal_valve.ToString() + ',' + Data.cal_pump.ToString() + ',' + Data.cal_balance_pipe.ToString() + ',' + Data.cal_mini_1.ToString() + ','
-                    + Data.cal_mini_2.ToString() + ',' + Data.use_ff_static.ToString() + ',' + Data.IsMixed_circleType.ToString() + ',' + Data.cal_superSat_fickTrans.ToString() + ',' + Data.ec_pump_independent.ToString() + ',');
+                    + Data.cal_mini_2.ToString() + ',' + Data.use_ff_static.ToString() + ',' + Data.IsMixed_circleType.ToString() + ',' + Data.cal_superSat_fickTrans.ToString() + ',' );
                 file.WriteLine("###########################,,,,,,,,,,,,,,,");
                 file.WriteLine("# 几何参数,,,,,,,,,,,,,,,");
                 file.WriteLine("###########################,,,,,,,,,,,,,,,");

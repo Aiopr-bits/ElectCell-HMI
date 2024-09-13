@@ -130,7 +130,6 @@ namespace SimulationDesignPlatform.UserControls
             row["use_ff_static"] = Data.use_ff_static;
             row["IsMixed_circleType"] = Data.IsMixed_circleType;
             row["cal_superSat_fickTrans"] = Data.cal_superSat_fickTrans;
-            row["ec_pump_independent"] = Data.ec_pump_independent;
 
             dataTable01.Rows.Add(row);
             
