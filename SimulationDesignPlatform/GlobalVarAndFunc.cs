@@ -94,9 +94,11 @@ namespace SimulationDesignPlatform
         public static double Volume_hotside, Volume_codeside, di_stack, Area_sep, Area_stack, C_tsep, C_tk;
         public static double sigma_e_1, sigma_h2_r1, sigma_h2o_r1, sigma_e_2, sigma_h2o_r2, sigma_o2_r2, eta_F, F, n_cell,
 			a_cell, A_mem, thickness_mem, porosity_mem, tortuosity_mem, wt_KOHsln, k, D_h2, D_o2, k_x_h2, k_x_o2, eps_h2_Darcy,
-			eps_o2_Darcy, tao_b, FC_flash, R, T, eta, M_h2, M_o2, M_koh, M_h2o, rho_h2o, rho_h2, rho_o2, rho_sln_koh, g, Re24_0,
-			mu, Area_hx, massFlowRate_cw, cv1, cv2, P_cathode_sep_out, P_anode_sep_out, P_env;
-		public static bool cal_current, cal_valve, cal_pump, cal_balance_pipe, cal_mini_1, cal_mini_2, use_ff_static, IsMixed_circleType;
+			eps_o2_Darcy, tao_b, FC_flash, R, eta, M_h2, M_o2, M_n2, M_koh, M_h2o, rho_h2o, rho_h2, rho_o2, rho_sln_koh, g, Re7_0,
+			mu, cv1, cv2, P_cathode_sep_out, P_anode_sep_out, P_env;
+        public static double T_elin0, T_k0, T_K, T_btout, T_btout0;
+        public static double T_cw_in, T_cw_out0, T_ambi, T_pipeout0, T_btout_ano0, T_btout_cat0;
+        public static bool cal_current, cal_valve, cal_pump, cal_balance_pipe, cal_mini_1, cal_mini_2, use_ff_static, IsMixed_circleType;
         public static bool cal_superSat_fickTrans, cal_ShellTube_heatExchanger, cal_Ele_heater;
         public static bool multi_case;//多工况计算
 		public static string fzxt_name, user_name, user_password, case_name;//用户登录用户名，密码
@@ -218,13 +220,14 @@ namespace SimulationDesignPlatform
                 file.WriteLine(Data.thickness_mem.ToString() + ',' + Data.porosity_mem.ToString() + ',' + Data.tortuosity_mem.ToString() + ',' + Data.wt_KOHsln.ToString() + ',' + Data.k.ToString() + ',' +
                     Data.D_h2.ToString() + ',' + Data.D_o2.ToString() + ',' + Data.k_x_h2.ToString() + ',' + Data.k_x_o2.ToString() + ',' + Data.eps_h2_Darcy.ToString() + ',' + Data.eps_o2_Darcy.ToString() + ',');
                 file.WriteLine("tao_b,FC_flash,R,T,eta,M_h2,M_o2,M_koh,M_h2o,rho_h2o,rho_h2,,,,,,,,,");
-                file.WriteLine(Data.tao_b.ToString() + ',' + Data.FC_flash.ToString() + ',' + Data.R.ToString() + ',' + Data.T.ToString() + ',' + Data.eta.ToString() + ',' +
-                    Data.M_h2.ToString() + ',' + Data.M_o2.ToString() + ',' + Data.M_koh.ToString() + ',' + Data.M_h2o.ToString() + ',' + Data.rho_h2o.ToString() + ',' + Data.rho_h2.ToString() + ',');
+                file.WriteLine(Data.tao_b.ToString() + ',' + Data.FC_flash.ToString() + ',' + Data.R.ToString()  + ',' + Data.eta.ToString() + ',' +
+                    Data.M_h2.ToString() + ',' + Data.M_o2.ToString() + ',' + Data.M_n2.ToString() + ',' + Data.M_koh.ToString() + ',' + Data.M_h2o.ToString() + ',' + Data.rho_h2o.ToString() + ',' + Data.rho_h2.ToString() + ',');
                 file.WriteLine("rho_o2,rho_sln_koh,g,Re24_0,mu,Area_hx,massFlowRate_cw,cv1,cv2,P_cathode_sep_out,P_anode_sep_out,,,,,,,,,");
-                file.WriteLine(Data.rho_o2.ToString() + ',' + Data.rho_sln_koh.ToString() + ',' + Data.g.ToString() + ',' + Data.Re24_0.ToString() + ',' + Data.mu.ToString() + ',' +
-                    Data.Area_hx.ToString() + ',' + Data.massFlowRate_cw.ToString() + ',' + Data.cv1.ToString() + ',' + Data.cv2.ToString() + ',' + Data.P_cathode_sep_out.ToString() + ',' + Data.P_anode_sep_out.ToString() + ',');
-                file.WriteLine("P_env,,,,,,,,,,,,,,,");
-                file.WriteLine(Data.P_env.ToString() + ',');
+                file.WriteLine(Data.rho_o2.ToString() + ',' + Data.rho_sln_koh.ToString() + ',' + Data.g.ToString() + ',' + Data.Re7_0.ToString() + ',' + Data.mu.ToString() + ','  + Data.cv1.ToString() + ',' + Data.cv2.ToString() + ',' + Data.P_cathode_sep_out.ToString() + ',' + Data.P_anode_sep_out.ToString() + ',' + Data.P_env.ToString() + ',');
+                file.WriteLine("T_elin0,T_k0,T_K,T_btout,T_btout0,,,,,,,,,");
+                file.WriteLine(Data.T_elin0.ToString() + ',' + Data.T_k0.ToString() + ',' + Data.T_K.ToString() + ',' + Data.T_btout.ToString() + ',' + Data.T_btout0.ToString() + ',');
+                file.WriteLine("T_cw_in,T_cw_out0,T_ambi,T_pipeout0,T_btout_ano0,T_btout_cat0,,,,,,,,,");
+                file.WriteLine(Data.T_cw_in.ToString() + ',' + Data.T_cw_out0.ToString() + ',' + Data.T_ambi.ToString() + ',' + Data.T_pipeout0.ToString() + ',' + Data.T_btout_ano0.ToString() + ',' + Data.T_btout_cat0.ToString() + ',');
                 file.WriteLine("###########################,,,,,,,,,,,,,,,");
                 file.WriteLine("# 部件参数,,,,,,,,,,,,,,,");
                 file.WriteLine("###########################,,,,,,,,,,,,,,,");

@@ -200,28 +200,36 @@ namespace SimulationDesignPlatform.UserControls
 			row["tao_b"] = Data.tao_b;
 			row["FC_flash"] = Data.FC_flash;
 			row["R"] = Data.R;
-			row["T"] = Data.T;
 			row["eta"] = Data.eta;
 			row["M_h2"] = Data.M_h2;
 			row["M_o2"] = Data.M_o2;
-			row["M_koh"] = Data.M_koh;
+            row["M_n2"] = Data.M_n2;
+            row["M_koh"] = Data.M_koh;
 			row["M_h2o"] = Data.M_h2o;
 			row["rho_h2o"] = Data.rho_h2o;
 			row["rho_h2"] = Data.rho_h2;
 			row["rho_o2"] = Data.rho_o2;
 			row["rho_sln_koh"] = Data.rho_sln_koh;
 			row["g"] = Data.g;
-			row["Re24_0"] = Data.Re24_0;
+			row["Re24_0"] = Data.Re7_0;
 			row["mu"] = Data.mu;
-			row["Area_hx"] = Data.Area_hx;
-			row["massFlowRate_cw"] = Data.massFlowRate_cw;
 			row["cv1"] = Data.cv1;
 			row["cv2"] = Data.cv2;
 			row["P_cathode_sep_out"] = Data.P_cathode_sep_out;
 			row["P_anode_sep_out"] = Data.P_anode_sep_out;
 			row["P_env"] = Data.P_env;
-
-			dataTable01.Rows.Add(row);
+            row["T_elin0"] = Data.T_elin0;
+            row["T_k0"] = Data.T_k0;
+            row["T_K"] = Data.T_K;
+            row["T_btout"] = Data.T_btout;
+            row["T_btout0"] = Data.T_btout0;
+            row["T_cw_in"] = Data.T_cw_in;
+            row["T_cw_out0"] = Data.T_cw_out0;
+            row["T_ambi"] = Data.T_ambi;
+            row["T_pipeout0"] = Data.T_pipeout0;
+            row["T_btout_ano0"] = Data.T_btout_ano0;
+            row["T_btout_cat0"] = Data.T_btout_cat0;
+            dataTable01.Rows.Add(row);
 		}
 
 		// 用户要求增加显示变量单位及含义。20240322，由M添加
@@ -296,28 +304,38 @@ namespace SimulationDesignPlatform.UserControls
 				dataGridView1.Rows.Add(i++, "tao_b", Data.tao_b, "-", "电化学系数");
 				dataGridView1.Rows.Add(i++, "FC_flash", Data.FC_flash, "-", "电化学系数");
 				dataGridView1.Rows.Add(i++, "R", Data.R, "J·mol⁻¹·K⁻¹", "气体方程常数");
-				dataGridView1.Rows.Add(i++, "T", Data.T, "K", "温度");
 				dataGridView1.Rows.Add(i++, "eta", Data.eta, "-", "电化学系数");
 				dataGridView1.Rows.Add(i++, "M_h2", Data.M_h2, "kg·mol⁻¹", "氢气摩尔量");
 				dataGridView1.Rows.Add(i++, "M_o2", Data.M_o2, "kg·mol⁻¹", "氧气摩尔量");
-				dataGridView1.Rows.Add(i++, "M_koh", Data.M_koh, "kg·mol⁻¹", "KOH溶液摩尔量");
+                dataGridView1.Rows.Add(i++, "M_n2", Data.M_n2, "kg·mol⁻¹", "氮气摩尔量");
+                dataGridView1.Rows.Add(i++, "M_koh", Data.M_koh, "kg·mol⁻¹", "KOH溶液摩尔量");
 				dataGridView1.Rows.Add(i++, "M_h2o", Data.M_h2o, "kg·mol⁻¹", "水摩尔量");
 				dataGridView1.Rows.Add(i++, "rho_h2o", Data.rho_h2o, "kg·m³", "水密度系数");
 				dataGridView1.Rows.Add(i++, "rho_h2", Data.rho_h2, "kg·m³", "氢气密度系数");
 				dataGridView1.Rows.Add(i++, "rho_o2", Data.rho_o2, "kg·m³", "氧气密度系数");
 				dataGridView1.Rows.Add(i++, "rho_sln_koh", Data.rho_sln_koh, "kg·m³", "KOH溶液密度系数");
 				dataGridView1.Rows.Add(i++, "g", Data.g, "m·s⁻²", "重力系数");
-				dataGridView1.Rows.Add(i++, "Re24_0", Data.Re24_0, "-", "雷诺数");
+				dataGridView1.Rows.Add(i++, "Re24_0", Data.Re7_0, "-", "雷诺数");
 				dataGridView1.Rows.Add(i++, "mu", Data.mu, "Pa·s", "粘度系数");
-				dataGridView1.Rows.Add(i++, "Area_hx", Data.Area_hx, "m²", "换热器换热面积");
-				dataGridView1.Rows.Add(i++, "massFlowRate_cw", Data.massFlowRate_cw, "kg·s⁻¹", "冷却水给水流量");
 				dataGridView1.Rows.Add(i++, "cv1", Data.cv1, "", "");
 				dataGridView1.Rows.Add(i++, "cv2", Data.cv2, "", "");
 				dataGridView1.Rows.Add(i++, "P_cathode_sep_out", Data.P_cathode_sep_out, "Pa", "阴极分离器出口压力");
 				dataGridView1.Rows.Add(i++, "P_anode_sep_out", Data.P_anode_sep_out, "Pa", "阳极分离器出口压力");
 				dataGridView1.Rows.Add(i++, "P_env", Data.P_env, "Pa", "环境压力");
-			}
-			else
+                //以下是工艺参数新加的参数，暂不加载到界面上
+                //dataGridView1.Rows.Add(i++, "T_elin0", Data.T_elin0, "K", "电解槽初始温度");
+                //dataGridView1.Rows.Add(i++, "T_k0", Data.T_k0, "K", "KOH溶液初始温度");
+                //dataGridView1.Rows.Add(i++, "T_K", Data.T_K, "K", "KOH溶液温度");
+                //dataGridView1.Rows.Add(i++, "T_btout", Data.T_btout, "K", "阴极分离器出口温度");
+                //dataGridView1.Rows.Add(i++, "T_btout0", Data.T_btout0, "K", "阴极分离器出口温度");
+                //dataGridView1.Rows.Add(i++, "T_cw_in", Data.T_cw_in, "K", "冷却水进口温度");
+                //dataGridView1.Rows.Add(i++, "T_cw_out0", Data.T_cw_out0, "K", "冷却水出口温度");
+                //dataGridView1.Rows.Add(i++, "T_ambi", Data.T_ambi, "K", "环境温度");
+                //dataGridView1.Rows.Add(i++, "T_pipeout0", Data.T_pipeout0, "K", "管道出口温度");
+                //dataGridView1.Rows.Add(i++, "T_btout_ano0", Data.T_btout_ano0, "K", "阳极分离器出口温度");
+                //dataGridView1.Rows.Add(i++, "T_btout_cat0", Data.T_btout_cat0, "K", "阴极分离器出口温度");
+            }
+            else
 			{
 				int i = 0;
 				dataGridView1[2, i++].Value = Data.sigma_e_1;
@@ -345,21 +363,19 @@ namespace SimulationDesignPlatform.UserControls
 				dataGridView1[2, i++].Value = Data.tao_b;
 				dataGridView1[2, i++].Value = Data.FC_flash;
 				dataGridView1[2, i++].Value = Data.R;
-				dataGridView1[2, i++].Value = Data.T;
 				dataGridView1[2, i++].Value = Data.eta;
 				dataGridView1[2, i++].Value = Data.M_h2;
 				dataGridView1[2, i++].Value = Data.M_o2;
-				dataGridView1[2, i++].Value = Data.M_koh;
+                dataGridView1[2, i++].Value = Data.M_n2;
+                dataGridView1[2, i++].Value = Data.M_koh;
 				dataGridView1[2, i++].Value = Data.M_h2o;
 				dataGridView1[2, i++].Value = Data.rho_h2o;
 				dataGridView1[2, i++].Value = Data.rho_h2;
 				dataGridView1[2, i++].Value = Data.rho_o2;
 				dataGridView1[2, i++].Value = Data.rho_sln_koh;
 				dataGridView1[2, i++].Value = Data.g;
-				dataGridView1[2, i++].Value = Data.Re24_0;
+				dataGridView1[2, i++].Value = Data.Re7_0;
 				dataGridView1[2, i++].Value = Data.mu;
-				dataGridView1[2, i++].Value = Data.Area_hx;
-				dataGridView1[2, i++].Value = Data.massFlowRate_cw;
 				dataGridView1[2, i++].Value = Data.cv1;
 				dataGridView1[2, i++].Value = Data.cv2;
 				dataGridView1[2, i++].Value = Data.P_cathode_sep_out;
@@ -403,21 +419,19 @@ namespace SimulationDesignPlatform.UserControls
 			Data.tao_b = (double)dataGridView1[2, i++].Value;
 			Data.FC_flash = (double)dataGridView1[2, i++].Value;
 			Data.R = (double)dataGridView1[2, i++].Value;
-			Data.T = (double)dataGridView1[2, i++].Value;
 			Data.eta = (double)dataGridView1[2, i++].Value;
 			Data.M_h2 = (double)dataGridView1[2, i++].Value;
 			Data.M_o2 = (double)dataGridView1[2, i++].Value;
-			Data.M_koh = (double)dataGridView1[2, i++].Value;
+            Data.M_n2 = (double)dataGridView1[2, i++].Value;
+            Data.M_koh = (double)dataGridView1[2, i++].Value;
 			Data.M_h2o = (double)dataGridView1[2, i++].Value;
 			Data.rho_h2o = (double)dataGridView1[2, i++].Value;
 			Data.rho_h2 = (double)dataGridView1[2, i++].Value;
 			Data.rho_o2 = (double)dataGridView1[2, i++].Value;
 			Data.rho_sln_koh = (double)dataGridView1[2, i++].Value;
 			Data.g = (double)dataGridView1[2, i++].Value;
-			Data.Re24_0 = (double)dataGridView1[2, i++].Value;
+			Data.Re7_0 = (double)dataGridView1[2, i++].Value;
 			Data.mu = (double)dataGridView1[2, i++].Value;
-			Data.Area_hx = (double)dataGridView1[2, i++].Value;
-			Data.massFlowRate_cw = (double)dataGridView1[2, i++].Value;
 			Data.cv1 = (double)dataGridView1[2, i++].Value;
 			Data.cv2 = (double)dataGridView1[2, i++].Value;
 			Data.P_cathode_sep_out = (double)dataGridView1[2, i++].Value;

@@ -1002,18 +1002,14 @@ namespace SimulationDesignPlatform.Forms
 						flag = flag && double.TryParse(tmp[0], out Data.tao_b);
 						flag = flag && double.TryParse(tmp[1], out Data.FC_flash);
 						flag = flag && double.TryParse(tmp[2], out Data.R);
-						flag = flag && double.TryParse(tmp[3], out Data.T);
 						flag = flag && double.TryParse(tmp[4], out Data.eta);
 						flag = flag && double.TryParse(tmp[5], out Data.M_h2);
 						flag = flag && double.TryParse(tmp[6], out Data.M_o2);
-						flag = flag && double.TryParse(tmp[7], out Data.M_koh);
+                        flag = flag && double.TryParse(tmp[3], out Data.M_n2);
+                        flag = flag && double.TryParse(tmp[7], out Data.M_koh);
 						flag = flag && double.TryParse(tmp[8], out Data.M_h2o);
 						flag = flag && double.TryParse(tmp[9], out Data.rho_h2o);
 						flag = flag && double.TryParse(tmp[10], out Data.rho_h2);
-						Console.WriteLine("tao_b = {0} ,FC_flash = {1}, R = {2}, T = {3}, eta = {4}, M_h2 = {5}, " +
-							"M_o2 = {6}, M_koh = {7}, M_h2o = {8},  rho_h2o = {9}, rho_h2 = {10}",
-							Data.tao_b, Data.FC_flash, Data.R, Data.T, Data.eta, Data.M_h2, Data.M_o2,
-							Data.M_koh, Data.M_h2o, Data.rho_h2o, Data.rho_h2);
 					}
 					nextLine = sR1.ReadLine(); //# 工艺参数
 					nextLine = sR1.ReadLine(); //# 工艺参数
@@ -1022,27 +1018,36 @@ namespace SimulationDesignPlatform.Forms
 						flag = flag && double.TryParse(tmp[0], out Data.rho_o2);
 						flag = flag && double.TryParse(tmp[1], out Data.rho_sln_koh);
 						flag = flag && double.TryParse(tmp[2], out Data.g);
-						flag = flag && double.TryParse(tmp[3], out Data.Re24_0);
+						flag = flag && double.TryParse(tmp[3], out Data.Re7_0);
 						flag = flag && double.TryParse(tmp[4], out Data.mu);
-						flag = flag && double.TryParse(tmp[5], out Data.Area_hx);
-						flag = flag && double.TryParse(tmp[6], out Data.massFlowRate_cw);
-						flag = flag && double.TryParse(tmp[7], out Data.cv1);
-						flag = flag && double.TryParse(tmp[8], out Data.cv2);
-						flag = flag && double.TryParse(tmp[9], out Data.P_cathode_sep_out);
-						flag = flag && double.TryParse(tmp[10], out Data.P_anode_sep_out);
-						Console.WriteLine("rho_o2 = {0} ,rho_sln_koh = {1}, g = {2}, Re24_0 = {3}, mu = {4}, Area_hx = {5}, " +
-							"massFlowRate_cw = {6}, cv1 = {7}, cv2 = {8},  P_cathode_sep_out = {9}, P_anode_sep_out = {10}",
-							Data.rho_o2, Data.rho_sln_koh, Data.g, Data.Re24_0, Data.mu, Data.Area_hx, Data.massFlowRate_cw,
-							Data.cv1, Data.cv2, Data.P_cathode_sep_out, Data.P_anode_sep_out);
-					}
-					nextLine = sR1.ReadLine(); //# 工艺参数
-					nextLine = sR1.ReadLine(); //# 工艺参数
-					{
-						string[] tmp = nextLine.Split(',');
-						flag = flag && double.TryParse(tmp[0], out Data.P_env);
-						Console.WriteLine("P_env = {0} ", Data.P_env);
-					}
-					nextLine = sR1.ReadLine(); //# 部件参数
+						flag = flag && double.TryParse(tmp[5], out Data.cv1);
+						flag = flag && double.TryParse(tmp[6], out Data.cv2);
+						flag = flag && double.TryParse(tmp[7], out Data.P_cathode_sep_out);
+						flag = flag && double.TryParse(tmp[8], out Data.P_anode_sep_out);
+                        flag = flag && double.TryParse(tmp[9], out Data.P_env);
+                    }
+                    nextLine = sR1.ReadLine(); //# 工艺参数
+                    nextLine = sR1.ReadLine(); //# 工艺参数
+                    {
+                        string[] tmp = nextLine.Split(',');
+                        flag = flag && double.TryParse(tmp[0], out Data.T_elin0);
+                        flag = flag && double.TryParse(tmp[1], out Data.T_k0);
+                        flag = flag && double.TryParse(tmp[2], out Data.T_K);
+                        flag = flag && double.TryParse(tmp[3], out Data.T_btout);
+                        flag = flag && double.TryParse(tmp[4], out Data.T_btout0);
+                    }
+                    nextLine = sR1.ReadLine(); //# 工艺参数
+                    nextLine = sR1.ReadLine(); //# 工艺参数
+                    {
+                        string[] tmp = nextLine.Split(',');
+                        flag = flag && double.TryParse(tmp[0], out Data.T_cw_in);
+                        flag = flag && double.TryParse(tmp[1], out Data.T_cw_out0);
+                        flag = flag && double.TryParse(tmp[2], out Data.T_ambi);
+                        flag = flag && double.TryParse(tmp[3], out Data.T_pipeout0);
+                        flag = flag && double.TryParse(tmp[4], out Data.T_btout_ano0);
+                        flag = flag && double.TryParse(tmp[5], out Data.T_btout_cat0);
+                    }
+                    nextLine = sR1.ReadLine(); //# 部件参数
 					nextLine = sR1.ReadLine(); //# 部件参数
 					nextLine = sR1.ReadLine(); //# 部件参数
 					nextLine = sR1.ReadLine(); //# 部件参数

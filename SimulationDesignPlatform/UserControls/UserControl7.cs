@@ -83,13 +83,12 @@ namespace SimulationDesignPlatform.UserControls
             dataTable01.Columns.Add("p", typeof(double));
             dataTable01.Columns.Add("l_l", typeof(double));
             dataTable01.Columns.Add("l_g", typeof(double));
-            dataTable01.Columns.Add("x_h2", typeof(double));
-            dataTable01.Columns.Add("x_o2", typeof(double));
-            dataTable01.Columns.Add("x_h2o", typeof(double));
+            dataTable01.Columns.Add("n_h2", typeof(double));
+            dataTable01.Columns.Add("n_o2", typeof(double));
+            dataTable01.Columns.Add("v_t", typeof(double));
 
             // 设置DataGridView的DataSource  
             dataGridView1.DataSource = dataTable01;
-            //dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             // 设置列名  

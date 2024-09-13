@@ -378,10 +378,10 @@ namespace SimulationDesignPlatform.UserControls
             row["tao_b"] = Data.tao_b;
             row["FC_flash"] = Data.FC_flash;
             row["R"] = Data.R;
-            row["T"] = Data.T;
             row["eta"] = Data.eta;
             row["M_h2"] = Data.M_h2;
             row["M_o2"] = Data.M_o2;
+            row["M_n2"] = Data.M_n2;
             row["M_koh"] = Data.M_koh;
             row["M_h2o"] = Data.M_h2o;
             row["rho_h2o"] = Data.rho_h2o;
@@ -389,15 +389,24 @@ namespace SimulationDesignPlatform.UserControls
             row["rho_o2"] = Data.rho_o2;
             row["rho_sln_koh"] = Data.rho_sln_koh;
             row["g"] = Data.g;
-            row["Re24_0"] = Data.Re24_0;
+            row["Re24_0"] = Data.Re7_0;
             row["mu"] = Data.mu;
-            row["Area_hx"] = Data.Area_hx;
-            row["massFlowRate_cw"] = Data.massFlowRate_cw;
             row["cv1"] = Data.cv1;
             row["cv2"] = Data.cv2;
             row["P_cathode_sep_out"] = Data.P_cathode_sep_out;
             row["P_anode_sep_out"] = Data.P_anode_sep_out;
             row["P_env"] = Data.P_env;
+            row["T_elin0"] = Data.T_elin0;
+            row["T_k0"] = Data.T_k0;
+            row["T_K"] = Data.T_K;
+            row["T_btout"] = Data.T_btout;
+            row["T_btout0"] = Data.T_btout0;
+            row["T_cw_in"] = Data.T_cw_in;
+            row["T_cw_out0"] = Data.T_cw_out0;
+            row["T_ambi"] = Data.T_ambi;
+            row["T_pipeout0"] = Data.T_pipeout0;
+            row["T_btout_ano0"] = Data.T_btout_ano0;
+            row["T_btout_cat0"] = Data.T_btout_cat0;
 
             dataTable01.Rows.Add(row);
         }
