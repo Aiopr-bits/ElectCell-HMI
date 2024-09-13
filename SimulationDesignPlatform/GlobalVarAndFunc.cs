@@ -33,7 +33,7 @@ namespace SimulationDesignPlatform
 	public class FlowData
 	{
 		public int num;
-		public double Di, L, v_t, x_h2, x_o2, x_h2o, h2_type;
+		public double Di, L, x_h2, x_o2, x_h2o, h2_type;
 		public FlowData()
 		{
 		}
@@ -198,7 +198,7 @@ namespace SimulationDesignPlatform
                 for (int i = 0; i < Data.n_flow; i++)
                 {
                     file.WriteLine(Data.flow[i].num.ToString() + ',' + Data.flow[i].x_h2.ToString() + ',' + Data.flow[i].x_o2.ToString() + ',' + Data.flow[i].x_h2o.ToString() + ','
-                        + Data.flow[i].Di.ToString() + ',' + Data.flow[i].L.ToString() + ',' + Data.flow[i].v_t.ToString() + ',');
+                        + Data.flow[i].Di.ToString() + ',' + Data.flow[i].L.ToString() + ',' );
                 }
                 file.WriteLine("ps,,,,,,,,,,,,,,,");
                 file.WriteLine(Data.n_ps.ToString() + ',');
@@ -405,7 +405,7 @@ namespace SimulationDesignPlatform
 		public static double data9_left, data9_right;	//工艺流程-氧中氢  时间阈值
 		public static double data10_left, data10_right;	//工艺流程-氢中氧  时间阈值
 
-		public const int n_flow_max = 42;//flow参数
+		public const int n_flow_max = 1000;//flow参数
 		public static FlowData[] flow = new FlowData[n_flow_max]; //全局变量，存储
 		public static FlowData[] flow_f = new FlowData[n_flow_max]; //全局变量，存储
 

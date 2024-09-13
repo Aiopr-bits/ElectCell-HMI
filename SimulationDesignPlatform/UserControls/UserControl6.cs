@@ -109,7 +109,6 @@ namespace SimulationDesignPlatform.UserControls
                 row["x_h2o"] = Data.flow[i].x_h2o;
                 row["Di"] = Data.flow[i].Di;
                 row["L"] = Data.flow[i].L;
-                row["v_t"] = Data.flow[i].v_t;
 
                 dataTable01.Rows.Add(row);
             }
@@ -144,7 +143,6 @@ namespace SimulationDesignPlatform.UserControls
                 Data.flow[i].x_h2o = (double)dataGridView1.Rows[i].Cells[3].Value;
                 Data.flow[i].Di = (double)dataGridView1.Rows[i].Cells[4].Value;
                 Data.flow[i].L = (double)dataGridView1.Rows[i].Cells[5].Value;
-                Data.flow[i].v_t = (double)dataGridView1.Rows[i].Cells[6].Value;
             }
 
             //点了保存按钮进⼊

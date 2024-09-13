@@ -199,7 +199,6 @@ namespace SimulationDesignPlatform.UserControls
                 row["x_h2o"] = Data.flow[i].x_h2o;
                 row["Di"] = Data.flow[i].Di;
                 row["L"] = Data.flow[i].L;
-                row["v_t"] = Data.flow[i].v_t;
 
                 dataTable01.Rows.Add(row);
             }

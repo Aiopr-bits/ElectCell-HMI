@@ -166,7 +166,6 @@ namespace SimulationDesignPlatform.UserControls
 					Data.flow_f[i].x_h2o = Convert.ToDouble(dataGridView2.Rows[i].Cells[3].Value);
 					Data.flow_f[i].Di = Convert.ToDouble(dataGridView2.Rows[i].Cells[4].Value);
 					Data.flow_f[i].L = Convert.ToDouble(dataGridView2.Rows[i].Cells[5].Value);
-					Data.flow_f[i].v_t = Convert.ToInt32(dataGridView2.Rows[i].Cells[6].Value);
 				}
 
 			}
@@ -207,7 +206,6 @@ namespace SimulationDesignPlatform.UserControls
 					Data.flow_f[a].x_h2o = Data.faultflow[i].x_h2o;
 					Data.flow_f[a].Di = Data.faultflow[i].Di;
 					Data.flow_f[a].L = Data.faultflow[i].L;
-					Data.flow_f[a].v_t = Data.faultflow[i].v_t;
 					a++;
 				}
 			}
@@ -255,7 +253,6 @@ namespace SimulationDesignPlatform.UserControls
 				row["x_h2o"] = Data.flow_f[i].x_h2o;
 				row["Di"] = Data.flow_f[i].Di;
 				row["L"] = Data.flow_f[i].L;
-				row["v_t"] = Data.flow_f[i].v_t;
 
 				if (Data.flow_f[i].num != 0)
 				{

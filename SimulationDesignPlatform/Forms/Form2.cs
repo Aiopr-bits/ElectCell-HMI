@@ -926,10 +926,6 @@ namespace SimulationDesignPlatform.Forms
 							Data.flow[i].x_h2o = double.Parse(tmp[3]);
 							Data.flow[i].Di = double.Parse(tmp[4]);
 							Data.flow[i].L = double.Parse(tmp[5]);
-							Data.flow[i].v_t = double.Parse(tmp[6]);
-							Console.WriteLine("num = {0} ,x_h2 = {1}, x_o2 = {2}, x_h2o = {3}, Di = {4}, L = {5}, " +
-						   "v_t = {6}",
-						   Data.flow[i].num, Data.flow[i].x_h2, Data.flow[i].x_o2, Data.flow[i].x_h2o, Data.flow[i].Di, Data.flow[i].L, Data.flow[i].v_t);
 						}
 					}
 					nextLine = sR1.ReadLine(); //# ps参数
@@ -1329,7 +1325,6 @@ namespace SimulationDesignPlatform.Forms
 						Data.faultflow[a].x_o2 = Data.flow[i].x_o2;
 						Data.faultflow[a].x_h2o = Data.flow[i].x_h2o;
 						Data.faultflow[a].L = Data.flow[i].L;
-						Data.faultflow[a].v_t = Data.flow[i].v_t;
 						Data.faultflow[a].is_fault = false;
 						Data.faultflow[a].is_result = false;
 						a++;
