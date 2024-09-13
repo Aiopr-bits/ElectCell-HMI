@@ -539,8 +539,8 @@ namespace SimulationDesignPlatform.Forms
 		//		file.WriteLine("###########################,,,,,,,,,,,,,,,");
 		//		file.WriteLine("# 几何参数,,,,,,,,,,,,,,,");
 		//		file.WriteLine("###########################,,,,,,,,,,,,,,,");
-		//		file.WriteLine("L_VII,L_IX,D_sc,l_sc,,,,,,,,,,,,,,,");
-		//		file.WriteLine(Data.L_VII.ToString() + ',' + Data.L_IX.ToString() + ',' + Data.D_sc.ToString() + ',' + Data.l_sc.ToString() + ',');
+		//		file.WriteLine("L_ca2se,L_an2se,D_sc,l_sc,,,,,,,,,,,,,,,");
+		//		file.WriteLine(Data.L_ca2se.ToString() + ',' + Data.L_an2se.ToString() + ',' + Data.D_sc.ToString() + ',' + Data.l_sc.ToString() + ',');
 		//		file.WriteLine("###########################,,,,,,,,,,,,,,,");
 		//		file.WriteLine("# flow和ps参数,,,,,,,,,,,,,,,");
 		//		file.WriteLine("###########################,,,,,,,,,,,,,,,");
@@ -883,13 +883,28 @@ namespace SimulationDesignPlatform.Forms
 					nextLine = sR1.ReadLine(); //# 几何参数
 					{
 						string[] tmp = nextLine.Split(',');
-						flag = flag && double.TryParse(tmp[0], out Data.L_VII);
-						flag = flag && double.TryParse(tmp[1], out Data.L_IX);
+                        flag = flag && double.TryParse(tmp[0], out Data.L_ca2se);
+						flag = flag && double.TryParse(tmp[1], out Data.L_an2se);
 						flag = flag && double.TryParse(tmp[2], out Data.D_sc);
 						flag = flag && double.TryParse(tmp[3], out Data.l_sc);
-						Console.WriteLine("L_VII = {0} ,L_IX = {1}, D_sc = {2}, l_sc = {3} ", Data.L_VII, Data.L_IX, Data.D_sc, Data.l_sc);
-					}
-					nextLine = sR1.ReadLine(); //# flow和ps参数
+                        flag = flag && double.TryParse(tmp[4], out Data.thickness_cat);
+                        flag = flag && double.TryParse(tmp[5], out Data.thickness_ano);
+                        flag = flag && double.TryParse(tmp[6], out Data.distance_am);
+                        flag = flag && double.TryParse(tmp[7], out Data.distance_cm);
+                    }
+                    nextLine = sR1.ReadLine(); //# 几何参数
+                    nextLine = sR1.ReadLine(); //# 几何参数
+                    {
+                        string[] tmp = nextLine.Split(',');
+                        flag = flag && double.TryParse(tmp[0], out Data.Volume_hotside);
+                        flag = flag && double.TryParse(tmp[1], out Data.Volume_codeside);
+                        flag = flag && double.TryParse(tmp[2], out Data.di_stack);
+                        flag = flag && double.TryParse(tmp[3], out Data.Area_sep);
+                        flag = flag && double.TryParse(tmp[4], out Data.Area_stack);
+                        flag = flag && double.TryParse(tmp[5], out Data.C_tsep);
+                        flag = flag && double.TryParse(tmp[6], out Data.C_tk);
+                    }
+                    nextLine = sR1.ReadLine(); //# flow和ps参数
 					nextLine = sR1.ReadLine(); //# flow和ps参数
 					nextLine = sR1.ReadLine(); //# flow和ps参数
 					nextLine = sR1.ReadLine(); //# flow和ps参数

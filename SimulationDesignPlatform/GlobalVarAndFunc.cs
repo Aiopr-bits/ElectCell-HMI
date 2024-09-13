@@ -89,8 +89,10 @@ namespace SimulationDesignPlatform
 	public class Data
 	{
 		public static int n_flow, n_ps, n_node, n_case, n_ele;//
-		public static double delta_t, L_VII, L_IX, D_sc, l_sc, start_time, end_time;
-		public static double sigma_e_1, sigma_h2_r1, sigma_h2o_r1, sigma_e_2, sigma_h2o_r2, sigma_o2_r2, eta_F, F, n_cell,
+		public static double delta_t, start_time, end_time;
+        public static double L_ca2se, L_an2se, D_sc, l_sc, thickness_cat, thickness_ano, distance_am, distance_cm;
+        public static double Volume_hotside, Volume_codeside, di_stack, Area_sep, Area_stack, C_tsep, C_tk;
+        public static double sigma_e_1, sigma_h2_r1, sigma_h2o_r1, sigma_e_2, sigma_h2o_r2, sigma_o2_r2, eta_F, F, n_cell,
 			a_cell, A_mem, thickness_mem, porosity_mem, tortuosity_mem, wt_KOHsln, k, D_h2, D_o2, k_x_h2, k_x_o2, eps_h2_Darcy,
 			eps_o2_Darcy, tao_b, FC_flash, R, T, eta, M_h2, M_o2, M_koh, M_h2o, rho_h2o, rho_h2, rho_o2, rho_sln_koh, g, Re24_0,
 			mu, Area_hx, massFlowRate_cw, cv1, cv2, P_cathode_sep_out, P_anode_sep_out, P_env;
@@ -185,8 +187,8 @@ namespace SimulationDesignPlatform
                 file.WriteLine("###########################,,,,,,,,,,,,,,,");
                 file.WriteLine("# 几何参数,,,,,,,,,,,,,,,");
                 file.WriteLine("###########################,,,,,,,,,,,,,,,");
-                file.WriteLine("L_VII,L_IX,D_sc,l_sc,,,,,,,,,,,,,,,");
-                file.WriteLine(Data.L_VII.ToString() + ',' + Data.L_IX.ToString() + ',' + Data.D_sc.ToString() + ',' + Data.l_sc.ToString() + ',');
+                file.WriteLine("L_ca2se,L_an2se,D_sc,l_sc,,,,,,,,,,,,,,,");
+                file.WriteLine(Data.L_ca2se.ToString() + ',' + Data.L_an2se.ToString() + ',' + Data.D_sc.ToString() + ',' + Data.l_sc.ToString() + ',');
                 file.WriteLine("###########################,,,,,,,,,,,,,,,");
                 file.WriteLine("# flow和ps参数,,,,,,,,,,,,,,,");
                 file.WriteLine("###########################,,,,,,,,,,,,,,,");

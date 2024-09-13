@@ -139,8 +139,8 @@ namespace SimulationDesignPlatform.UserControls
         {
             DataTable dataTable01 = new DataTable();
 
-            dataTable01.Columns.Add("L_VII", typeof(double));
-            dataTable01.Columns.Add("L_IX", typeof(double));
+            dataTable01.Columns.Add("L_ca2se", typeof(double));
+            dataTable01.Columns.Add("L_an2se", typeof(double));
             dataTable01.Columns.Add("D_sc", typeof(double));
             dataTable01.Columns.Add("l_sc", typeof(double));
             
@@ -149,15 +149,15 @@ namespace SimulationDesignPlatform.UserControls
             dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
             // 设置列名  
-            dataGridView2.Columns["L_VII"].HeaderText = "L_VII";
-            dataGridView2.Columns["L_IX"].HeaderText = "L_IX";
+            dataGridView2.Columns["L_ca2se"].HeaderText = "L_ca2se";
+            dataGridView2.Columns["L_an2se"].HeaderText = "L_an2se";
             dataGridView2.Columns["D_sc"].HeaderText = "D_sc";
             dataGridView2.Columns["l_sc"].HeaderText = "l_sc";
 
             //添加行数据
             DataRow row = dataTable01.NewRow();
-            row["L_VII"] = Data.L_VII; ;
-            row["L_IX"] = Data.L_IX;
+            row["L_ca2se"] = Data.L_ca2se; ;
+            row["L_an2se"] = Data.L_an2se;
             row["D_sc"] = Data.D_sc;
             row["l_sc"] = Data.l_sc;
 

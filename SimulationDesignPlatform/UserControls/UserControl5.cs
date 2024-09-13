@@ -77,8 +77,8 @@ namespace SimulationDesignPlatform.UserControls
 			}
 			DataTable dataTable01 = new DataTable();
 
-			dataTable01.Columns.Add("L_VII", typeof(double));
-			dataTable01.Columns.Add("L_IX", typeof(double));
+			dataTable01.Columns.Add("L_ca2se", typeof(double));
+			dataTable01.Columns.Add("L_an2se", typeof(double));
 			dataTable01.Columns.Add("D_sc", typeof(double));
 			dataTable01.Columns.Add("l_sc", typeof(double));
 
@@ -88,15 +88,15 @@ namespace SimulationDesignPlatform.UserControls
 			dataGridView1.AllowUserToAddRows = false;
 
 			// 设置列名  
-			dataGridView1.Columns["L_VII"].HeaderText = "L_VII";
-			dataGridView1.Columns["L_IX"].HeaderText = "L_IX";
+			dataGridView1.Columns["L_ca2se"].HeaderText = "L_ca2se";
+			dataGridView1.Columns["L_an2se"].HeaderText = "L_an2se";
 			dataGridView1.Columns["D_sc"].HeaderText = "D_sc";
 			dataGridView1.Columns["l_sc"].HeaderText = "l_sc";
 
 			//添加行数据
 			DataRow row = dataTable01.NewRow();
-			row["L_VII"] = Data.L_VII;
-			row["L_IX"] = Data.L_IX;
+			row["L_ca2se"] = Data.L_ca2se;
+			row["L_an2se"] = Data.L_an2se;
 			row["D_sc"] = Data.D_sc;
 			row["l_sc"] = Data.l_sc;
 
@@ -151,16 +151,16 @@ namespace SimulationDesignPlatform.UserControls
 					ValueType = typeof(string),
 				});
 				int i = 1;
-				dataGridView1.Rows.Add(i++, "L_VII", Data.L_VII, "m", "氢气分离器长度");
-				dataGridView1.Rows.Add(i++, "L_IX", Data.L_IX, "m", "氧气分离器长度");
+				dataGridView1.Rows.Add(i++, "L_ca2se", Data.L_ca2se, "m", "氢气分离器长度");
+				dataGridView1.Rows.Add(i++, "L_an2se", Data.L_an2se, "m", "氧气分离器长度");
 				dataGridView1.Rows.Add(i++, "D_sc", Data.D_sc, "m", "电解槽直径");
 				dataGridView1.Rows.Add(i++, "l_sc", Data.l_sc, "m", "电解槽长度");
 			}
 			else
 			{
 				int i = 0;
-				dataGridView1[2, i++].Value = Data.L_VII;
-				dataGridView1[2, i++].Value = Data.L_IX;
+				dataGridView1[2, i++].Value = Data.L_ca2se;
+				dataGridView1[2, i++].Value = Data.L_an2se;
 				dataGridView1[2, i++].Value = Data.D_sc;
 				dataGridView1[2, i++].Value = Data.l_sc;
 			}
@@ -176,8 +176,8 @@ namespace SimulationDesignPlatform.UserControls
 		{
 			dataGridView1.AllowUserToAddRows = false;
 
-			Data.L_VII = (double)dataGridView1[2, 0].Value;
-			Data.L_IX = (double)dataGridView1[2, 1].Value;
+			Data.L_ca2se = (double)dataGridView1[2, 0].Value;
+			Data.L_an2se = (double)dataGridView1[2, 1].Value;
 			Data.D_sc = (double)dataGridView1[2, 2].Value;
 			Data.l_sc = (double)dataGridView1[2, 3].Value;
 
