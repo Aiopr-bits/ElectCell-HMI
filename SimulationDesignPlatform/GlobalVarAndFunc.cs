@@ -424,13 +424,14 @@ namespace SimulationDesignPlatform
 
 		public const int n_node_max = 1000;//部件参数
 		public static NodeData[] ele = new NodeData[n_node_max]; //电解槽  数组---多个
-		public static NodeData Cathode_separator = new NodeData();//阴极分离器
+        public static NodeData[] pump = new NodeData[n_node_max]; //泵  数组---多个
+        public static NodeData Cathode_separator = new NodeData();//阴极分离器
 		public static NodeData Anode_separator = new NodeData();//阳极分离器
-		public static NodeData Balance_line = new NodeData();//平衡管线
 		public static NodeData Cathode_valve = new NodeData();//阴极阀门
 		public static NodeData Anode_valve = new NodeData();//阳极阀门
+        public static NodeData Balance_line = new NodeData();//平衡管线
 
-		public const int n_case_max = 1000;//工况参数
+        public const int n_case_max = 1000;//工况参数
 		public static CaseData[] case_data = new CaseData[n_case_max]; //全局变量，存储
 
 		public static string openFile, saveFile, fileName, filePath, exePath, casePath, caseUsePath, newFolderPath, newFolderName;  // 文件名，包含路径，用于存储文件

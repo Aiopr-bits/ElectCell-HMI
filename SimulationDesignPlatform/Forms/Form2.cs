@@ -952,7 +952,204 @@ namespace SimulationDesignPlatform.Forms
 							Data.ps[i].v_t = double.Parse(tmp[8]);
 						}
 					}
-					nextLine = sR1.ReadLine(); //# 工艺参数
+
+                    nextLine = sR1.ReadLine(); //# 部件参数
+                    nextLine = sR1.ReadLine(); //# 电解槽部件参数
+                    {
+                        string[] tmp = nextLine.Split(',');
+                        Data.n_ele = int.Parse(tmp[0]);
+                    }
+                    nextLine = sR1.ReadLine(); 
+                    nextLine = sR1.ReadLine(); 
+                    {
+                        string[] tmp = nextLine.Split(',');
+						for(int i=0;i< Data.n_ele; ++i)
+						{
+                            Data.ele[i].node_name = "electrolyzer";
+                            Data.ele[i].I_current = double.Parse(tmp[i]);
+                        }
+                    }
+                    for(int i=0;i < Data.n_ele; ++i)
+					{
+                        nextLine = sR1.ReadLine();
+                        nextLine = sR1.ReadLine();
+                        nextLine = sR1.ReadLine();
+                        {
+                            string[] tmp = nextLine.Split(',');
+                            Data.ele[i].i_flow = 6;
+                            Data.ele[i].flow = new int[Data.ele[i].i_flow];
+                            for (int j = 0; j < Data.ele[i].i_flow; ++j)
+                            {
+                                Data.ele[i].flow[j] = int.Parse(tmp[j]);
+                            }
+                        }
+                        nextLine = sR1.ReadLine();
+                        nextLine = sR1.ReadLine();
+                        {
+                            string[] tmp = nextLine.Split(',');
+                            Data.ele[i].i_ps = 2;
+                            Data.ele[i].ps = new int[Data.ele[i].i_ps];
+                            for (int j = 0; j < Data.ele[i].i_ps; ++j)
+                            {
+                                Data.ele[i].ps[j] = int.Parse(tmp[j]);
+                            }
+                        }
+                    }
+                   for(int i=0;i< Data.n_ele; ++i)				//泵
+					{
+                        nextLine = sR1.ReadLine();
+                        nextLine = sR1.ReadLine();
+						nextLine = sR1.ReadLine();
+						{
+                            string[] tmp = nextLine.Split(',');
+							Data.pump[i] = new NodeData();
+                            Data.pump[i].node_name = "pump";
+                            Data.pump[i].i_flow = 2;
+                            Data.pump[i].flow = new int[Data.pump[i].i_flow];
+                            for (int j = 0; j < Data.pump[i].i_flow; ++j)
+                            {
+                                Data.pump[i].flow[j] = int.Parse(tmp[j]);
+                            }
+                        }
+                        nextLine = sR1.ReadLine();
+                        nextLine = sR1.ReadLine();
+                        {
+                            string[] tmp = nextLine.Split(',');
+                            Data.pump[i].i_ps = 1;
+                            Data.pump[i].ps = new int[Data.pump[i].i_ps];
+                            for (int j = 0; j < Data.pump[i].i_ps; ++j)
+                            {
+                                Data.pump[i].ps[j] = int.Parse(tmp[j]);
+                            }
+                        }
+                    }
+
+                    nextLine = sR1.ReadLine();//阴极分离器
+                    nextLine = sR1.ReadLine();
+                    nextLine = sR1.ReadLine();
+					{
+						string[] tmp = nextLine.Split(',');
+                        Data.Cathode_separator.node_name = "Cathode_separator";
+                        Data.Cathode_separator.i_flow = 5;
+                        Data.Cathode_separator.flow = new int[Data.Cathode_separator.i_flow];
+                        for (int j = 0; j < Data.Cathode_separator.i_flow; ++j)
+                        {
+                            Data.Cathode_separator.flow[j] = int.Parse(tmp[j]);
+                        }
+                    }
+                    nextLine = sR1.ReadLine();
+                    nextLine = sR1.ReadLine();
+                    {
+                        string[] tmp = nextLine.Split(',');
+                        Data.Cathode_separator.i_ps = 2;
+                        Data.Cathode_separator.ps = new int[Data.Cathode_separator.i_ps];
+                        for (int j = 0; j < Data.Cathode_separator.i_ps; ++j)
+                        {
+                            Data.Cathode_separator.ps[j] = int.Parse(tmp[j]);
+                        }
+                    }
+
+                    nextLine = sR1.ReadLine();//阳极分离器
+                    nextLine = sR1.ReadLine();
+                    nextLine = sR1.ReadLine();
+                    {
+                        string[] tmp = nextLine.Split(',');
+                        Data.Anode_separator.node_name = "Anode_separator";
+                        Data.Anode_separator.i_flow = 5;
+                        Data.Anode_separator.flow = new int[Data.Anode_separator.i_flow];
+                        for (int j = 0; j < Data.Anode_separator.i_flow; ++j)
+                        {
+                            Data.Anode_separator.flow[j] = int.Parse(tmp[j]);
+                        }
+                    }
+                    nextLine = sR1.ReadLine();
+                    nextLine = sR1.ReadLine();
+                    {
+                        string[] tmp = nextLine.Split(',');
+                        Data.Anode_separator.i_ps = 2;
+                        Data.Anode_separator.ps = new int[Data.Anode_separator.i_ps];
+                        for (int j = 0; j < Data.Anode_separator.i_ps; ++j)
+                        {
+                            Data.Anode_separator.ps[j] = int.Parse(tmp[j]);
+                        }
+                    }
+
+                    nextLine = sR1.ReadLine();//阴极阀门
+                    nextLine = sR1.ReadLine();
+                    nextLine = sR1.ReadLine();
+					{
+                        string[] tmp = nextLine.Split(',');
+                        Data.Cathode_valve.node_name = "Cathode_valve";
+                        Data.Cathode_valve.i_flow = 2;
+                        Data.Cathode_valve.flow = new int[Data.Cathode_valve.i_flow];
+                        for (int j = 0; j < Data.Cathode_valve.i_flow; ++j)
+                        {
+                            Data.Cathode_valve.flow[j] = int.Parse(tmp[j]);
+                        }
+                    }
+                    nextLine = sR1.ReadLine();
+                    nextLine = sR1.ReadLine();
+                    {
+                        string[] tmp = nextLine.Split(',');
+                        Data.Cathode_valve.i_ps = 1;
+                        Data.Cathode_valve.ps = new int[Data.Cathode_valve.i_ps];
+                        for (int j = 0; j < Data.Cathode_valve.i_ps; ++j)
+                        {
+                            Data.Cathode_valve.ps[j] = int.Parse(tmp[j]);
+                        }
+                    }
+
+                    nextLine = sR1.ReadLine();//阳极阀门
+					nextLine = sR1.ReadLine();
+                    nextLine = sR1.ReadLine();
+					{
+                        string[] tmp = nextLine.Split(',');
+                        Data.Anode_valve.node_name = "Anode_valve";
+                        Data.Anode_valve.i_flow = 2;
+                        Data.Anode_valve.flow = new int[Data.Anode_valve.i_flow];
+                        for (int j = 0; j < Data.Anode_valve.i_flow; ++j)
+                        {
+                            Data.Anode_valve.flow[j] = int.Parse(tmp[j]);
+                        }
+                    }
+                    nextLine = sR1.ReadLine();
+                    nextLine = sR1.ReadLine();
+                    {
+                        string[] tmp = nextLine.Split(',');
+                        Data.Anode_valve.i_ps = 1;
+                        Data.Anode_valve.ps = new int[Data.Anode_valve.i_ps];
+                        for (int j = 0; j < Data.Anode_valve.i_ps; ++j)
+                        {
+                            Data.Anode_valve.ps[j] = int.Parse(tmp[j]);
+                        }
+                    }
+
+                    nextLine = sR1.ReadLine();//平衡管线
+                    nextLine = sR1.ReadLine();
+                    nextLine = sR1.ReadLine();
+					{
+                        string[] tmp = nextLine.Split(',');
+                        Data.Balance_line.node_name = "Balance_line";
+                        Data.Balance_line.i_flow = 2;
+                        Data.Balance_line.flow = new int[Data.Balance_line.i_flow];
+                        for (int j = 0; j < Data.Balance_line.i_flow; ++j)
+                        {
+                            Data.Balance_line.flow[j] = int.Parse(tmp[j]);
+                        }
+                    }
+                    nextLine = sR1.ReadLine();
+                    nextLine = sR1.ReadLine();
+					{
+                        string[] tmp = nextLine.Split(',');
+                        Data.Balance_line.i_ps = 1;
+                        Data.Balance_line.ps = new int[Data.Balance_line.i_ps];
+                        for (int j = 0; j < Data.Balance_line.i_ps; ++j)
+                        {
+                            Data.Balance_line.ps[j] = int.Parse(tmp[j]);
+                        }
+                    }
+
+                    nextLine = sR1.ReadLine(); //# 工艺参数
 					nextLine = sR1.ReadLine(); //# 工艺参数
 					nextLine = sR1.ReadLine(); //# 工艺参数
 					nextLine = sR1.ReadLine(); //# 工艺参数
@@ -1046,277 +1243,7 @@ namespace SimulationDesignPlatform.Forms
                         flag = flag && double.TryParse(tmp[3], out Data.T_pipeout0);
                         flag = flag && double.TryParse(tmp[4], out Data.T_btout_ano0);
                         flag = flag && double.TryParse(tmp[5], out Data.T_btout_cat0);
-                    }
-                    nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 电解槽部件参数
-					{
-						string[] tmp = nextLine.Split(',');
-						Data.n_ele = int.Parse(tmp[0]);
-						Console.WriteLine("n_ele = {0} ", Data.n_ele);
-						Data.n_node = 3;
-					}
-					for (int i = 0; i < Data.n_ele; i++)
-					{
-						Data.ele[i].node_name = "electrolyzer";
-						nextLine = sR1.ReadLine();
-						nextLine = sR1.ReadLine();
-						{
-							string[] tmp = nextLine.Split(',');
-							Data.ele[i].I_current = double.Parse(tmp[0]);
-							Data.ele[i].i_flow = int.Parse(tmp[1]);
-							Data.ele[i].i_ps = int.Parse(tmp[2]);
-							Console.WriteLine("I_current = {0}, i_flow = {1}, i_ps = {2} ", Data.ele[i].I_current, Data.ele[i].i_flow, Data.ele[i].i_ps);
-						}
-						nextLine = sR1.ReadLine();
-						nextLine = sR1.ReadLine();
-						{
-							string[] tmp = nextLine.Split(',');
-							Data.ele[i].flow = new int[Data.ele[i].i_flow];
-							for (int j = 0; j < Data.ele[i].i_flow; j++)
-							{
-								Data.ele[i].flow[j] = int.Parse(tmp[j]);
-							}
-						}
-						nextLine = sR1.ReadLine();
-						nextLine = sR1.ReadLine();
-						{
-							string[] tmp = nextLine.Split(',');
-							Data.ele[i].ps = new int[Data.ele[i].i_ps];
-							for (int j = 0; j < Data.ele[i].i_ps; j++)
-							{
-								Data.ele[i].ps[j] = int.Parse(tmp[j]);
-							}
-						}
-					}
-
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 阴极分离器部件参数
-					{
-						string[] tmp = nextLine.Split(',');
-						Data.Cathode_separator.i_flow = int.Parse(tmp[0]);
-						Data.Cathode_separator.i_ps = int.Parse(tmp[1]);
-					}
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 部件参数
-					{
-						string[] tmp = nextLine.Split(',');
-						Data.Cathode_separator.flow = new int[Data.Cathode_separator.i_flow];
-						for (int j = 0; j < Data.Cathode_separator.i_flow; j++)
-						{
-							Data.Cathode_separator.flow[j] = int.Parse(tmp[j]);
-						}
-					}
-					nextLine = sR1.ReadLine();
-					nextLine = sR1.ReadLine();
-					{
-						string[] tmp = nextLine.Split(',');
-						Data.Cathode_separator.ps = new int[Data.Cathode_separator.i_ps];
-						for (int j = 0; j < Data.Cathode_separator.i_ps; j++)
-						{
-							Data.Cathode_separator.ps[j] = int.Parse(tmp[j]);
-						}
-					}
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 阳极分离器部件参数
-					{
-						string[] tmp = nextLine.Split(',');
-						Data.Anode_separator.i_flow = int.Parse(tmp[0]);
-						Data.Anode_separator.i_ps = int.Parse(tmp[1]);
-					}
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 部件参数
-					{
-						string[] tmp = nextLine.Split(',');
-						Data.Anode_separator.flow = new int[Data.Anode_separator.i_flow];
-						for (int j = 0; j < Data.Anode_separator.i_flow; j++)
-						{
-							Data.Anode_separator.flow[j] = int.Parse(tmp[j]);
-						}
-					}
-					nextLine = sR1.ReadLine();
-					nextLine = sR1.ReadLine();
-					{
-						string[] tmp = nextLine.Split(',');
-						Data.Anode_separator.ps = new int[Data.Anode_separator.i_ps];
-						for (int j = 0; j < Data.Anode_separator.i_ps; j++)
-						{
-							Data.Anode_separator.ps[j] = int.Parse(tmp[j]);
-						}
-					}
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 平衡管线部件参数
-					{
-						string[] tmp = nextLine.Split(',');
-						Data.Balance_line.i_flow = int.Parse(tmp[0]);
-						Data.Balance_line.i_ps = int.Parse(tmp[1]);
-					}
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 部件参数
-					{
-						string[] tmp = nextLine.Split(',');
-						Data.Balance_line.flow = new int[Data.Balance_line.i_flow];
-						for (int j = 0; j < Data.Balance_line.i_flow; j++)
-						{
-							//Data.Balance_line.flow[j] = int.Parse(tmp[j]);
-
-                            if (tmp.Length <= Data.Balance_line.i_flow)
-							{
-								if (j < tmp.Length)
-								{
-									Data.Balance_line.flow[j] = int.Parse(tmp[j].Trim()==""?"0":tmp[j].Trim());
-								}
-								else
-								{ Data.Balance_line.flow[j] = 0; }
-							}
-							else
-							{
-								Data.Balance_line.flow[j] = int.Parse(tmp[j].Trim() == "" ? "0" : tmp[j].Trim());
-                            }
-						}
-					}
-					nextLine = sR1.ReadLine();
-					nextLine = sR1.ReadLine();
-					{
-						string[] tmp = nextLine.Split(',');
-						Data.Balance_line.ps = new int[Data.Balance_line.i_ps];
-						for (int j = 0; j < Data.Balance_line.i_ps; j++)
-						{
-							//Data.Balance_line.ps[j] = int.Parse(tmp[j]);
-                            if (tmp.Length <= Data.Balance_line.i_ps)
-                            {
-                                if (j < tmp.Length)
-                                {
-                                    Data.Balance_line.ps[j] = int.Parse(tmp[j].Trim() == "" ? "0" : tmp[j].Trim());
-                                }
-                                else
-                                { Data.Balance_line.ps[j] = 0; }
-                            }
-                            else
-                            {
-                                Data.Balance_line.ps[j] = int.Parse(tmp[j].Trim() == "" ? "0" : tmp[j].Trim());
-                            }
-                        }
-					}
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 阴极阀门部件参数
-					{
-						string[] tmp = nextLine.Split(',');
-						Data.Cathode_valve.i_flow = int.Parse(tmp[0]);
-						Data.Cathode_valve.i_ps = int.Parse(tmp[1]);
-					}
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 部件参数
-					{
-						string[] tmp = nextLine.Split(',');
-						Data.Cathode_valve.flow = new int[Data.Cathode_valve.i_flow];
-						for (int j = 0; j < Data.Cathode_valve.i_flow; j++)
-                        {
-							//Data.Cathode_valve.flow[j] = int.Parse(tmp[j]);
-                            if (tmp.Length <= Data.Cathode_valve.i_flow)
-                            {
-                                if (j < tmp.Length)
-                                {
-                                    Data.Cathode_valve.flow[j] = int.Parse(tmp[j].Trim() == "" ? "0" : tmp[j].Trim());
-                                }
-                                else
-                                { Data.Cathode_valve.flow[j] = 0; }
-                            }
-                            else
-                            {
-                                Data.Cathode_valve.flow[j] = int.Parse(tmp[j].Trim() == "" ? "0" : tmp[j].Trim());
-                            }
-                        }
-					}
-					nextLine = sR1.ReadLine();
-					nextLine = sR1.ReadLine();
-					{
-						string[] tmp = nextLine.Split(',');
-						Data.Cathode_valve.ps = new int[Data.Cathode_valve.i_ps];
-						for (int j = 0; j < Data.Cathode_valve.i_ps; j++)
-						{
-							//Data.Cathode_valve.ps[j] = int.Parse(tmp[j]);
-                            if (tmp.Length <= Data.Cathode_valve.i_ps)
-                            {
-                                if (j < tmp.Length)
-                                {
-                                    Data.Cathode_valve.ps[j] = int.Parse(tmp[j].Trim() == "" ? "0" : tmp[j].Trim());
-                                }
-                                else
-                                { Data.Cathode_valve.ps[j] = 0; }
-                            }
-                            else
-                            {
-                                Data.Cathode_valve.ps[j] = int.Parse(tmp[j].Trim() == "" ? "0" : tmp[j].Trim());
-                            }
-                        }
-					}
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 阳极阀门部件参数
-					{
-						string[] tmp = nextLine.Split(',');
-						Data.Anode_valve.i_flow = int.Parse(tmp[0]);
-						Data.Anode_valve.i_ps = int.Parse(tmp[1]);
-					}
-					nextLine = sR1.ReadLine(); //# 部件参数
-					nextLine = sR1.ReadLine(); //# 部件参数
-					{
-						string[] tmp = nextLine.Split(',');
-						Data.Anode_valve.flow = new int[Data.Anode_valve.i_flow];
-						for (int j = 0; j < Data.Anode_valve.i_flow; j++)
-						{
-							//Data.Anode_valve.flow[j] = int.Parse(tmp[j]);
-                            if (tmp.Length <= Data.Anode_valve.i_flow)
-                            {
-                                if (j < tmp.Length)
-                                {
-                                    Data.Anode_valve.flow[j] = int.Parse(tmp[j].Trim() == "" ? "0" : tmp[j].Trim());
-                                }
-                                else
-                                { Data.Anode_valve.flow[j] = 0; }
-                            }
-                            else
-                            {
-                                Data.Anode_valve.flow[j] = int.Parse(tmp[j].Trim() == "" ? "0" : tmp[j].Trim());
-                            }
-                        }
-					}
-					nextLine = sR1.ReadLine();
-					nextLine = sR1.ReadLine();
-					{
-						string[] tmp = nextLine.Split(',');
-						Data.Anode_valve.ps = new int[Data.Anode_valve.i_ps];
-						for (int j = 0; j < Data.Anode_valve.i_ps; j++)
-						{
-							//Data.Anode_valve.ps[j] = int.Parse(tmp[j]);
-                            if (tmp.Length <= Data.Anode_valve.i_ps)
-                            {
-                                if (j < tmp.Length)
-                                {
-                                    Data.Anode_valve.ps[j] = int.Parse(tmp[j].Trim() == "" ? "0" : tmp[j].Trim());
-                                }
-                                else
-                                { Data.Anode_valve.ps[j] = 0; }
-                            }
-                            else
-                            {
-                                Data.Anode_valve.ps[j] = int.Parse(tmp[j].Trim() == "" ? "0" : tmp[j].Trim());
-                            }
-                        }
-					}
+                    }                   
 
 					int a = 0;
 					for (int i = 0; i < Data.n_flow; i++)
