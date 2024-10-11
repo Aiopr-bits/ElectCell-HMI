@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ElectCell_HMI
 {
@@ -518,7 +519,185 @@ namespace ElectCell_HMI
         private void saveFile(string path) 
         {
             path = path + "/data_input.csv";
+            using (StreamWriter sw = new StreamWriter(path)) 
+            {
+                sw.WriteLine("###########################,,,,,,,,,,");
+                sw.WriteLine("# 控制参数,,,,,,,,,,");
+                sw.WriteLine("###########################,,,,,,,,,,");
+                sw.WriteLine("start_time,end_time,delta_t,,,,,,,,");
+                sw.WriteLine(Data.controlParameter.start_time + "," + Data.controlParameter.end_time + "," + Data.controlParameter.delta_t + ",,,,,,,,");
+                sw.WriteLine("cal_current,cal_valve,cal_pump,cal_balance_pipe,cal_mini_1,cal_mini_2,use_ff_static,IsMixed_circleType,,,");
+                sw.WriteLine(Data.controlParameter.cal_current + "," + Data.controlParameter.cal_valve + "," + Data.controlParameter.cal_pump + "," + Data.controlParameter.cal_balance_pipe + "," + Data.controlParameter.cal_mini_1 + "," + Data.controlParameter.cal_mini_2 + "," + Data.controlParameter.use_ff_static + "," + Data.controlParameter.IsMixed_circleType + ",,,");
+                sw.WriteLine("cal_superSat_fickTrans,cal_ShellTube_heatExchanger,cal_Ele_heater,,,,,,,,");
+                sw.WriteLine(Data.controlParameter.cal_superSat_fickTrans + "," + Data.controlParameter.cal_ShellTube_heatExchanger + "," + Data.controlParameter.cal_Ele_heater + ",,,,,,,,");
 
+                sw.WriteLine("###########################,,,,,,,,,,");
+                sw.WriteLine("# 几何参数,,,,,,,,,,");
+                sw.WriteLine("###########################,,,,,,,,,,");
+                sw.WriteLine("L_ca2se,L_an2se,D_sc,l_sc,thickness_cat,thickness_ano,distance_am,distance_cm,,,");
+                sw.WriteLine(Data.geometryParameter.L_ca2se + "," + Data.geometryParameter.L_an2se + "," + Data.geometryParameter.D_sc + "," + Data.geometryParameter.l_sc + "," + Data.geometryParameter.thickness_cat + "," + Data.geometryParameter.thickness_ano + "," + Data.geometryParameter.distance_am + "," + Data.geometryParameter.distance_cm + ",,,");
+                sw.WriteLine("Volume_hotside,Volume_codeside,di_stack,Area_sep,Area_stack,C_tsep,C_tk,,,,");
+                sw.WriteLine(Data.geometryParameter.Volume_hotside + "," + Data.geometryParameter.Volume_codeside + "," + Data.geometryParameter.di_stack + "," + Data.geometryParameter.Area_sep + "," + Data.geometryParameter.Area_stack + "," + Data.geometryParameter.C_tsep + "," + Data.geometryParameter.C_tk + ",,,,");
+
+                sw.WriteLine("###########################,,,,,,,,,,");
+                sw.WriteLine("# 部件参数,,,,,,,,,,");
+                sw.WriteLine("###########################,,,,,,,,,,");
+                sw.WriteLine("flow,,,,,,,,,,");
+                sw.WriteLine(Data.flowParameter.flow.Count + ",,,,,,,,,,");
+                sw.WriteLine("num,x_h2,x_o2,x_h2o,Di,L,,,,,");
+                for (int i = 0; i < Data.flowParameter.flow.Count; i++)
+                {
+                    sw.WriteLine(Data.flowParameter.flow[i][0] + "," + Data.flowParameter.flow[i][1] + "," + Data.flowParameter.flow[i][2] + "," + Data.flowParameter.flow[i][3] + "," + Data.flowParameter.flow[i][4] + "," + Data.flowParameter.flow[i][5] + ",,,,,");
+                }
+
+                sw.WriteLine("ps,,,,,,,,,,");
+                sw.WriteLine(Data.psParameter.ps.Count + ",,,,,,,,,,");
+                sw.WriteLine("num,n,v,p,l_l,l_g,n_h2,n_o2,v_t,,");
+                for (int i = 0; i < Data.psParameter.ps.Count; i++)
+                {
+                    sw.WriteLine(Data.psParameter.ps[i][0] + "," + Data.psParameter.ps[i][1] + "," + Data.psParameter.ps[i][2] + "," + Data.psParameter.ps[i][3] + "," + Data.psParameter.ps[i][4] + "," + Data.psParameter.ps[i][5] + "," + Data.psParameter.ps[i][6] + "," + Data.psParameter.ps[i][7] +  ",,,");
+                }
+
+                sw.WriteLine("###########################,,,,,,,,,,");
+                sw.WriteLine("# 部件参数,,,,,,,,,,");
+                sw.WriteLine("###########################,,,,,,,,,,");
+                sw.WriteLine("电解槽个数,,,,,,,,,,");
+                sw.WriteLine(Data.componentParameter.nElectrolyticCell + ",,,,,,,,,,");
+                sw.WriteLine("电流,,,,,,,,,,");
+                string line = "";
+                for (int i = 0; i < Data.componentParameter.nElectrolyticCell; i++)
+                {
+                    line += Data.componentParameter.electrolyticCell[i].current + ",";
+                }
+                sw.WriteLine(line + ",,,,,,");
+                for (int i = 0; i < Data.componentParameter.nElectrolyticCell; i++)
+                {
+                    sw.WriteLine("电解槽" + (i + 1) + ",,,,,,,,,,");
+                    sw.WriteLine("flow,,,,,,,,,,");
+                    line = "";
+                    for (int j = 0; j < Data.componentParameter.electrolyticCell[i].flow.Count; j++)
+                    {
+                        line += Data.componentParameter.electrolyticCell[i].flow[j] + ",";
+                    }
+                    sw.WriteLine(line + ",,,,");
+                    sw.WriteLine("ps,,,,,,,,,,");
+                    line = "";
+                    for (int j = 0; j < Data.componentParameter.electrolyticCell[i].ps.Count; j++)
+                    {
+                        line += Data.componentParameter.electrolyticCell[i].ps[j] + ",";
+                    }
+                    sw.WriteLine(line + ",,,,,,,,");
+                }
+                for (int i = 0; i < Data.componentParameter.nElectrolyticCell; i++)
+                {
+                    sw.WriteLine("泵" + (i + 1) + ",,,,,,,,,,");
+                    sw.WriteLine("flow,,,,,,,,,,");
+                    line = "";
+                    for (int j = 0; j < Data.componentParameter.pump[i].flow.Count; j++)
+                    {
+                        line += Data.componentParameter.pump[i].flow[j] + ",";
+                    }
+                    sw.WriteLine(line + ",,,,,,,,");
+                    sw.WriteLine("ps,,,,,,,,,,");
+                    line = "";
+                    for (int j = 0; j < Data.componentParameter.pump[i].ps.Count; j++)
+                    {
+                        line += Data.componentParameter.pump[i].ps[j] + ",";
+                    }
+                    sw.WriteLine(line + ",,,,,,,,,");
+                }
+                sw.WriteLine("阴极分离器,,,,,,,,,,");
+                sw.WriteLine("flow,,,,,,,,,,");
+                line = "";
+                for (int j = 0; j < Data.componentParameter.cathodeSeparator.flow.Count; j++)
+                {
+                    line += Data.componentParameter.cathodeSeparator.flow[j] + ",";
+                }
+                sw.WriteLine(line + ",,,,,");
+                sw.WriteLine("ps,,,,,,,,,,");
+                line = "";
+                for (int j = 0; j < Data.componentParameter.cathodeSeparator.ps.Count; j++)
+                {
+                    line += Data.componentParameter.cathodeSeparator.ps[j] + ",";
+                }
+                sw.WriteLine(line + ",,,,,,,,");
+                sw.WriteLine("阳极分离器,,,,,,,,,,");
+                sw.WriteLine("flow,,,,,,,,,,");
+                line = "";
+                for (int j = 0; j < Data.componentParameter.anodeSeparator.flow.Count; j++)
+                {
+                    line += Data.componentParameter.anodeSeparator.flow[j] + ",";
+                }
+                sw.WriteLine(line + ",,,,,");
+                sw.WriteLine("ps,,,,,,,,,,");
+                line = "";
+                for (int j = 0; j < Data.componentParameter.anodeSeparator.ps.Count; j++)
+                {
+                    line += Data.componentParameter.anodeSeparator.ps[j] + ",";
+                }
+                sw.WriteLine(line + ",,,,,,,,");
+                sw.WriteLine("阴极阀门,,,,,,,,,,");
+                sw.WriteLine("flow,,,,,,,,,,");
+                line = "";
+                for (int j = 0; j < Data.componentParameter.cathodeValve.flow.Count; j++)
+                {
+                    line += Data.componentParameter.cathodeValve.flow[j] + ",";
+                }
+                sw.WriteLine(line + ",,,,,,,,");
+                sw.WriteLine("ps,,,,,,,,,,");
+                line = "";
+                for (int j = 0; j < Data.componentParameter.cathodeValve.ps.Count; j++)
+                {
+                    line += Data.componentParameter.cathodeValve.ps[j] + ",";
+                }
+                sw.WriteLine(line + ",,,,,,,,,");
+                sw.WriteLine("阳极阀门,,,,,,,,,,");
+                sw.WriteLine("flow,,,,,,,,,,");
+                line = "";
+                for (int j = 0; j < Data.componentParameter.anodeValve.flow.Count; j++)
+                {
+                    line += Data.componentParameter.anodeValve.flow[j] + ",";
+                }
+                sw.WriteLine(line + ",,,,,,,,");
+                sw.WriteLine("ps,,,,,,,,,,");
+                line = "";
+                for (int j = 0; j < Data.componentParameter.anodeValve.ps.Count; j++)
+                {
+                    line += Data.componentParameter.anodeValve.ps[j] + ",";
+                }
+                sw.WriteLine(line + ",,,,,,,,,");
+                sw.WriteLine("平衡管线,,,,,,,,,,");
+                sw.WriteLine("flow,,,,,,,,,,");
+                line = "";
+                for (int j = 0; j < Data.componentParameter.balancePipe.flow.Count; j++)
+                {
+                    line += Data.componentParameter.balancePipe.flow[j] + ",";
+                }
+                sw.WriteLine(line + ",,,,,,,,");
+                sw.WriteLine("ps,,,,,,,,,,");
+                line = "";
+                for (int j = 0; j < Data.componentParameter.balancePipe.ps.Count; j++)
+                {
+                    line += Data.componentParameter.balancePipe.ps[j] + ",";
+                }
+                sw.WriteLine(line + ",,,,,,,,,");
+
+                sw.WriteLine("###########################,,,,,,,,,,");
+                sw.WriteLine("# 工艺参数,,,,,,,,,,");
+                sw.WriteLine("###########################,,,,,,,,,,");
+                sw.WriteLine("sigma_e_1,sigma_h2_r1,sigma_h2o_r1,sigma_e_2,sigma_h2o_r2,sigma_o2_r2,eta_F,F,n_cell,a_cell,A_mem");
+                sw.WriteLine(Data.processParameter.sigma_e_1 + "," + Data.processParameter.sigma_h2_r1 + "," + Data.processParameter.sigma_h2o_r1 + "," + Data.processParameter.sigma_e_2 + "," + Data.processParameter.sigma_h2o_r2 + "," + Data.processParameter.sigma_o2_r2 + "," + Data.processParameter.eta_F + "," + Data.processParameter.F + "," + Data.processParameter.n_cell + "," + Data.processParameter.a_cell + "," + Data.processParameter.A_mem);
+                sw.WriteLine("thickness_mem,porosity_mem,tortuosity_mem,wt_KOHsln,k,D_h2,D_o2,k_x_h2,k_x_o2,eps_h2_Darcy,eps_o2_Darcy");
+                sw.WriteLine(Data.processParameter.thickness_mem + "," + Data.processParameter.porosity_mem + "," + Data.processParameter.tortuosity_mem + "," + Data.processParameter.wt_KOHsln + "," + Data.processParameter.k + "," + Data.processParameter.D_h2 + "," + Data.processParameter.D_o2 + "," + Data.processParameter.k_x_h2 + "," + Data.processParameter.k_x_o2 + "," + Data.processParameter.eps_h2_Darcy + "," + Data.processParameter.eps_o2_Darcy);
+                sw.WriteLine("tao_b,FC_flash,R,eta,M_h2,M_o2,M_n2,M_koh,M_h2o,rho_h2o,rho_h2");
+                sw.WriteLine(Data.processParameter.tao_b + "," + Data.processParameter.FC_flash + "," + Data.processParameter.R + "," + Data.processParameter.eta + "," + Data.processParameter.M_h2 + "," + Data.processParameter.M_o2 + "," + Data.processParameter.M_n2 + "," + Data.processParameter.M_koh + "," + Data.processParameter.M_h2o + "," + Data.processParameter.rho_h2o + "," + Data.processParameter.rho_h2);
+                sw.WriteLine("rho_o2,rho_sln_koh,g,Re7_0,mu,cv1,cv2,P_cathode_sep_out,P_anode_sep_out,P_env,");
+                sw.WriteLine(Data.processParameter.rho_o2 + "," + Data.processParameter.rho_sln_koh + "," + Data.processParameter.g + "," + Data.processParameter.Re7_0 + "," + Data.processParameter.mu + "," + Data.processParameter.cv1 + "," + Data.processParameter.cv2 + "," + Data.processParameter.P_cathode_sep_out + "," + Data.processParameter.P_anode_sep_out + "," + Data.processParameter.P_env + ",");
+                sw.WriteLine("T_elin0,T_k0,T_K,T_btout,T_btout0,,,,,,");
+                sw.WriteLine(Data.processParameter.T_elin0 + "," + Data.processParameter.T_k0 + "," + Data.processParameter.T_K + "," + Data.processParameter.T_btout + "," + Data.processParameter.T_btout0 + ",,,,,,");
+                sw.WriteLine("T_cw_in,T_cw_out0,T_ambi,T_pipeout0,T_btout_ano0,T_btout_cat0,,,,,");
+                sw.WriteLine(Data.processParameter.T_cw_in + "," + Data.processParameter.T_cw_out0 + "," + Data.processParameter.T_ambi + "," + Data.processParameter.T_pipeout0 + "," + Data.processParameter.T_btout_ano0 + "," + Data.processParameter.T_btout_cat0 + ",,,,,");
+            }
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
