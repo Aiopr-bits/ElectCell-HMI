@@ -10,6 +10,7 @@ namespace ElectCell_HMI
     public partial class MainWindow : Form
     {
         private ControlParameterPage controlParameter;
+        private GeometricParameterPage geometricParameter;
 
         public MainWindow()
         {
@@ -69,22 +70,24 @@ namespace ElectCell_HMI
             switch (nodeText)
             {
                 case "控制参数配置":
+                    geometricParameter.Hide();
                     controlParameter.Show();
                     break;
                 case "几何参数配置":
                     controlParameter.Hide();
+                    geometricParameter.Show();
                     break;
                 case "flow参数配置":
-                    controlParameter.Hide();
+                    
                     break;
                 case "ps参数配置":
-                    controlParameter.Hide();
+                    
                     break;
                 case "工艺参数配置":
-                    controlParameter.Hide();
+                    
                     break;
                 case "部件参数配置":
-                    controlParameter.Hide();
+                    
                     break;
                 default:
                     controlParameter.Hide();
@@ -98,6 +101,11 @@ namespace ElectCell_HMI
             controlParameter.Dock = DockStyle.Fill; 
             tableLayoutPanel1.Controls.Add(controlParameter, 1, 0);
             controlParameter.Hide();
+
+            geometricParameter = new GeometricParameterPage();
+            geometricParameter.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Controls.Add(geometricParameter, 1, 0);
+            geometricParameter.Hide();
         }
 
         private void readFile(string path)
