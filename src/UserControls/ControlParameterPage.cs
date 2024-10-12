@@ -139,6 +139,12 @@ namespace ElectCell_HMI
             dr["含义"] = "是否打开电加热器";
             dt.Rows.Add(dr);
 
+            for (int i = 0; i < 25; i++)
+            {
+                dr = dt.NewRow();
+                dt.Rows.Add(dr);
+            }
+
             dataGridView1.DataSource = dt;
         }
     }

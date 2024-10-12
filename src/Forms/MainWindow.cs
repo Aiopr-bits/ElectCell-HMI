@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -18,6 +19,7 @@ namespace ElectCell_HMI
             string path = @"C:/Users/Aiopr/Desktop/ElectCell-HMI/case1";
             readFile(path);
             InitializeControlPanel();
+            AdjustDataGridViewStyles(this);
         }
 
         private void InitializeTreeView()
@@ -727,5 +729,73 @@ namespace ElectCell_HMI
         {
             Application.Exit();
         }
+
+        // 设置 DataGridView 样式
+        private void AdjustDataGridViewStyles(Control parent)
+        {
+            foreach (Control control in parent.Controls)
+            {
+                if (control is DataGridView dataGridView)
+                {
+
+                    dataGridView.BackgroundColor = Color.FromArgb(255, 255, 255);
+                    dataGridView.BorderStyle = BorderStyle.FixedSingle;
+                    dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.Single;
+                    dataGridView.DefaultCellStyle.SelectionBackColor = Color.FromArgb(173, 216, 230);
+                    dataGridView.DefaultCellStyle.SelectionForeColor = Color.Black;
+                    dataGridView.DefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
+                    dataGridView.DefaultCellStyle.ForeColor = Color.Black;
+                    dataGridView.DefaultCellStyle.Font = new Font(dataGridView.Font.FontFamily, 10); 
+                    dataGridView.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(220, 220, 220);
+                    dataGridView.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(70, 130, 180);
+                    dataGridView.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+                    dataGridView.ColumnHeadersDefaultCellStyle.Font = new Font(dataGridView.Font.FontFamily, 12, FontStyle.Bold);
+                    dataGridView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    dataGridView.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    dataGridView.EnableHeadersVisualStyles = false;
+                    dataGridView.GridColor = Color.FromArgb(200, 200, 200);
+                    dataGridView.RowHeadersVisible = false;
+                    dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    dataGridView.Dock = DockStyle.Fill;
+                    dataGridView.AllowUserToAddRows = false;
+                    foreach (DataGridViewColumn column in dataGridView.Columns)
+                    {
+                        column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    }
+                    dataGridView.AllowUserToDeleteRows = false;
+                    dataGridView.AllowUserToResizeColumns = false;
+                    dataGridView.AllowUserToResizeRows = false;
+                    dataGridView.ScrollBars = ScrollBars.None;
+
+                    // 添加 MouseWheel 事件处理程序
+                    dataGridView.MouseWheel += (s, e) =>
+                    {
+                        if (e.Delta > 0)
+                        {
+                            if (dataGridView.FirstDisplayedScrollingRowIndex > 0)
+                            {
+                                dataGridView.FirstDisplayedScrollingRowIndex--;
+                            }
+                        }
+                        else if (e.Delta < 0)
+                        {
+                            if (dataGridView.FirstDisplayedScrollingRowIndex < dataGridView.RowCount - 1)
+                            {
+                                dataGridView.FirstDisplayedScrollingRowIndex++;
+                            }
+                        }
+                    };
+                }
+                else if (control.HasChildren)
+                {
+                    AdjustDataGridViewStyles(control);
+                }
+            }
+        }
+
+
+
+
+
     }
 }
