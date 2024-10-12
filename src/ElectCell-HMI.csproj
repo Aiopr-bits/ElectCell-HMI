@@ -64,6 +64,12 @@
     <Compile Include="Forms\StartPage.Designer.cs">
       <DependentUpon>StartPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\FlowParameterPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\FlowParameterPage.Designer.cs">
+      <DependentUpon>FlowParameterPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\GeometricParameterPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -76,6 +82,9 @@
     <Compile Include="UserControls\ControlParameterPage.Designer.cs">
       <DependentUpon>ControlParameterPage.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UserControls\FlowParameterPage.resx">
+      <DependentUpon>FlowParameterPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\GeometricParameterPage.resx">
       <DependentUpon>GeometricParameterPage.cs</DependentUpon>
     </EmbeddedResource>

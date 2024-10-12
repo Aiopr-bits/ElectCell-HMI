@@ -11,6 +11,7 @@ namespace ElectCell_HMI
     {
         private ControlParameterPage controlParameter;
         private GeometricParameterPage geometricParameter;
+        private FlowParameterPage flowParameter;
 
         public MainWindow()
         {
@@ -71,14 +72,19 @@ namespace ElectCell_HMI
             {
                 case "控制参数配置":
                     geometricParameter.Hide();
+                    flowParameter.Hide();
                     controlParameter.Show();
                     break;
                 case "几何参数配置":
                     controlParameter.Hide();
+                    flowParameter.Hide();
                     geometricParameter.Show();
                     break;
                 case "flow参数配置":
-                    
+                    controlParameter.Hide();
+                    geometricParameter.Hide();
+                    flowParameter.Show();
+
                     break;
                 case "ps参数配置":
                     
@@ -106,6 +112,12 @@ namespace ElectCell_HMI
             geometricParameter.Dock = DockStyle.Fill;
             tableLayoutPanel1.Controls.Add(geometricParameter, 1, 0);
             geometricParameter.Hide();
+
+            flowParameter = new FlowParameterPage();
+            flowParameter.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Controls.Add(flowParameter, 1, 0);
+            flowParameter.Hide();
+
         }
 
         private void readFile(string path)
@@ -738,7 +750,6 @@ namespace ElectCell_HMI
             Application.Exit();
         }
 
-        // 设置 DataGridView 样式
         private void AdjustDataGridViewStyles(Control parent)
         {
             foreach (Control control in parent.Controls)
@@ -800,10 +811,5 @@ namespace ElectCell_HMI
                 }
             }
         }
-
-
-
-
-
     }
 }
