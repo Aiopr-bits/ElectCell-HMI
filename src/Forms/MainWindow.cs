@@ -13,7 +13,7 @@ namespace ElectCell_HMI
         private GeometricParameterPage geometricParameter;
         private FlowParameterPage flowParameter;
         private PSParameterPage psParameter;
-
+        private ProcessParameterPage processParameter;
 
         public MainWindow()
         {
@@ -76,28 +76,36 @@ namespace ElectCell_HMI
                     geometricParameter.Hide();
                     flowParameter.Hide();
                     psParameter.Hide();
+                    processParameter.Hide();
                     controlParameter.Show();
                     break;
                 case "几何参数配置":
                     controlParameter.Hide();
                     flowParameter.Hide();
                     psParameter.Hide();
+                    processParameter.Hide();
                     geometricParameter.Show();
                     break;
                 case "flow参数配置":
                     controlParameter.Hide();
                     geometricParameter.Hide();
                     psParameter.Hide();
+                    processParameter.Hide();
                     flowParameter.Show();
                     break;
                 case "ps参数配置":
                     controlParameter.Hide();
                     geometricParameter.Hide();
                     flowParameter.Hide();
+                    processParameter.Hide();
                     psParameter.Show();
                     break;
                 case "工艺参数配置":
-                    
+                    controlParameter.Hide();
+                    geometricParameter.Hide();
+                    flowParameter.Hide();
+                    psParameter.Hide();
+                    processParameter.Show();
                     break;
                 case "部件参数配置":
                     
@@ -129,6 +137,11 @@ namespace ElectCell_HMI
             psParameter.Dock = DockStyle.Fill;
             tableLayoutPanel1.Controls.Add(psParameter, 1, 0);
             psParameter.Hide();
+
+            processParameter = new ProcessParameterPage();
+            processParameter.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Controls.Add(processParameter, 1, 0);
+            processParameter.Hide();
         }
 
         private void readFile(string path)

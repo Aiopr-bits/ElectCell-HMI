@@ -64,6 +64,12 @@
     <Compile Include="Forms\StartPage.Designer.cs">
       <DependentUpon>StartPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ProcessParameterPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ProcessParameterPage.Designer.cs">
+      <DependentUpon>ProcessParameterPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\PSParameterPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -88,6 +94,9 @@
     <Compile Include="UserControls\ControlParameterPage.Designer.cs">
       <DependentUpon>ControlParameterPage.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UserControls\ProcessParameterPage.resx">
+      <DependentUpon>ProcessParameterPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\PSParameterPage.resx">
       <DependentUpon>PSParameterPage.cs</DependentUpon>
     </EmbeddedResource>
