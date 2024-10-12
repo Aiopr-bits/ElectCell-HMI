@@ -12,6 +12,8 @@ namespace ElectCell_HMI
         private ControlParameterPage controlParameter;
         private GeometricParameterPage geometricParameter;
         private FlowParameterPage flowParameter;
+        private PSParameterPage psParameter;
+
 
         public MainWindow()
         {
@@ -73,21 +75,26 @@ namespace ElectCell_HMI
                 case "控制参数配置":
                     geometricParameter.Hide();
                     flowParameter.Hide();
+                    psParameter.Hide();
                     controlParameter.Show();
                     break;
                 case "几何参数配置":
                     controlParameter.Hide();
                     flowParameter.Hide();
+                    psParameter.Hide();
                     geometricParameter.Show();
                     break;
                 case "flow参数配置":
                     controlParameter.Hide();
                     geometricParameter.Hide();
+                    psParameter.Hide();
                     flowParameter.Show();
-
                     break;
                 case "ps参数配置":
-                    
+                    controlParameter.Hide();
+                    geometricParameter.Hide();
+                    flowParameter.Hide();
+                    psParameter.Show();
                     break;
                 case "工艺参数配置":
                     
@@ -118,6 +125,10 @@ namespace ElectCell_HMI
             tableLayoutPanel1.Controls.Add(flowParameter, 1, 0);
             flowParameter.Hide();
 
+            psParameter = new PSParameterPage();
+            psParameter.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Controls.Add(psParameter, 1, 0);
+            psParameter.Hide();
         }
 
         private void readFile(string path)

@@ -20,10 +20,6 @@ namespace ElectCell_HMI
 
         private void dataGridView1LoadData()
         {
-            //        public class FlowParameter
-            //{
-            //    public List<List<double>> flow;
-            //}
             DataTable dt = new DataTable();
             dt.Columns.Add("序号", typeof(int));
             dt.Columns.Add("氢气", typeof(double));
