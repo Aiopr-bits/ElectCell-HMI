@@ -14,11 +14,10 @@ namespace ElectCell_HMI
         {
             this.FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
             InitializeComponent();
-            InitializeTreeView();
-            InitializeControlPanel();
+            InitializeTreeView();            
             string path = @"C:/Users/Aiopr/Desktop/ElectCell-HMI/case1";
             readFile(path);
-            saveFile(path);
+            InitializeControlPanel();
         }
 
         private void InitializeTreeView()
@@ -65,6 +64,30 @@ namespace ElectCell_HMI
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             string nodeText = e.Node.Text;
+            switch (nodeText)
+            {
+                case "控制参数配置":
+                    controlParameter.Show();
+                    break;
+                case "几何参数配置":
+                    controlParameter.Hide();
+                    break;
+                case "flow参数配置":
+                    controlParameter.Hide();
+                    break;
+                case "ps参数配置":
+                    controlParameter.Hide();
+                    break;
+                case "工艺参数配置":
+                    controlParameter.Hide();
+                    break;
+                case "部件参数配置":
+                    controlParameter.Hide();
+                    break;
+                default:
+                    controlParameter.Hide();
+                    break;
+            }
         }
 
         private void InitializeControlPanel()
@@ -72,7 +95,7 @@ namespace ElectCell_HMI
             controlParameter = new ControlParameterPage();
             controlParameter.Dock = DockStyle.Fill; 
             tableLayoutPanel1.Controls.Add(controlParameter, 1, 0);
-            controlParameter.Show();
+            controlParameter.Hide();
         }
 
         private void readFile(string path)
