@@ -14,6 +14,7 @@ namespace ElectCell_HMI
         private FlowParameterPage flowParameter;
         private PSParameterPage psParameter;
         private ProcessParameterPage processParameter;
+        private ComponentParameterPage componentParameterPage;
 
         public MainWindow()
         {
@@ -69,52 +70,45 @@ namespace ElectCell_HMI
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            string nodeText = e.Node.Text;
+            HideAllParameterPages();
+            ShowSelectedParameterPage(e.Node.Text);
+        }
+
+        private void HideAllParameterPages()
+        {
+            controlParameter.Hide();
+            geometricParameter.Hide();
+            flowParameter.Hide();
+            psParameter.Hide();
+            processParameter.Hide();
+            componentParameterPage.Hide();
+        }
+
+        private void ShowSelectedParameterPage(string nodeText)
+        {
             switch (nodeText)
             {
                 case "控制参数配置":
-                    geometricParameter.Hide();
-                    flowParameter.Hide();
-                    psParameter.Hide();
-                    processParameter.Hide();
                     controlParameter.Show();
                     break;
                 case "几何参数配置":
-                    controlParameter.Hide();
-                    flowParameter.Hide();
-                    psParameter.Hide();
-                    processParameter.Hide();
                     geometricParameter.Show();
                     break;
                 case "flow参数配置":
-                    controlParameter.Hide();
-                    geometricParameter.Hide();
-                    psParameter.Hide();
-                    processParameter.Hide();
                     flowParameter.Show();
                     break;
                 case "ps参数配置":
-                    controlParameter.Hide();
-                    geometricParameter.Hide();
-                    flowParameter.Hide();
-                    processParameter.Hide();
                     psParameter.Show();
                     break;
                 case "工艺参数配置":
-                    controlParameter.Hide();
-                    geometricParameter.Hide();
-                    flowParameter.Hide();
-                    psParameter.Hide();
                     processParameter.Show();
                     break;
                 case "部件参数配置":
-                    
-                    break;
-                default:
-                    controlParameter.Hide();
+                    componentParameterPage.Show();
                     break;
             }
         }
+
 
         private void InitializeControlPanel()
         {
@@ -142,6 +136,11 @@ namespace ElectCell_HMI
             processParameter.Dock = DockStyle.Fill;
             tableLayoutPanel1.Controls.Add(processParameter, 1, 0);
             processParameter.Hide();
+
+            componentParameterPage = new ComponentParameterPage();
+            componentParameterPage.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Controls.Add(componentParameterPage, 1, 0);
+            componentParameterPage.Hide();
         }
 
         private void readFile(string path)
