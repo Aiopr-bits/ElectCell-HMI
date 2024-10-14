@@ -18,7 +18,7 @@ namespace ElectCell_HMI
             dataGridView1LoadData();
         }
 
-        private void dataGridView1LoadData()
+        public void dataGridView1LoadData()
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("序号", typeof(int));

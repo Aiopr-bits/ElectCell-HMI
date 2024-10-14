@@ -18,7 +18,7 @@ namespace ElectCell_HMI
             dataGridView1LoadData();
         }
 
-        private void dataGridView1LoadData()
+        public void dataGridView1LoadData()
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("序号", typeof(int));
@@ -54,7 +54,7 @@ namespace ElectCell_HMI
             dataGridView1.DataSource = dt;
         }
 
-        private void AddControlParameter(DataTable dt, int index, string name, double value, string unit, string description)
+        public void AddControlParameter(DataTable dt, int index, string name, double value, string unit, string description)
         {
             DataRow dr = dt.NewRow();
             dr["序号"] = index;

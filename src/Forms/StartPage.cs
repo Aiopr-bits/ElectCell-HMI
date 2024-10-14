@@ -12,7 +12,7 @@ namespace ElectCell_HMI
 {
     public partial class StartPage : Form
     {
-        private MainWindow mainWindow;
+        public MainWindow mainWindow;
         public StartPage()
         {
             InitializeComponent();
@@ -23,7 +23,7 @@ namespace ElectCell_HMI
             this.MinimizeBox = false;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
             mainWindow = new MainWindow();

@@ -5,7 +5,7 @@
         /// <summary>
         /// 必需的设计器变量。
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        public System.ComponentModel.IContainer components = null;
 
         /// <summary>
         /// 清理所有正在使用的资源。
@@ -26,7 +26,7 @@
         /// 设计器支持所需的方法 - 不要修改
         /// 使用代码编辑器修改此方法的内容。
         /// </summary>
-        private void InitializeComponent()
+        public void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -117,12 +117,12 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TreeView treeView1;
+        public System.Windows.Forms.MenuStrip menuStrip1;
+        public System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem;
+        public System.Windows.Forms.ToolStrip toolStrip1;
+        public System.Windows.Forms.StatusStrip statusStrip1;
+        public System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        public System.Windows.Forms.TreeView treeView1;
     }
 }
 

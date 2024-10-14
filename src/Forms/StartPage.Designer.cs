@@ -5,7 +5,7 @@
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        public System.ComponentModel.IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -26,7 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        public void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -195,15 +195,15 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.CheckBox cb;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox txtPassword;
-        private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
+        public System.Windows.Forms.Panel panel1;
+        public System.Windows.Forms.Label label1;
+        public System.Windows.Forms.Label label6;
+        public System.Windows.Forms.CheckBox cb;
+        public System.Windows.Forms.Button button1;
+        public System.Windows.Forms.TextBox txtPassword;
+        public System.Windows.Forms.TextBox txtName;
+        public System.Windows.Forms.Label label4;
+        public System.Windows.Forms.Label label3;
+        public System.Windows.Forms.Label label2;
     }
 }

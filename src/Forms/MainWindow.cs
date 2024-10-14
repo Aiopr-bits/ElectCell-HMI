@@ -9,12 +9,12 @@ namespace ElectCell_HMI
 {
     public partial class MainWindow : Form
     {
-        private ControlParameterPage controlParameter;
-        private GeometricParameterPage geometricParameter;
-        private FlowParameterPage flowParameter;
-        private PSParameterPage psParameter;
-        private ProcessParameterPage processParameter;
-        private ComponentParameterPage componentParameterPage;
+        public ControlParameterPage controlParameter;
+        public GeometricParameterPage geometricParameter;
+        public FlowParameterPage flowParameter;
+        public PSParameterPage psParameter;
+        public ProcessParameterPage processParameter;
+        public ComponentParameterPage componentParameterPage;
 
         public MainWindow()
         {
@@ -27,7 +27,7 @@ namespace ElectCell_HMI
             AdjustDataGridViewStyles(this);
         }
 
-        private void InitializeTreeView()
+        public void InitializeTreeView()
         {
             treeView1.Font = new System.Drawing.Font(treeView1.Font.FontFamily, 12);
             treeView1.ItemHeight = 24;
@@ -68,13 +68,13 @@ namespace ElectCell_HMI
             treeView1.ExpandAll();
         }
 
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        public void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             HideAllParameterPages();
             ShowSelectedParameterPage(e.Node.Text);
         }
 
-        private void HideAllParameterPages()
+        public void HideAllParameterPages()
         {
             controlParameter.Hide();
             geometricParameter.Hide();
@@ -84,7 +84,7 @@ namespace ElectCell_HMI
             componentParameterPage.Hide();
         }
 
-        private void ShowSelectedParameterPage(string nodeText)
+        public void ShowSelectedParameterPage(string nodeText)
         {
             switch (nodeText)
             {
@@ -110,7 +110,7 @@ namespace ElectCell_HMI
         }
 
 
-        private void InitializeControlPanel()
+        public void InitializeControlPanel()
         {
             controlParameter = new ControlParameterPage();
             controlParameter.Dock = DockStyle.Fill; 
@@ -143,7 +143,7 @@ namespace ElectCell_HMI
             componentParameterPage.Hide();
         }
 
-        private void readFile(string path)
+        public void readFile(string path)
         {
             path = path + "/data_input.csv";
             string nextLine;
@@ -584,7 +584,7 @@ namespace ElectCell_HMI
             }
         }
 
-        private void saveFile(string path) 
+        public void saveFile(string path) 
         {
             path = path + "/data_input.csv";
             using (StreamWriter sw = new StreamWriter(path)) 
@@ -768,18 +768,17 @@ namespace ElectCell_HMI
             }
         }
 
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        public void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
         }
 
-        private void AdjustDataGridViewStyles(Control parent)
+        public void AdjustDataGridViewStyles(Control parent)
         {
             foreach (Control control in parent.Controls)
             {
                 if (control is DataGridView dataGridView)
                 {
-
                     dataGridView.BackgroundColor = Color.FromArgb(255, 255, 255);
                     dataGridView.BorderStyle = BorderStyle.FixedSingle;
                     dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.Single;
@@ -787,7 +786,7 @@ namespace ElectCell_HMI
                     dataGridView.DefaultCellStyle.SelectionForeColor = Color.Black;
                     dataGridView.DefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
                     dataGridView.DefaultCellStyle.ForeColor = Color.Black;
-                    dataGridView.DefaultCellStyle.Font = new Font(dataGridView.Font.FontFamily, 10); 
+                    dataGridView.DefaultCellStyle.Font = new Font(dataGridView.Font.FontFamily, 10);
                     dataGridView.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(220, 220, 220);
                     dataGridView.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(70, 130, 180);
                     dataGridView.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
@@ -797,6 +796,12 @@ namespace ElectCell_HMI
                     dataGridView.EnableHeadersVisualStyles = false;
                     dataGridView.GridColor = Color.FromArgb(200, 200, 200);
                     dataGridView.RowHeadersVisible = false;
+                    dataGridView.RowHeadersDefaultCellStyle.BackColor = Color.FromArgb(70, 130, 180);
+                    dataGridView.RowHeadersDefaultCellStyle.ForeColor = Color.White;
+                    dataGridView.RowHeadersDefaultCellStyle.Font = new Font(dataGridView.Font.FontFamily, 12, FontStyle.Bold);
+                    dataGridView.RowHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+                    dataGridView.RowHeadersWidth = 160;
+
                     dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                     dataGridView.Dock = DockStyle.Fill;
                     dataGridView.AllowUserToAddRows = false;
@@ -834,5 +839,6 @@ namespace ElectCell_HMI
                 }
             }
         }
+
     }
 }
