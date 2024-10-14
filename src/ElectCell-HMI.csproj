@@ -64,6 +64,12 @@
     <Compile Include="Forms\StartPage.Designer.cs">
       <DependentUpon>StartPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\TrendMonitorPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\TrendMonitorPage.Designer.cs">
+      <DependentUpon>TrendMonitorPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\ComponentParameterPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -100,6 +106,9 @@
     <Compile Include="UserControls\ControlParameterPage.Designer.cs">
       <DependentUpon>ControlParameterPage.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UserControls\TrendMonitorPage.resx">
+      <DependentUpon>TrendMonitorPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\ComponentParameterPage.resx">
       <DependentUpon>ComponentParameterPage.cs</DependentUpon>
     </EmbeddedResource>

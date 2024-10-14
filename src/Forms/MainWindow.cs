@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Diagnostics;
+using System.Threading;
 
 namespace ElectCell_HMI
 {
     public partial class MainWindow : Form
     {
-        public ControlParameterPage controlParameter;
-        public GeometricParameterPage geometricParameter;
-        public FlowParameterPage flowParameter;
-        public PSParameterPage psParameter;
-        public ProcessParameterPage processParameter;
-        public ComponentParameterPage componentParameterPage;
+        public ControlParameterPage controlParameter;           // 控制参数配置页面
+        public GeometricParameterPage geometricParameter;       // 几何参数配置页面
+        public FlowParameterPage flowParameter;                 // flow参数配置页面
+        public PSParameterPage psParameter;                     // ps参数配置页面
+        public ProcessParameterPage processParameter;           // 工艺参数配置页面
+        public ComponentParameterPage componentParameter;   // 部件参数配置页面
+        public TrendMonitorPage trendMonitor;                   // 趋势监控页面
 
         public MainWindow()
         {
@@ -65,9 +67,40 @@ namespace ElectCell_HMI
         }
 
         public void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            HideAllParameterPages();
-            ShowSelectedParameterPage(e.Node.Text);
+        {          
+            switch (e.Node.Text)
+            {
+                case "控制参数配置":
+                    HideAllParameterPages();
+                    controlParameter.Show();
+                    break;
+                case "几何参数配置":
+                    HideAllParameterPages();
+                    geometricParameter.Show();
+                    break;
+                case "flow参数配置":
+                    HideAllParameterPages();
+                    flowParameter.Show();
+                    break;
+                case "ps参数配置":
+                    HideAllParameterPages();
+                    psParameter.Show();
+                    break;
+                case "工艺参数配置":
+                    HideAllParameterPages();
+                    processParameter.Show();
+                    break;
+                case "部件参数配置":
+                    HideAllParameterPages();
+                    componentParameter.Show();
+                    break;
+
+                case "趋势监控":
+                    HideAllParameterPages();
+                    trendMonitor.Show();
+                    break;
+
+            }
         }
 
         public void HideAllParameterPages()
@@ -77,32 +110,8 @@ namespace ElectCell_HMI
             flowParameter.Hide();
             psParameter.Hide();
             processParameter.Hide();
-            componentParameterPage.Hide();
-        }
-
-        public void ShowSelectedParameterPage(string nodeText)
-        {
-            switch (nodeText)
-            {
-                case "控制参数配置":
-                    controlParameter.Show();
-                    break;
-                case "几何参数配置":
-                    geometricParameter.Show();
-                    break;
-                case "flow参数配置":
-                    flowParameter.Show();
-                    break;
-                case "ps参数配置":
-                    psParameter.Show();
-                    break;
-                case "工艺参数配置":
-                    processParameter.Show();
-                    break;
-                case "部件参数配置":
-                    componentParameterPage.Show();
-                    break;
-            }
+            componentParameter.Hide();
+            trendMonitor.Hide();
         }
 
         public void InitializeControlPanel()
@@ -132,10 +141,15 @@ namespace ElectCell_HMI
             tableLayoutPanel1.Controls.Add(processParameter, 1, 0);
             processParameter.Hide();
 
-            componentParameterPage = new ComponentParameterPage();
-            componentParameterPage.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Controls.Add(componentParameterPage, 1, 0);
-            componentParameterPage.Hide();
+            componentParameter = new ComponentParameterPage();
+            componentParameter.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Controls.Add(componentParameter, 1, 0);
+            componentParameter.Hide();
+
+            trendMonitor = new TrendMonitorPage();
+            trendMonitor.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Controls.Add(trendMonitor, 1, 0);
+            trendMonitor.Hide();
         }
 
         public void readFile(string path)
@@ -838,12 +852,12 @@ namespace ElectCell_HMI
             }
         }
 
-        private void 退出ToolStripMenuItem_Click(object sender, EventArgs e)
+        public void 退出ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
+        public void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string allowedRootDirectory = System.Environment.CurrentDirectory; // 允许选择的根目录为当前目录
             string historyPathFile = System.IO.Path.Combine(allowedRootDirectory, "case_path.csv");
@@ -897,7 +911,6 @@ namespace ElectCell_HMI
                             this.path = selectedPath;
                             this.readFile(selectedPath);
 
-                            // 获取相对路径
                             Uri rootUri = new Uri(allowedRootDirectory + Path.DirectorySeparatorChar);
                             Uri selectedUri = new Uri(selectedPath + Path.DirectorySeparatorChar);
                             string relativePath = rootUri.MakeRelativeUri(selectedUri).ToString();
@@ -912,10 +925,73 @@ namespace ElectCell_HMI
                     }
                     else
                     {
-                        break; // 用户取消选择
+                        break;
                     }
                 }
             }
         }
+
+        public void 关于ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("软件版本：V1.0", "关于");
+        }
+
+        public void 求解计算ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[5].Nodes[0];
+
+            Process proc = null;
+            try
+            {
+                trendMonitor.richTextBox1.Clear();
+
+                trendMonitor.richTextBox1.ReadOnly = true;
+                trendMonitor.richTextBox1.Font = new Font(trendMonitor.richTextBox1.Font.FontFamily, 10);
+
+                proc = new Process();
+                proc.StartInfo.FileName = "aeSLN.exe";
+                proc.StartInfo.CreateNoWindow = true;
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                proc.StartInfo.RedirectStandardOutput = true;
+                proc.StartInfo.UseShellExecute = false;
+                proc.EnableRaisingEvents = true;
+
+                proc.OutputDataReceived += (s, args) =>
+                {
+                    if (args.Data != null)
+                    {
+                        trendMonitor.richTextBox1.Invoke((MethodInvoker)delegate
+                        {
+                            trendMonitor.richTextBox1.AppendText(args.Data + Environment.NewLine);
+                            trendMonitor.richTextBox1.SelectionStart = trendMonitor.richTextBox1.Text.Length;
+                            trendMonitor.richTextBox1.ScrollToCaret();
+                            trendMonitor.richTextBox1.Refresh();
+                        });
+                    }
+                };
+
+                proc.Exited += (s, args) =>
+                {
+                    trendMonitor.richTextBox1.Invoke((MethodInvoker)delegate
+                    {
+                        MessageBox.Show("计算完成！");
+                    });
+                };
+
+                proc.Start();
+                proc.BeginOutputReadLine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+            }
+        }
+
+
+
+
+
+
+
     }
 }

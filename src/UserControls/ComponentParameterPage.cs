@@ -19,7 +19,7 @@ namespace ElectCell_HMI
             dataGridView1LoadData();
         }
 
-        private void DataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        public void DataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             dataGridViewStyle();
         }
