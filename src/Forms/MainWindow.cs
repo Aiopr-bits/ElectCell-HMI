@@ -20,9 +20,8 @@ namespace ElectCell_HMI
         {
             this.FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
             InitializeComponent();
-            InitializeTreeView();            
-            string path = @"C:/Users/Aiopr/Desktop/ElectCell-HMI/case1";
-            readFile(path);
+            InitializeTreeView();
+            打开ToolStripMenuItem_Click(null, null);
             InitializeControlPanel();
             AdjustDataGridViewStyles(this);
         }
@@ -63,9 +62,6 @@ namespace ElectCell_HMI
 
             // 将根节点添加到TreeView
             treeView1.Nodes.Add(rootNode);
-
-            // 展开所有节点
-            treeView1.ExpandAll();
         }
 
         public void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -108,7 +104,6 @@ namespace ElectCell_HMI
                     break;
             }
         }
-
 
         public void InitializeControlPanel()
         {
@@ -582,6 +577,9 @@ namespace ElectCell_HMI
             {
                 sw.WriteLine(Path.GetDirectoryName(path));
             }
+
+            treeView1.ExpandAll();
+            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[0].Nodes[0];
         }
 
         public void saveFile(string path) 
@@ -840,5 +838,84 @@ namespace ElectCell_HMI
             }
         }
 
+        private void 退出ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string allowedRootDirectory = System.Environment.CurrentDirectory; // 允许选择的根目录为当前目录
+            string historyPathFile = System.IO.Path.Combine(allowedRootDirectory, "case_path.csv");
+
+            if (File.Exists(historyPathFile))
+            {
+                DialogResult result = MessageBox.Show("是否加载历史目录数据？", "提示", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    string relativePath;
+                    using (StreamReader reader = new StreamReader(historyPathFile))
+                    {
+                        relativePath = reader.ReadLine();
+                    }
+                    string absolutePath = Path.GetFullPath(Path.Combine(allowedRootDirectory, relativePath));
+
+                    if (Directory.Exists(absolutePath))
+                    {
+                        if (absolutePath.StartsWith(allowedRootDirectory, StringComparison.OrdinalIgnoreCase))
+                        {
+                            this.path = absolutePath;
+                            this.readFile(absolutePath);
+                            return;
+                        }
+                        else
+                        {
+                            MessageBox.Show("历史目录数据不在允许的根目录下，请选择新的数据文件夹。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("历史目录数据不存在，请选择新的数据文件夹。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+
+            using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
+            {
+                folderBrowserDialog.Description = "请选择数据文件夹";
+                folderBrowserDialog.ShowNewFolderButton = false;
+                folderBrowserDialog.RootFolder = Environment.SpecialFolder.MyComputer; 
+
+                while (true)
+                {
+                    if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        string selectedPath = folderBrowserDialog.SelectedPath;
+
+                        if (selectedPath.StartsWith(allowedRootDirectory, StringComparison.OrdinalIgnoreCase))
+                        {
+                            this.path = selectedPath;
+                            this.readFile(selectedPath);
+
+                            // 获取相对路径
+                            Uri rootUri = new Uri(allowedRootDirectory + Path.DirectorySeparatorChar);
+                            Uri selectedUri = new Uri(selectedPath + Path.DirectorySeparatorChar);
+                            string relativePath = rootUri.MakeRelativeUri(selectedUri).ToString();
+
+                            File.WriteAllText(historyPathFile, relativePath);
+                            break;
+                        }
+                        else
+                        {
+                            MessageBox.Show($"请选择位于 {allowedRootDirectory} 目录下的文件夹。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        break; // 用户取消选择
+                    }
+                }
+            }
+        }
     }
 }

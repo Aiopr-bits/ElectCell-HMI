@@ -30,6 +30,13 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.打开ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.另存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.求解计算ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.查看曲线ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -41,7 +48,10 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.文件ToolStripMenuItem});
+            this.文件ToolStripMenuItem,
+            this.求解计算ToolStripMenuItem,
+            this.查看曲线ToolStripMenuItem,
+            this.关于ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1211, 25);
@@ -50,9 +60,58 @@
             // 
             // 文件ToolStripMenuItem
             // 
+            this.文件ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.打开ToolStripMenuItem,
+            this.保存ToolStripMenuItem,
+            this.另存ToolStripMenuItem,
+            this.退出ToolStripMenuItem});
             this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
             this.文件ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.文件ToolStripMenuItem.Text = "文件";
+            // 
+            // 打开ToolStripMenuItem
+            // 
+            this.打开ToolStripMenuItem.Name = "打开ToolStripMenuItem";
+            this.打开ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.打开ToolStripMenuItem.Text = "打开";
+            this.打开ToolStripMenuItem.Click += new System.EventHandler(this.打开ToolStripMenuItem_Click);
+            // 
+            // 保存ToolStripMenuItem
+            // 
+            this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
+            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.保存ToolStripMenuItem.Text = "保存";
+            // 
+            // 另存ToolStripMenuItem
+            // 
+            this.另存ToolStripMenuItem.Name = "另存ToolStripMenuItem";
+            this.另存ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.另存ToolStripMenuItem.Text = "另存";
+            // 
+            // 退出ToolStripMenuItem
+            // 
+            this.退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
+            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.退出ToolStripMenuItem.Text = "退出";
+            this.退出ToolStripMenuItem.Click += new System.EventHandler(this.退出ToolStripMenuItem_Click);
+            // 
+            // 求解计算ToolStripMenuItem
+            // 
+            this.求解计算ToolStripMenuItem.Name = "求解计算ToolStripMenuItem";
+            this.求解计算ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.求解计算ToolStripMenuItem.Text = "求解计算";
+            // 
+            // 查看曲线ToolStripMenuItem
+            // 
+            this.查看曲线ToolStripMenuItem.Name = "查看曲线ToolStripMenuItem";
+            this.查看曲线ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.查看曲线ToolStripMenuItem.Text = "查看曲线";
+            // 
+            // 关于ToolStripMenuItem
+            // 
+            this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
+            this.关于ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.关于ToolStripMenuItem.Text = "关于";
             // 
             // toolStrip1
             // 
@@ -123,6 +182,14 @@
         public System.Windows.Forms.StatusStrip statusStrip1;
         public System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         public System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.ToolStripMenuItem 打开ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 保存ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 另存ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 退出ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 求解计算ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 查看曲线ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 关于ToolStripMenuItem;
+        private string path;
     }
 }
 
