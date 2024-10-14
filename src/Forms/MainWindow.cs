@@ -578,7 +578,7 @@ namespace ElectCell_HMI
                 }
             }
 
-            using (StreamWriter sw = new StreamWriter("history.csv", false))
+            using (StreamWriter sw = new StreamWriter("case_path.csv", false))
             {
                 sw.WriteLine(Path.GetDirectoryName(path));
             }
