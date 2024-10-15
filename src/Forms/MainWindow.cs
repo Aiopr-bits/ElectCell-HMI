@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Threading;
+using System.Timers;
 
 namespace ElectCell_HMI
 {
@@ -15,8 +16,10 @@ namespace ElectCell_HMI
         public FlowParameterPage flowParameter;                 // flow参数配置页面
         public PSParameterPage psParameter;                     // ps参数配置页面
         public ProcessParameterPage processParameter;           // 工艺参数配置页面
-        public ComponentParameterPage componentParameter;   // 部件参数配置页面
+        public ComponentParameterPage componentParameter;       // 部件参数配置页面
         public TrendMonitorPage trendMonitor;                   // 趋势监控页面
+        public SimulationResultPage simulationResult;           // 仿真结果页面
+        public DataPlaybackPage dataPlayback;                   // 数据回放页面
 
         public MainWindow()
         {
@@ -26,7 +29,7 @@ namespace ElectCell_HMI
             打开ToolStripMenuItem_Click(null, null);
             InitializeControlPanel();
             AdjustDataGridViewStyles(this);
-           // BeautifyControls(this);
+            BeautifyControls(this);
         }
 
         public void InitializeTreeView()
@@ -41,34 +44,36 @@ namespace ElectCell_HMI
             TreeNode simulationParamsNode = new TreeNode("仿真参数配置");
             simulationParamsNode.Nodes.Add(new TreeNode("控制参数配置"));
             simulationParamsNode.Nodes.Add(new TreeNode("几何参数配置"));
-            simulationParamsNode.Nodes.Add(new TreeNode("flow参数配置"));
-            simulationParamsNode.Nodes.Add(new TreeNode("ps参数配置"));
+            //simulationParamsNode.Nodes.Add(new TreeNode("flow参数配置"));
+            //simulationParamsNode.Nodes.Add(new TreeNode("ps参数配置"));
             simulationParamsNode.Nodes.Add(new TreeNode("工艺参数配置"));
             simulationParamsNode.Nodes.Add(new TreeNode("部件参数配置"));
-
-            TreeNode simulationResultsNode = new TreeNode("仿真结果");
+         
             TreeNode variableListNode = new TreeNode("变量清单");
             TreeNode faultInjectionNode = new TreeNode("故障注入");
             TreeNode autoTestNode = new TreeNode("自动测试");
 
             TreeNode dataMonitoringNode = new TreeNode("数据监控");
             dataMonitoringNode.Nodes.Add(new TreeNode("趋势监控"));
+            dataMonitoringNode.Nodes.Add(new TreeNode("仿真结果"));
             dataMonitoringNode.Nodes.Add(new TreeNode("数据列表"));
+
+            TreeNode simulationResultsNode = new TreeNode("数据回放");
 
             // 将子节点添加到根节点
             rootNode.Nodes.Add(simulationParamsNode);
-            rootNode.Nodes.Add(simulationResultsNode);
             rootNode.Nodes.Add(variableListNode);
             rootNode.Nodes.Add(faultInjectionNode);
             rootNode.Nodes.Add(autoTestNode);
             rootNode.Nodes.Add(dataMonitoringNode);
+            rootNode.Nodes.Add(simulationResultsNode);
 
             // 将根节点添加到TreeView
             treeView1.Nodes.Add(rootNode);
         }
 
         public void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
-        {          
+        {
             switch (e.Node.Text)
             {
                 case "控制参数配置":
@@ -95,12 +100,18 @@ namespace ElectCell_HMI
                     HideAllParameterPages();
                     componentParameter.Show();
                     break;
-
                 case "趋势监控":
                     HideAllParameterPages();
                     trendMonitor.Show();
                     break;
-
+                case "仿真结果":
+                    HideAllParameterPages();
+                    simulationResult.Show();
+                    break;
+                case "数据回放":
+                    HideAllParameterPages();
+                    dataPlayback.Show();
+                    break;
             }
         }
 
@@ -113,12 +124,14 @@ namespace ElectCell_HMI
             processParameter.Hide();
             componentParameter.Hide();
             trendMonitor.Hide();
+            simulationResult.Hide();
+            dataPlayback.Hide();
         }
 
         public void InitializeControlPanel()
         {
             controlParameter = new ControlParameterPage();
-            controlParameter.Dock = DockStyle.Fill; 
+            controlParameter.Dock = DockStyle.Fill;
             tableLayoutPanel1.Controls.Add(controlParameter, 1, 0);
             controlParameter.Hide();
 
@@ -151,9 +164,19 @@ namespace ElectCell_HMI
             trendMonitor.Dock = DockStyle.Fill;
             tableLayoutPanel1.Controls.Add(trendMonitor, 1, 0);
             trendMonitor.Hide();
+
+            simulationResult = new SimulationResultPage();
+            simulationResult.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Controls.Add(simulationResult, 1, 0);
+            simulationResult.Hide();
+
+            dataPlayback = new DataPlaybackPage();
+            dataPlayback.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Controls.Add(dataPlayback, 1, 0);
+            dataPlayback.Hide();
         }
 
-        public void readFile(string path)
+        public void readParametersFile(string path)
         {
             path = path + "/data_input.csv";
             string nextLine;
@@ -279,14 +302,14 @@ namespace ElectCell_HMI
                 {
                     values = nextLine.Split(',');
                     Data.componentParameter.electrolyticCell = new List<ElectrolyticCell>();
-                    for (int i = 0;i< Data.componentParameter.nElectrolyticCell; i++)
+                    for (int i = 0; i < Data.componentParameter.nElectrolyticCell; i++)
                     {
                         var cell = new ElectrolyticCell();
                         cell.current = Convert.ToDouble(values[i]);
                         Data.componentParameter.electrolyticCell.Add(cell);
                     }
                 }
-                for (int i = 0; i < Data.componentParameter.nElectrolyticCell; i++) 
+                for (int i = 0; i < Data.componentParameter.nElectrolyticCell; i++)
                 {
                     nextLine = sr.ReadLine();
                     nextLine = sr.ReadLine();
@@ -597,10 +620,46 @@ namespace ElectCell_HMI
             treeView1.SelectedNode = treeView1.Nodes[0].Nodes[0].Nodes[0];
         }
 
-        public void saveFile(string path) 
+        public void readResultFile(string path)
+        {
+            Data.result.result = new List<List<double>>();
+            path = Path.Combine(path, "output.data", "result.csv");
+            if (!File.Exists(path))
+            {
+                return;
+            }
+
+            string nextLine;
+            using (StreamReader sr = new StreamReader(path))
+            {
+                nextLine = sr.ReadLine();
+                {
+                    List<string> line = new List<string>();
+                    string[] values = nextLine.Split(',');
+                    for (int i = 0; i < values.Length - 1; i++)
+                    {
+                        line.Add(values[i]);
+                    }
+                    Data.result.header = line;
+                }
+
+                while ((nextLine = sr.ReadLine()) != null)
+                {
+                    List<double> line = new List<double>();
+                    string[] values = nextLine.Split(',');
+                    for (int i = 0; i < values.Length-1; i++)
+                    {
+                        line.Add(Convert.ToDouble(values[i]));
+                    }
+                    Data.result.result.Add(line);
+                }
+            }
+        }
+
+        public void saveFile(string path)
         {
             path = path + "/data_input.csv";
-            using (StreamWriter sw = new StreamWriter(path)) 
+            using (StreamWriter sw = new StreamWriter(path))
             {
                 sw.WriteLine("###########################,,,,,,,,,,");
                 sw.WriteLine("# 控制参数,,,,,,,,,,");
@@ -636,7 +695,7 @@ namespace ElectCell_HMI
                 sw.WriteLine("num,n,v,p,l_l,l_g,n_h2,n_o2,v_t,,");
                 for (int i = 0; i < Data.psParameter.ps.Count; i++)
                 {
-                    sw.WriteLine(Data.psParameter.ps[i][0] + "," + Data.psParameter.ps[i][1] + "," + Data.psParameter.ps[i][2] + "," + Data.psParameter.ps[i][3] + "," + Data.psParameter.ps[i][4] + "," + Data.psParameter.ps[i][5] + "," + Data.psParameter.ps[i][6] + "," + Data.psParameter.ps[i][7] +  ",,,");
+                    sw.WriteLine(Data.psParameter.ps[i][0] + "," + Data.psParameter.ps[i][1] + "," + Data.psParameter.ps[i][2] + "," + Data.psParameter.ps[i][3] + "," + Data.psParameter.ps[i][4] + "," + Data.psParameter.ps[i][5] + "," + Data.psParameter.ps[i][6] + "," + Data.psParameter.ps[i][7] + ",,,");
                 }
 
                 sw.WriteLine("###########################,,,,,,,,,,");
@@ -880,7 +939,8 @@ namespace ElectCell_HMI
                         if (absolutePath.StartsWith(allowedRootDirectory, StringComparison.OrdinalIgnoreCase))
                         {
                             this.path = absolutePath;
-                            this.readFile(absolutePath);
+                            this.readParametersFile(absolutePath);
+                            this.readResultFile(absolutePath);
                             return;
                         }
                         else
@@ -899,7 +959,7 @@ namespace ElectCell_HMI
             {
                 folderBrowserDialog.Description = "请选择数据文件夹";
                 folderBrowserDialog.ShowNewFolderButton = false;
-                folderBrowserDialog.RootFolder = Environment.SpecialFolder.MyComputer; 
+                folderBrowserDialog.RootFolder = Environment.SpecialFolder.MyComputer;
 
                 while (true)
                 {
@@ -910,7 +970,8 @@ namespace ElectCell_HMI
                         if (selectedPath.StartsWith(allowedRootDirectory, StringComparison.OrdinalIgnoreCase))
                         {
                             this.path = selectedPath;
-                            this.readFile(selectedPath);
+                            this.readParametersFile(selectedPath);
+                            this.readResultFile(selectedPath);
 
                             Uri rootUri = new Uri(allowedRootDirectory + Path.DirectorySeparatorChar);
                             Uri selectedUri = new Uri(selectedPath + Path.DirectorySeparatorChar);
@@ -939,7 +1000,7 @@ namespace ElectCell_HMI
 
         public void 求解计算ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[5].Nodes[0];
+            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[4].Nodes[0];
 
             Process proc = null;
             try
@@ -1025,8 +1086,18 @@ namespace ElectCell_HMI
             }
         }
 
+        private void InitializeTimer()
+        {
+            timer1 = new System.Windows.Forms.Timer();
+            timer1.Interval = 10; // 设置间隔为10毫秒
+            timer1.Tick += Timer1_Tick;
+            timer1.Start();
+        }
 
-
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            MessageBox.Show("计算完成！");
+        }
 
 
     }

@@ -96,6 +96,13 @@ namespace ElectCell_HMI
         public BalancePipe balancePipe;
     }
 
+    //计算结果
+    public class Result
+    {
+        public List<string> header;
+        public List<List<double>> result;
+    }
+
     public static class Data
     {
         public static ControlParameter controlParameter = new ControlParameter();           // 控制参数
@@ -104,5 +111,6 @@ namespace ElectCell_HMI
         public static PSParameter psParameter = new PSParameter();                          // ps参数
         public static ProcessParameter processParameter = new ProcessParameter();           // 工艺参数
         public static ComponentParameter componentParameter = new ComponentParameter();     // 部件参数
+        public static Result result = new Result();                                         // 计算结果
     }
 }

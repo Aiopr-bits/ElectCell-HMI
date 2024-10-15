@@ -64,6 +64,18 @@
     <Compile Include="Forms\StartPage.Designer.cs">
       <DependentUpon>StartPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\SimulationResultPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\SimulationResultPage.Designer.cs">
+      <DependentUpon>SimulationResultPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\DataPlaybackPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\DataPlaybackPage.Designer.cs">
+      <DependentUpon>DataPlaybackPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\TrendMonitorPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -106,6 +118,12 @@
     <Compile Include="UserControls\ControlParameterPage.Designer.cs">
       <DependentUpon>ControlParameterPage.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UserControls\SimulationResultPage.resx">
+      <DependentUpon>SimulationResultPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\DataPlaybackPage.resx">
+      <DependentUpon>DataPlaybackPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\TrendMonitorPage.resx">
       <DependentUpon>TrendMonitorPage.cs</DependentUpon>
     </EmbeddedResource>

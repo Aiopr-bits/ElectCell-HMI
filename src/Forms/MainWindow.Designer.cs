@@ -2,10 +2,6 @@
 {
     partial class MainWindow
     {
-        /// <summary>
-        /// 必需的设计器变量。
-        /// </summary>
-        public System.ComponentModel.IContainer components = null;
 
         /// <summary>
         /// 清理所有正在使用的资源。
@@ -28,6 +24,7 @@
         /// </summary>
         public void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.打开ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,6 +38,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -191,6 +189,8 @@
         public System.Windows.Forms.ToolStripMenuItem 查看曲线ToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem 关于ToolStripMenuItem;
         public string path;
+        private System.Windows.Forms.Timer timer1;
+        private System.ComponentModel.IContainer components;
     }
 }
 
