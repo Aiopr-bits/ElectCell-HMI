@@ -20,12 +20,16 @@ namespace ElectCell_HMI
 
         public void comboBox1LoadData()
         {
-            for (int i = 0; i < Data.result.result.Count; i++)
+            if (Data.result.result.Count > 0)
             {
-                comboBox1.Items.Add(Data.result.result[i][0]);
+                for (int i = 0; i < Data.result.result.Count; i++)
+                {
+                    comboBox1.Items.Add(Data.result.result[i][0]);
+                }
+                comboBox1.SelectedIndex = 0;
             }
-            comboBox1.SelectedIndex = 0;
         }
+
 
         void dataGridView1LoadData(int time)
         {
@@ -56,7 +60,7 @@ namespace ElectCell_HMI
             dataGridView1.DataSource = dt;
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        public void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (int.TryParse(comboBox1.SelectedItem.ToString(), out int selectedTime))
             {

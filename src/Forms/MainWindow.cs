@@ -21,6 +21,8 @@ namespace ElectCell_HMI
         public SimulationResultPage simulationResult;           // 仿真结果页面
         public DataPlaybackPage dataPlayback;                   // 数据回放页面
 
+        public event EventHandler TimerTicked; // 定义事件
+
         public MainWindow()
         {
             this.FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
@@ -30,6 +32,7 @@ namespace ElectCell_HMI
             InitializeControlPanel();
             AdjustDataGridViewStyles(this);
             BeautifyControls(this);
+            InitializeTimer();
         }
 
         public void InitializeTreeView()
@@ -160,7 +163,7 @@ namespace ElectCell_HMI
             tableLayoutPanel1.Controls.Add(componentParameter, 1, 0);
             componentParameter.Hide();
 
-            trendMonitor = new TrendMonitorPage();
+            trendMonitor = new TrendMonitorPage(this);
             trendMonitor.Dock = DockStyle.Fill;
             tableLayoutPanel1.Controls.Add(trendMonitor, 1, 0);
             trendMonitor.Hide();
@@ -609,6 +612,7 @@ namespace ElectCell_HMI
                     Data.processParameter.T_btout_ano0 = Convert.ToDouble(values[4]);
                     Data.processParameter.T_btout_cat0 = Convert.ToDouble(values[5]);
                 }
+                sr.Close();
             }
 
             using (StreamWriter sw = new StreamWriter("case_path.csv", false))
@@ -630,7 +634,8 @@ namespace ElectCell_HMI
             }
 
             string nextLine;
-            using (StreamReader sr = new StreamReader(path))
+            using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (StreamReader sr = new StreamReader(fs))
             {
                 nextLine = sr.ReadLine();
                 {
@@ -647,7 +652,7 @@ namespace ElectCell_HMI
                 {
                     List<double> line = new List<double>();
                     string[] values = nextLine.Split(',');
-                    for (int i = 0; i < values.Length-1; i++)
+                    for (int i = 0; i < values.Length - 1; i++)
                     {
                         line.Add(Convert.ToDouble(values[i]));
                     }
@@ -655,6 +660,7 @@ namespace ElectCell_HMI
                 }
             }
         }
+
 
         public void saveFile(string path)
         {
@@ -1036,10 +1042,12 @@ namespace ElectCell_HMI
                 {
                     trendMonitor.richTextBox1.Invoke((MethodInvoker)delegate
                     {
+                        timer1.Stop(); 
                         MessageBox.Show("计算完成！");
                     });
                 };
 
+                timer1.Start(); // 计算开始时启动 timer1
                 proc.Start();
                 proc.BeginOutputReadLine();
             }
@@ -1048,6 +1056,7 @@ namespace ElectCell_HMI
                 Console.WriteLine(ex.StackTrace.ToString());
             }
         }
+
 
         public void BeautifyControls(Control parent)
         {
@@ -1086,19 +1095,17 @@ namespace ElectCell_HMI
             }
         }
 
-        private void InitializeTimer()
+        public void InitializeTimer()
         {
             timer1 = new System.Windows.Forms.Timer();
-            timer1.Interval = 10; // 设置间隔为10毫秒
+            timer1.Interval = 10; 
             timer1.Tick += Timer1_Tick;
-            timer1.Start();
         }
 
-        private void Timer1_Tick(object sender, EventArgs e)
+        public void Timer1_Tick(object sender, EventArgs e)
         {
-            MessageBox.Show("计算完成！");
+            readResultFile(path);
+            TimerTicked?.Invoke(this, EventArgs.Empty);
         }
-
-
     }
 }

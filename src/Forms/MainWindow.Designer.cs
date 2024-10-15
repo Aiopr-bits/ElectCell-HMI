@@ -189,8 +189,8 @@
         public System.Windows.Forms.ToolStripMenuItem 查看曲线ToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem 关于ToolStripMenuItem;
         public string path;
-        private System.Windows.Forms.Timer timer1;
-        private System.ComponentModel.IContainer components;
+        public System.Windows.Forms.Timer timer1;
+        public System.ComponentModel.IContainer components;
     }
 }
 

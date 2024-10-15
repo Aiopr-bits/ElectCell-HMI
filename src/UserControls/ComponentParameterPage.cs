@@ -12,7 +12,7 @@ namespace ElectCell_HMI
 {
     public partial class ComponentParameterPage : UserControl
     {
-        private float originalColumnWidth;
+        public float originalColumnWidth;
 
         public ComponentParameterPage()
         {
@@ -23,7 +23,7 @@ namespace ElectCell_HMI
             treeView1.SelectedNode = treeView1.Nodes[0].Nodes[0].Nodes[0];
         }
 
-        private void initTreeview()
+        public void initTreeview()
         {
             treeView1.Nodes.Clear();
 
@@ -65,7 +65,7 @@ namespace ElectCell_HMI
             treeView1.ExpandAll();
         }
 
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        public void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             string selectedNode = e.Node.Text;
             DataTable dt1 = new DataTable();
