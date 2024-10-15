@@ -18,7 +18,9 @@ namespace ElectCell_HMI
         {
             InitializeComponent();
             initTreeview();
-            originalColumnWidth = tableLayoutPanel1.ColumnStyles[3].Width;
+            originalColumnWidth = tableLayoutPanel3.ColumnStyles[2].Width;
+
+            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[0].Nodes[0];
         }
 
         private void initTreeview()
@@ -69,199 +71,510 @@ namespace ElectCell_HMI
             DataTable dt1 = new DataTable();
             DataTable dt2 = new DataTable();
             DataTable dt3 = new DataTable();
-            dt1.Columns.Add("flow", typeof(double));
-            dt2.Columns.Add("ps", typeof(double));
+            DataTable dt4 = new DataTable();
+            DataTable dt5 = new DataTable();
+            dt1.Columns.Add("Flow", typeof(double));
+            dt2.Columns.Add("Ps", typeof(double));
             dt3.Columns.Add("I_current", typeof(double));
+
+            dt4.Columns.Add("Flow号", typeof(int));
+            dt4.Columns.Add("氢气", typeof(double));
+            dt4.Columns.Add("氧气", typeof(double));
+            dt4.Columns.Add("水", typeof(double));
+            dt4.Columns.Add("管道直径", typeof(double));
+            dt4.Columns.Add("管道长度", typeof(double));
+
+            dt5.Columns.Add("PS号", typeof(int));
+            dt5.Columns.Add("物质的量", typeof(string));
+            dt5.Columns.Add("摩尔体积", typeof(string));
+            dt5.Columns.Add("压强", typeof(string));
+            dt5.Columns.Add("液体高度", typeof(string));
+            dt5.Columns.Add("气体高度", typeof(string));
+            dt5.Columns.Add("氢气", typeof(string));
+            dt5.Columns.Add("氧气", typeof(string));
+
             for (int i = 0; i < Data.componentParameter.nElectrolyticCell; i++)
             {
                 if (selectedNode == $"电解槽{i + 1}")
                 {
+                    //参数表
                     dataGridView3.Visible = true;
-                    tableLayoutPanel1.ColumnStyles[3].Width = originalColumnWidth;
+                    tableLayoutPanel3.ColumnStyles[2].Width = originalColumnWidth;
 
-                    for (int j=0;j< Data.componentParameter.electrolyticCell[i].flow.Count; j++)
+                    for (int j = 0; j < Data.componentParameter.electrolyticCell[i].flow.Count; j++)
                     {
                         dt1.Rows.Add(Data.componentParameter.electrolyticCell[i].flow[j]);
                     }
-                    dataGridView1.DataSource = dt1;
-                
+
                     for (int j = 0; j < Data.componentParameter.electrolyticCell[i].ps.Count; j++)
                     {
                         dt2.Rows.Add(Data.componentParameter.electrolyticCell[i].ps[j]);
                     }
-                    dataGridView2.DataSource = dt2;
-                    
+
                     dt3.Rows.Add(Data.componentParameter.electrolyticCell[i].current);
-                    dataGridView3.DataSource = dt3;
+
+                    //数据表flow
+                    for (int j = 0; j < Data.flowParameter.flow.Count; j++)
+                    {
+                        if (Data.componentParameter.electrolyticCell[i].flow.Contains(Data.flowParameter.flow[j][0]))
+                        {
+                            DataRow dr = dt4.NewRow();
+                            dr["Flow号"] = Data.flowParameter.flow[j][0];
+                            dr["氢气"] = Data.flowParameter.flow[j][1];
+                            dr["氧气"] = Data.flowParameter.flow[j][2];
+                            dr["水"] = Data.flowParameter.flow[j][3];
+                            dr["管道直径"] = Data.flowParameter.flow[j][4];
+                            dr["管道长度"] = Data.flowParameter.flow[j][5];
+                            dt4.Rows.Add(dr);
+                        }
+                    }
+
+                    //数据表ps
+                    for (int j = 0; j < Data.psParameter.ps.Count; j++)
+                    {
+                        if (Data.componentParameter.electrolyticCell[i].ps.Contains(Data.psParameter.ps[j][0]))
+                        {
+                            DataRow dr = dt5.NewRow();
+                            dr["PS号"] = Data.psParameter.ps[j][0];
+                            dr["物质的量"] = Data.psParameter.ps[j][1];
+                            dr["摩尔体积"] = Data.psParameter.ps[j][2];
+                            dr["压强"] = Data.psParameter.ps[j][3];
+                            dr["液体高度"] = Data.psParameter.ps[j][4];
+                            dr["气体高度"] = Data.psParameter.ps[j][5];
+                            dr["氢气"] = Data.psParameter.ps[j][6];
+                            dr["氧气"] = Data.psParameter.ps[j][7];
+                            dt5.Rows.Add(dr);
+                        }
+                    }
 
                     for (int j = 0; j < 50; j++)
                     {
                         DataRow dr1 = dt1.NewRow();
                         DataRow dr2 = dt2.NewRow();
                         DataRow dr3 = dt3.NewRow();
+                        DataRow dr4 = dt4.NewRow();
+                        DataRow dr5 = dt5.NewRow();
                         dt1.Rows.Add(dr1);
                         dt2.Rows.Add(dr2);
                         dt3.Rows.Add(dr3);
+                        dt4.Rows.Add(dr4);
+                        dt5.Rows.Add(dr5);
                     }
+
+                    dataGridView1.DataSource = dt1;
+                    dataGridView2.DataSource = dt2;
+                    dataGridView3.DataSource = dt3;
+                    dataGridView4.DataSource = dt4;
+                    dataGridView5.DataSource = dt5;
                     return;
                 }
                 else if (selectedNode == $"泵{i + 1}")
                 {
                     dataGridView3.Visible = false;
-                    tableLayoutPanel1.ColumnStyles[3].Width = 0;
+                    tableLayoutPanel3.ColumnStyles[2].Width = 0;
 
                     for (int j = 0; j < Data.componentParameter.pump[i].flow.Count; j++)
                     {
                         dt1.Rows.Add(Data.componentParameter.pump[i].flow[j]);
                     }
-                    dataGridView1.DataSource = dt1;
 
                     for (int j = 0; j < Data.componentParameter.pump[i].ps.Count; j++)
                     {
                         dt2.Rows.Add(Data.componentParameter.pump[i].ps[j]);
                     }
-                    dataGridView2.DataSource = dt2;
+
+                    //数据表flow
+                    for (int j = 0; j < Data.flowParameter.flow.Count; j++)
+                    {
+                        if (Data.componentParameter.pump[i].flow.Contains(Data.flowParameter.flow[j][0]))
+                        {
+                            DataRow dr = dt4.NewRow();
+                            dr["Flow号"] = Data.flowParameter.flow[j][0];
+                            dr["氢气"] = Data.flowParameter.flow[j][1];
+                            dr["氧气"] = Data.flowParameter.flow[j][2];
+                            dr["水"] = Data.flowParameter.flow[j][3];
+                            dr["管道直径"] = Data.flowParameter.flow[j][4];
+                            dr["管道长度"] = Data.flowParameter.flow[j][5];
+                            dt4.Rows.Add(dr);
+                        }
+                    }
+
+                    //数据表ps
+                    for (int j = 0; j < Data.psParameter.ps.Count; j++)
+                    {
+                        if (Data.componentParameter.pump[i].ps.Contains(Data.psParameter.ps[j][0]))
+                        {
+                            DataRow dr = dt5.NewRow();
+                            dr["PS号"] = Data.psParameter.ps[j][0];
+                            dr["物质的量"] = Data.psParameter.ps[j][1];
+                            dr["摩尔体积"] = Data.psParameter.ps[j][2];
+                            dr["压强"] = Data.psParameter.ps[j][3];
+                            dr["液体高度"] = Data.psParameter.ps[j][4];
+                            dr["气体高度"] = Data.psParameter.ps[j][5];
+                            dr["氢气"] = Data.psParameter.ps[j][6];
+                            dr["氧气"] = Data.psParameter.ps[j][7];
+                            dt5.Rows.Add(dr);
+                        }
+                    }
 
                     for (int j = 0; j < 50; j++)
                     {
                         DataRow dr1 = dt1.NewRow();
                         DataRow dr2 = dt2.NewRow();
+                        DataRow dr4 = dt4.NewRow();
+                        DataRow dr5 = dt5.NewRow();
                         dt1.Rows.Add(dr1);
                         dt2.Rows.Add(dr2);
+                        dt4.Rows.Add(dr4);
+                        dt5.Rows.Add(dr5);
                     }
+
+                    dataGridView1.DataSource = dt1;
+                    dataGridView2.DataSource = dt2;
+                    dataGridView3.DataSource = dt3;
+                    dataGridView4.DataSource = dt4;
+                    dataGridView5.DataSource = dt5;
                     return;
                 }
             }
-
             if (selectedNode == "阴极分离器")
             {
                 dataGridView3.Visible = false;
-                tableLayoutPanel1.ColumnStyles[3].Width = 0;
+                tableLayoutPanel3.ColumnStyles[2].Width = 0;
 
                 for (int j = 0; j < Data.componentParameter.cathodeSeparator.flow.Count; j++)
                 {
                     dt1.Rows.Add(Data.componentParameter.cathodeSeparator.flow[j]);
                 }
-                dataGridView1.DataSource = dt1;
 
                 for (int j = 0; j < Data.componentParameter.cathodeSeparator.ps.Count; j++)
                 {
                     dt2.Rows.Add(Data.componentParameter.cathodeSeparator.ps[j]);
                 }
-                dataGridView2.DataSource = dt2;
+
+                //数据表flow
+                for (int j = 0; j < Data.flowParameter.flow.Count; j++)
+                {
+                    if (Data.componentParameter.cathodeSeparator.flow.Contains(Data.flowParameter.flow[j][0]))
+                    {
+                        DataRow dr = dt4.NewRow();
+                        dr["Flow号"] = Data.flowParameter.flow[j][0];
+                        dr["氢气"] = Data.flowParameter.flow[j][1];
+                        dr["氧气"] = Data.flowParameter.flow[j][2];
+                        dr["水"] = Data.flowParameter.flow[j][3];
+                        dr["管道直径"] = Data.flowParameter.flow[j][4];
+                        dr["管道长度"] = Data.flowParameter.flow[j][5];
+                        dt4.Rows.Add(dr);
+                    }
+                }
+
+                //数据表ps
+                for (int j = 0; j < Data.psParameter.ps.Count; j++)
+                {
+                    if (Data.componentParameter.cathodeSeparator.ps.Contains(Data.psParameter.ps[j][0]))
+                    {
+                        DataRow dr = dt5.NewRow();
+                        dr["PS号"] = Data.psParameter.ps[j][0];
+                        dr["物质的量"] = Data.psParameter.ps[j][1];
+                        dr["摩尔体积"] = Data.psParameter.ps[j][2];
+                        dr["压强"] = Data.psParameter.ps[j][3];
+                        dr["液体高度"] = Data.psParameter.ps[j][4];
+                        dr["气体高度"] = Data.psParameter.ps[j][5];
+                        dr["氢气"] = Data.psParameter.ps[j][6];
+                        dr["氧气"] = Data.psParameter.ps[j][7];
+                        dt5.Rows.Add(dr);
+                    }
+                }
 
                 for (int j = 0; j < 50; j++)
                 {
                     DataRow dr1 = dt1.NewRow();
                     DataRow dr2 = dt2.NewRow();
+                    DataRow dr4 = dt4.NewRow();
+                    DataRow dr5 = dt5.NewRow();
                     dt1.Rows.Add(dr1);
                     dt2.Rows.Add(dr2);
+                    dt4.Rows.Add(dr4);
+                    dt5.Rows.Add(dr5);
                 }
 
+                dataGridView1.DataSource = dt1;
+                dataGridView2.DataSource = dt2;
+                dataGridView3.DataSource = dt3;
+                dataGridView4.DataSource = dt4;
+                dataGridView5.DataSource = dt5;
                 return;
             }
             else if (selectedNode == "阳极分离器")
             {
                 dataGridView3.Visible = false;
-                tableLayoutPanel1.ColumnStyles[3].Width = 0;
+                tableLayoutPanel3.ColumnStyles[2].Width = 0;
 
                 for (int j = 0; j < Data.componentParameter.anodeSeparator.flow.Count; j++)
                 {
                     dt1.Rows.Add(Data.componentParameter.anodeSeparator.flow[j]);
                 }
-                dataGridView1.DataSource = dt1;
 
                 for (int j = 0; j < Data.componentParameter.anodeSeparator.ps.Count; j++)
                 {
                     dt2.Rows.Add(Data.componentParameter.anodeSeparator.ps[j]);
                 }
-                dataGridView2.DataSource = dt2;
+
+                //数据表flow
+                for (int j = 0; j < Data.flowParameter.flow.Count; j++)
+                {
+                    if (Data.componentParameter.anodeSeparator.flow.Contains(Data.flowParameter.flow[j][0]))
+                    {
+                        DataRow dr = dt4.NewRow();
+                        dr["Flow号"] = Data.flowParameter.flow[j][0];
+                        dr["氢气"] = Data.flowParameter.flow[j][1];
+                        dr["氧气"] = Data.flowParameter.flow[j][2];
+                        dr["水"] = Data.flowParameter.flow[j][3];
+                        dr["管道直径"] = Data.flowParameter.flow[j][4];
+                        dr["管道长度"] = Data.flowParameter.flow[j][5];
+                        dt4.Rows.Add(dr);
+                    }
+                }
+
+                //数据表ps
+                for (int j = 0; j < Data.psParameter.ps.Count; j++)
+                {
+                    if (Data.componentParameter.anodeSeparator.ps.Contains(Data.psParameter.ps[j][0]))
+                    {
+                        DataRow dr = dt5.NewRow();
+                        dr["PS号"] = Data.psParameter.ps[j][0];
+                        dr["物质的量"] = Data.psParameter.ps[j][1];
+                        dr["摩尔体积"] = Data.psParameter.ps[j][2];
+                        dr["压强"] = Data.psParameter.ps[j][3];
+                        dr["液体高度"] = Data.psParameter.ps[j][4];
+                        dr["气体高度"] = Data.psParameter.ps[j][5];
+                        dr["氢气"] = Data.psParameter.ps[j][6];
+                        dr["氧气"] = Data.psParameter.ps[j][7];
+                        dt5.Rows.Add(dr);
+                    }
+                }
 
                 for (int j = 0; j < 50; j++)
                 {
                     DataRow dr1 = dt1.NewRow();
                     DataRow dr2 = dt2.NewRow();
+                    DataRow dr4 = dt4.NewRow();
+                    DataRow dr5 = dt5.NewRow();
                     dt1.Rows.Add(dr1);
                     dt2.Rows.Add(dr2);
+                    dt4.Rows.Add(dr4);
+                    dt5.Rows.Add(dr5);
                 }
+
+                dataGridView1.DataSource = dt1;
+                dataGridView2.DataSource = dt2;
+                dataGridView3.DataSource = dt3;
+                dataGridView4.DataSource = dt4;
+                dataGridView5.DataSource = dt5;
                 return;
             }
             else if (selectedNode == "阴极阀门")
             {
                 dataGridView3.Visible = false;
-                tableLayoutPanel1.ColumnStyles[3].Width = 0;
+                tableLayoutPanel3.ColumnStyles[2].Width = 0;
 
                 for (int j = 0; j < Data.componentParameter.cathodeValve.flow.Count; j++)
                 {
                     dt1.Rows.Add(Data.componentParameter.cathodeValve.flow[j]);
                 }
-                dataGridView1.DataSource = dt1;
 
                 for (int j = 0; j < Data.componentParameter.cathodeValve.ps.Count; j++)
                 {
                     dt2.Rows.Add(Data.componentParameter.cathodeValve.ps[j]);
                 }
-                dataGridView2.DataSource = dt2;
+
+                //数据表flow
+                for (int j = 0; j < Data.flowParameter.flow.Count; j++)
+                {
+                    if (Data.componentParameter.cathodeValve.flow.Contains(Data.flowParameter.flow[j][0]))
+                    {
+                        DataRow dr = dt4.NewRow();
+                        dr["Flow号"] = Data.flowParameter.flow[j][0];
+                        dr["氢气"] = Data.flowParameter.flow[j][1];
+                        dr["氧气"] = Data.flowParameter.flow[j][2];
+                        dr["水"] = Data.flowParameter.flow[j][3];
+                        dr["管道直径"] = Data.flowParameter.flow[j][4];
+                        dr["管道长度"] = Data.flowParameter.flow[j][5];
+                        dt4.Rows.Add(dr);
+                    }
+                }
+
+                //数据表ps
+                for (int j = 0; j < Data.psParameter.ps.Count; j++)
+                {
+                    if (Data.componentParameter.cathodeValve.ps.Contains(Data.psParameter.ps[j][0]))
+                    {
+                        DataRow dr = dt5.NewRow();
+                        dr["PS号"] = Data.psParameter.ps[j][0];
+                        dr["物质的量"] = Data.psParameter.ps[j][1];
+                        dr["摩尔体积"] = Data.psParameter.ps[j][2];
+                        dr["压强"] = Data.psParameter.ps[j][3];
+                        dr["液体高度"] = Data.psParameter.ps[j][4];
+                        dr["气体高度"] = Data.psParameter.ps[j][5];
+                        dr["氢气"] = Data.psParameter.ps[j][6];
+                        dr["氧气"] = Data.psParameter.ps[j][7];
+                        dt5.Rows.Add(dr);
+                    }
+                }
 
                 for (int j = 0; j < 50; j++)
                 {
                     DataRow dr1 = dt1.NewRow();
                     DataRow dr2 = dt2.NewRow();
+                    DataRow dr4 = dt4.NewRow();
+                    DataRow dr5 = dt5.NewRow();
                     dt1.Rows.Add(dr1);
                     dt2.Rows.Add(dr2);
+                    dt4.Rows.Add(dr4);
+                    dt5.Rows.Add(dr5);
                 }
+
+                dataGridView1.DataSource = dt1;
+                dataGridView2.DataSource = dt2;
+                dataGridView3.DataSource = dt3;
+                dataGridView4.DataSource = dt4;
+                dataGridView5.DataSource = dt5;
                 return;
             }
             else if (selectedNode == "阳极阀门")
             {
                 dataGridView3.Visible = false;
-                tableLayoutPanel1.ColumnStyles[3].Width = 0;
+                tableLayoutPanel3.ColumnStyles[2].Width = 0;
 
                 for (int j = 0; j < Data.componentParameter.anodeValve.flow.Count; j++)
                 {
                     dt1.Rows.Add(Data.componentParameter.anodeValve.flow[j]);
                 }
-                dataGridView1.DataSource = dt1;
 
                 for (int j = 0; j < Data.componentParameter.anodeValve.ps.Count; j++)
                 {
                     dt2.Rows.Add(Data.componentParameter.anodeValve.ps[j]);
                 }
-                dataGridView2.DataSource = dt2;
+
+                //数据表flow
+                for (int j = 0; j < Data.flowParameter.flow.Count; j++)
+                {
+                    if (Data.componentParameter.anodeValve.flow.Contains(Data.flowParameter.flow[j][0]))
+                    {
+                        DataRow dr = dt4.NewRow();
+                        dr["Flow号"] = Data.flowParameter.flow[j][0];
+                        dr["氢气"] = Data.flowParameter.flow[j][1];
+                        dr["氧气"] = Data.flowParameter.flow[j][2];
+                        dr["水"] = Data.flowParameter.flow[j][3];
+                        dr["管道直径"] = Data.flowParameter.flow[j][4];
+                        dr["管道长度"] = Data.flowParameter.flow[j][5];
+                        dt4.Rows.Add(dr);
+                    }
+                }
+
+                //数据表ps
+                for (int j = 0; j < Data.psParameter.ps.Count; j++)
+                {
+                    if (Data.componentParameter.anodeValve.ps.Contains(Data.psParameter.ps[j][0]))
+                    {
+                        DataRow dr = dt5.NewRow();
+                        dr["PS号"] = Data.psParameter.ps[j][0];
+                        dr["物质的量"] = Data.psParameter.ps[j][1];
+                        dr["摩尔体积"] = Data.psParameter.ps[j][2];
+                        dr["压强"] = Data.psParameter.ps[j][3];
+                        dr["液体高度"] = Data.psParameter.ps[j][4];
+                        dr["气体高度"] = Data.psParameter.ps[j][5];
+                        dr["氢气"] = Data.psParameter.ps[j][6];
+                        dr["氧气"] = Data.psParameter.ps[j][7];
+                        dt5.Rows.Add(dr);
+                    }
+                }
 
                 for (int j = 0; j < 50; j++)
                 {
                     DataRow dr1 = dt1.NewRow();
                     DataRow dr2 = dt2.NewRow();
+                    DataRow dr4 = dt4.NewRow();
+                    DataRow dr5 = dt5.NewRow();
                     dt1.Rows.Add(dr1);
                     dt2.Rows.Add(dr2);
+                    dt4.Rows.Add(dr4);
+                    dt5.Rows.Add(dr5);
                 }
+
+                dataGridView1.DataSource = dt1;
+                dataGridView2.DataSource = dt2;
+                dataGridView3.DataSource = dt3;
+                dataGridView4.DataSource = dt4;
+                dataGridView5.DataSource = dt5;
                 return;
             }
             else if (selectedNode == "平衡管线")
             {
                 dataGridView3.Visible = false;
-                tableLayoutPanel1.ColumnStyles[3].Width = 0;
+                tableLayoutPanel3.ColumnStyles[2].Width = 0;
 
                 for (int j = 0; j < Data.componentParameter.balancePipe.flow.Count; j++)
                 {
                     dt1.Rows.Add(Data.componentParameter.balancePipe.flow[j]);
                 }
-                dataGridView1.DataSource = dt1;
 
                 for (int j = 0; j < Data.componentParameter.balancePipe.ps.Count; j++)
                 {
                     dt2.Rows.Add(Data.componentParameter.balancePipe.ps[j]);
                 }
-                dataGridView2.DataSource = dt2;
+
+                //数据表flow
+                for (int j = 0; j < Data.flowParameter.flow.Count; j++)
+                {
+                    if (Data.componentParameter.balancePipe.flow.Contains(Data.flowParameter.flow[j][0]))
+                    {
+                        DataRow dr = dt4.NewRow();
+                        dr["Flow号"] = Data.flowParameter.flow[j][0];
+                        dr["氢气"] = Data.flowParameter.flow[j][1];
+                        dr["氧气"] = Data.flowParameter.flow[j][2];
+                        dr["水"] = Data.flowParameter.flow[j][3];
+                        dr["管道直径"] = Data.flowParameter.flow[j][4];
+                        dr["管道长度"] = Data.flowParameter.flow[j][5];
+                        dt4.Rows.Add(dr);
+                    }
+                }
+
+                //数据表ps
+                for (int j = 0; j < Data.psParameter.ps.Count; j++)
+                {
+                    if (Data.componentParameter.balancePipe.ps.Contains(Data.psParameter.ps[j][0]))
+                    {
+                        DataRow dr = dt5.NewRow();
+                        dr["PS号"] = Data.psParameter.ps[j][0];
+                        dr["物质的量"] = Data.psParameter.ps[j][1];
+                        dr["摩尔体积"] = Data.psParameter.ps[j][2];
+                        dr["压强"] = Data.psParameter.ps[j][3];
+                        dr["液体高度"] = Data.psParameter.ps[j][4];
+                        dr["气体高度"] = Data.psParameter.ps[j][5];
+                        dr["氢气"] = Data.psParameter.ps[j][6];
+                        dr["氧气"] = Data.psParameter.ps[j][7];
+                        dt5.Rows.Add(dr);
+                    }
+                }
 
                 for (int j = 0; j < 50; j++)
                 {
                     DataRow dr1 = dt1.NewRow();
                     DataRow dr2 = dt2.NewRow();
+                    DataRow dr4 = dt4.NewRow();
+                    DataRow dr5 = dt5.NewRow();
                     dt1.Rows.Add(dr1);
                     dt2.Rows.Add(dr2);
+                    dt4.Rows.Add(dr4);
+                    dt5.Rows.Add(dr5);
                 }
+
+                dataGridView1.DataSource = dt1;
+                dataGridView2.DataSource = dt2;
+                dataGridView3.DataSource = dt3;
+                dataGridView4.DataSource = dt4;
+                dataGridView5.DataSource = dt5;
                 return;
             }
         }

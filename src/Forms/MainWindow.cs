@@ -26,7 +26,7 @@ namespace ElectCell_HMI
             打开ToolStripMenuItem_Click(null, null);
             InitializeControlPanel();
             AdjustDataGridViewStyles(this);
-            BeautifyControls(this);
+           // BeautifyControls(this);
         }
 
         public void InitializeTreeView()
