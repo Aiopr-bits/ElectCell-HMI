@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Threading;
 using System.Timers;
+using System.Threading.Tasks;
 
 namespace ElectCell_HMI
 {
@@ -20,6 +21,9 @@ namespace ElectCell_HMI
         public TrendMonitorPage trendMonitor;                   // 趋势监控页面
         public SimulationResultPage simulationResult;           // 仿真结果页面
         public DataPlaybackPage dataPlayback;                   // 数据回放页面
+
+        private Process proc;
+        private bool isStoppedManually = false;
 
         public event EventHandler TimerTicked; // 定义事件
 
@@ -1004,60 +1008,6 @@ namespace ElectCell_HMI
             MessageBox.Show("软件版本：V1.0", "关于");
         }
 
-        public void 求解计算ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[4].Nodes[0];
-
-            Process proc = null;
-            try
-            {
-                trendMonitor.richTextBox1.Clear();
-
-                trendMonitor.richTextBox1.ReadOnly = true;
-                trendMonitor.richTextBox1.Font = new Font(trendMonitor.richTextBox1.Font.FontFamily, 10);
-
-                proc = new Process();
-                proc.StartInfo.FileName = "aeSLN.exe";
-                proc.StartInfo.CreateNoWindow = true;
-                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                proc.StartInfo.RedirectStandardOutput = true;
-                proc.StartInfo.UseShellExecute = false;
-                proc.EnableRaisingEvents = true;
-
-                proc.OutputDataReceived += (s, args) =>
-                {
-                    if (args.Data != null)
-                    {
-                        trendMonitor.richTextBox1.Invoke((MethodInvoker)delegate
-                        {
-                            trendMonitor.richTextBox1.AppendText(args.Data + Environment.NewLine);
-                            trendMonitor.richTextBox1.SelectionStart = trendMonitor.richTextBox1.Text.Length;
-                            trendMonitor.richTextBox1.ScrollToCaret();
-                            trendMonitor.richTextBox1.Refresh();
-                        });
-                    }
-                };
-
-                proc.Exited += (s, args) =>
-                {
-                    trendMonitor.richTextBox1.Invoke((MethodInvoker)delegate
-                    {
-                        timer1.Stop(); 
-                        MessageBox.Show("计算完成！");
-                    });
-                };
-
-                timer1.Start(); // 计算开始时启动 timer1
-                proc.Start();
-                proc.BeginOutputReadLine();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.StackTrace.ToString());
-            }
-        }
-
-
         public void BeautifyControls(Control parent)
         {
             foreach (Control control in parent.Controls)
@@ -1106,6 +1056,85 @@ namespace ElectCell_HMI
         {
             readResultFile(path);
             TimerTicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        private async void 开始计算ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[4].Nodes[0];
+
+            try
+            {
+                trendMonitor.richTextBox1.Clear();
+
+                trendMonitor.richTextBox1.ReadOnly = true;
+                trendMonitor.richTextBox1.Font = new Font(trendMonitor.richTextBox1.Font.FontFamily, 10);
+
+                proc = new Process();
+                proc.StartInfo.FileName = "aeSLN.exe";
+                proc.StartInfo.CreateNoWindow = true;
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                proc.StartInfo.RedirectStandardOutput = true;
+                proc.StartInfo.UseShellExecute = false;
+                proc.EnableRaisingEvents = true;
+
+                proc.OutputDataReceived += (s, args) =>
+                {
+                    if (args.Data != null)
+                    {
+                        trendMonitor.richTextBox1.Invoke((MethodInvoker)delegate
+                        {
+                            trendMonitor.richTextBox1.AppendText(args.Data + Environment.NewLine);
+                            trendMonitor.richTextBox1.SelectionStart = trendMonitor.richTextBox1.Text.Length;
+                            trendMonitor.richTextBox1.ScrollToCaret();
+                            trendMonitor.richTextBox1.Refresh();
+                        });
+                    }
+                };
+
+                proc.Exited += (s, args) =>
+                {
+                    trendMonitor.richTextBox1.Invoke((MethodInvoker)delegate
+                    {
+                        timer1.Stop();
+                        if (!isStoppedManually)
+                        {
+                            MessageBox.Show("计算完成！");
+                        }
+                        isStoppedManually = false; // 重置标志
+                    });
+                };
+
+                isStoppedManually = false; // 重置标志
+                timer1.Start(); // 计算开始时启动 timer1
+                proc.Start();
+                proc.BeginOutputReadLine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+            }
+        }
+
+        private async void 停止计算ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (proc != null && !proc.HasExited)
+                {
+                    isStoppedManually = true; // 设置标志
+                    await Task.Run(() =>
+                    {
+                        proc.Kill();
+                        proc.WaitForExit();
+                    });
+                }
+                timer1.Stop();
+                MessageBox.Show("计算已停止！");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace.ToString());
+            }
         }
     }
 }

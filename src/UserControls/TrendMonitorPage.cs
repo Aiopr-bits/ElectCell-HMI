@@ -20,12 +20,12 @@ namespace ElectCell_HMI
             InitializeComponent();
             this.mainWindow = mainWindow;
             this.mainWindow.TimerTicked += MainWindow_TimerTicked;
+            this.Resize += TrendMonitorPage_Resize; // 添加Resize事件处理程序
             dataPoints = new List<PointF>();
         }
 
         private void MainWindow_TimerTicked(object sender, EventArgs e)
         {
-            if (Data.result.result.Count == 0) return;
             // 清空现有数据点
             dataPoints.Clear();
 
@@ -41,9 +41,14 @@ namespace ElectCell_HMI
             DrawGraph();
         }
 
+        private void TrendMonitorPage_Resize(object sender, EventArgs e)
+        {
+            DrawGraph();
+        }
+
         private void DrawGraph()
         {
-            if (pictureBox1.Width == 0 || pictureBox1.Height == 0)
+            if (pictureBox1.Width == 0 || pictureBox1.Height == 0|| dataPoints.Count == 0)
                 return;
 
             Bitmap bitmap = new Bitmap(pictureBox1.Width, pictureBox1.Height);
