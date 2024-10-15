@@ -20,10 +20,6 @@ namespace ElectCell_HMI
 
         public void dataGridView1LoadData()
         {
-            //        public class PSParameter
-            //{
-            //    public List<List<double>> ps;
-            //}
             DataTable dt = new DataTable();
             dt.Columns.Add("序号", typeof(int));
             dt.Columns.Add("物质的量", typeof(string));
@@ -49,11 +45,10 @@ namespace ElectCell_HMI
                 //dr["水"] = Data.psParameter.ps[i][8];
                 dt.Rows.Add(dr);
             }
-            //添加20行空行
+
             for (int i = 0; i < 20; i++)
             {
                 DataRow dr = dt.NewRow();
-                dr["序号"] = Data.psParameter.ps.Count + i + 1;
                 dt.Rows.Add(dr);
             }
 

@@ -12,296 +12,260 @@ namespace ElectCell_HMI
 {
     public partial class ComponentParameterPage : UserControl
     {
+        private float originalColumnWidth;
+
         public ComponentParameterPage()
         {
             InitializeComponent();
-            dataGridView1.DataBindingComplete += DataGridView1_DataBindingComplete;
-            dataGridView1LoadData();
+            initTreeview();
+            originalColumnWidth = tableLayoutPanel1.ColumnStyles[3].Width;
         }
 
-        public void DataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        private void initTreeview()
         {
-            dataGridViewStyle();
-        }
+            treeView1.Nodes.Clear();
 
-        public void dataGridView1LoadData()
-        {
-            DataTable dt = new DataTable();
+            // 创建根节点
+            TreeNode rootNode = new TreeNode("部件");
+
+            // 添加电解槽节点
+            TreeNode electrolyticCellsNode = new TreeNode("电解槽");
             for (int i = 0; i < Data.componentParameter.nElectrolyticCell; i++)
             {
-                dt.Columns.Add($"电解槽{i + 1}-flow", typeof(double));
-                dt.Columns.Add($"电解槽{i + 1}-ps", typeof(double));
-                dt.Columns.Add($"电解槽{i + 1}-current", typeof(double));
+                electrolyticCellsNode.Nodes.Add(new TreeNode($"电解槽{i + 1}"));
             }
-            for (int i = 0; i < Data.componentParameter.pump.Count; i++)
-            {
-                dt.Columns.Add($"泵{i + 1}-flow", typeof(double));
-                dt.Columns.Add($"泵{i + 1}-ps", typeof(double));
-            }
-            dt.Columns.Add("阴极分离器-flow", typeof(double));
-            dt.Columns.Add("阴极分离器-ps", typeof(double));
-            dt.Columns.Add("阳极分离器-flow", typeof(double));
-            dt.Columns.Add("阳极分离器-ps", typeof(double));
-            dt.Columns.Add("阴极阀门-flow", typeof(double));
-            dt.Columns.Add("阴极阀门-ps", typeof(double));
-            dt.Columns.Add("阳极阀门-flow", typeof(double));
-            dt.Columns.Add("阳极阀门-ps", typeof(double));
-            dt.Columns.Add("平衡管线-flow", typeof(double));
-            dt.Columns.Add("平衡管线-ps", typeof(double));
+            rootNode.Nodes.Add(electrolyticCellsNode);
 
-            for (int i = 0; i < Data.componentParameter.electrolyticCell[0].flow.Count; i++)
-            {
-                AddControlParameter(dt, i);
-            }
-
-            DataTable rotatedDt = RotateDataTable(dt);
-            dataGridView1.DataSource = rotatedDt;
-            dataGridView1.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders);
-        }
-
-        public void AddControlParameter(DataTable dt, int nrow)
-        {
-            DataRow dr = dt.NewRow();
-
+            // 添加泵节点
+            TreeNode pumpsNode = new TreeNode("泵");
             for (int i = 0; i < Data.componentParameter.nElectrolyticCell; i++)
             {
-                dr[$"电解槽{i + 1}-flow"] = nrow < Data.componentParameter.electrolyticCell[i].flow.Count ?
-                    Data.componentParameter.electrolyticCell[i].flow[nrow] : (object)DBNull.Value;
-                dr[$"电解槽{i + 1}-ps"] = nrow < Data.componentParameter.electrolyticCell[i].ps.Count ?
-                    Data.componentParameter.electrolyticCell[i].ps[nrow] : (object)DBNull.Value;
-                dr[$"电解槽{i + 1}-current"] = nrow < 1 ?
-                    Data.componentParameter.electrolyticCell[i].current : (object)DBNull.Value;
+                pumpsNode.Nodes.Add(new TreeNode($"泵{i + 1}"));
             }
+            rootNode.Nodes.Add(pumpsNode);
 
-            for (int i = 0; i < Data.componentParameter.pump.Count; i++)
-            {
-                dr[$"泵{i + 1}-flow"] = nrow < Data.componentParameter.pump[i].flow.Count ?
-                    Data.componentParameter.pump[i].flow[nrow] : (object)DBNull.Value;
-                dr[$"泵{i + 1}-ps"] = nrow < Data.componentParameter.pump[i].ps.Count ?
-                    Data.componentParameter.pump[i].ps[nrow] : (object)DBNull.Value;
-            }
+            // 添加分离器节点
+            TreeNode separatorsNode = new TreeNode("分离器");
+            separatorsNode.Nodes.Add(new TreeNode("阴极分离器"));
+            separatorsNode.Nodes.Add(new TreeNode("阳极分离器"));
+            rootNode.Nodes.Add(separatorsNode);
 
-            dr["阴极分离器-flow"] = nrow < Data.componentParameter.cathodeSeparator.flow.Count ?
-                Data.componentParameter.cathodeSeparator.flow[nrow] : (object)DBNull.Value;
-            dr["阴极分离器-ps"] = nrow < Data.componentParameter.cathodeSeparator.ps.Count ?
-                Data.componentParameter.cathodeSeparator.ps[nrow] : (object)DBNull.Value;
-            dr["阳极分离器-flow"] = nrow < Data.componentParameter.anodeSeparator.flow.Count ?
-                Data.componentParameter.anodeSeparator.flow[nrow] : (object)DBNull.Value;
-            dr["阳极分离器-ps"] = nrow < Data.componentParameter.anodeSeparator.ps.Count ?
-                Data.componentParameter.anodeSeparator.ps[nrow] : (object)DBNull.Value;
-            dr["阴极阀门-flow"] = nrow < Data.componentParameter.cathodeValve.flow.Count ?
-                Data.componentParameter.cathodeValve.flow[nrow] : (object)DBNull.Value;
-            dr["阴极阀门-ps"] = nrow < Data.componentParameter.cathodeValve.ps.Count ?
-                Data.componentParameter.cathodeValve.ps[nrow] : (object)DBNull.Value;
-            dr["阳极阀门-flow"] = nrow < Data.componentParameter.anodeValve.flow.Count ?
-                Data.componentParameter.anodeValve.flow[nrow] : (object)DBNull.Value;
-            dr["阳极阀门-ps"] = nrow < Data.componentParameter.anodeValve.ps.Count ?
-                Data.componentParameter.anodeValve.ps[nrow] : (object)DBNull.Value;
-            dr["平衡管线-flow"] = nrow < Data.componentParameter.balancePipe.flow.Count ?
-                Data.componentParameter.balancePipe.flow[nrow] : (object)DBNull.Value;
-            dr["平衡管线-ps"] = nrow < Data.componentParameter.balancePipe.ps.Count ?
-                Data.componentParameter.balancePipe.ps[nrow] : (object)DBNull.Value;
+            // 添加阀门节点
+            TreeNode valvesNode = new TreeNode("阀门");
+            valvesNode.Nodes.Add(new TreeNode("阴极阀门"));
+            valvesNode.Nodes.Add(new TreeNode("阳极阀门"));
+            rootNode.Nodes.Add(valvesNode);
 
-            dt.Rows.Add(dr);
+            // 添加平衡管线节点
+            rootNode.Nodes.Add(new TreeNode("平衡管线"));
+
+            treeView1.Nodes.Add(rootNode);
+            treeView1.ExpandAll();
         }
 
-        public DataTable RotateDataTable(DataTable dt)
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            DataTable rotatedDt = new DataTable();
-
-            // Add columns
-            rotatedDt.Columns.Add("Parameter", typeof(string));
-            for (int i = 0; i < dt.Rows.Count; i++)
+            string selectedNode = e.Node.Text;
+            DataTable dt1 = new DataTable();
+            DataTable dt2 = new DataTable();
+            DataTable dt3 = new DataTable();
+            dt1.Columns.Add("flow", typeof(double));
+            dt2.Columns.Add("ps", typeof(double));
+            dt3.Columns.Add("I_current", typeof(double));
+            for (int i = 0; i < Data.componentParameter.nElectrolyticCell; i++)
             {
-                rotatedDt.Columns.Add($"Row {i + 1}", typeof(double));
-            }
-
-            // Add rows
-            for (int i = 0; i < dt.Columns.Count; i++)
-            {
-                DataRow dr = rotatedDt.NewRow();
-                dr[0] = dt.Columns[i].ColumnName;
-                for (int j = 0; j < dt.Rows.Count; j++)
+                if (selectedNode == $"电解槽{i + 1}")
                 {
-                    dr[j + 1] = dt.Rows[j][i];
+                    dataGridView3.Visible = true;
+                    tableLayoutPanel1.ColumnStyles[3].Width = originalColumnWidth;
+
+                    for (int j=0;j< Data.componentParameter.electrolyticCell[i].flow.Count; j++)
+                    {
+                        dt1.Rows.Add(Data.componentParameter.electrolyticCell[i].flow[j]);
+                    }
+                    dataGridView1.DataSource = dt1;
+                
+                    for (int j = 0; j < Data.componentParameter.electrolyticCell[i].ps.Count; j++)
+                    {
+                        dt2.Rows.Add(Data.componentParameter.electrolyticCell[i].ps[j]);
+                    }
+                    dataGridView2.DataSource = dt2;
+                    
+                    dt3.Rows.Add(Data.componentParameter.electrolyticCell[i].current);
+                    dataGridView3.DataSource = dt3;
+
+                    for (int j = 0; j < 50; j++)
+                    {
+                        DataRow dr1 = dt1.NewRow();
+                        DataRow dr2 = dt2.NewRow();
+                        DataRow dr3 = dt3.NewRow();
+                        dt1.Rows.Add(dr1);
+                        dt2.Rows.Add(dr2);
+                        dt3.Rows.Add(dr3);
+                    }
+                    return;
                 }
-                rotatedDt.Rows.Add(dr);
-            }
-
-            return rotatedDt;
-        }
-
-        public void dataGridViewStyle()
-        {
-            dataGridView1.RowHeadersVisible = true;
-            dataGridView1.ColumnHeadersVisible = false;
-
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            {
-                if (dataGridView1.Rows[i].Cells[0].Value != null)
+                else if (selectedNode == $"泵{i + 1}")
                 {
-                    dataGridView1.Rows[i].HeaderCell.Value = dataGridView1.Rows[i].Cells[0].Value.ToString();
-                }
-            }
+                    dataGridView3.Visible = false;
+                    tableLayoutPanel1.ColumnStyles[3].Width = 0;
 
-            if (dataGridView1.Columns.Count > 0)
-            {
-                dataGridView1.Columns[0].Visible = false;
-            }
-        }
+                    for (int j = 0; j < Data.componentParameter.pump[i].flow.Count; j++)
+                    {
+                        dt1.Rows.Add(Data.componentParameter.pump[i].flow[j]);
+                    }
+                    dataGridView1.DataSource = dt1;
 
-        public void SaveDataGridViewChanges()
-        {
-            DataTable dt = (DataTable)dataGridView1.DataSource;
+                    for (int j = 0; j < Data.componentParameter.pump[i].ps.Count; j++)
+                    {
+                        dt2.Rows.Add(Data.componentParameter.pump[i].ps[j]);
+                    }
+                    dataGridView2.DataSource = dt2;
 
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                string parameterName = dt.Rows[i]["Parameter"].ToString();
-
-                for (int j = 1; j < dt.Columns.Count; j++)
-                {
-                    double value = dt.Rows[i][j] != DBNull.Value ? Convert.ToDouble(dt.Rows[i][j]) : double.NaN;
-
-                    if (parameterName.StartsWith("电解槽"))
+                    for (int j = 0; j < 50; j++)
                     {
-                        int cellIndex = int.Parse(parameterName.Substring(3, 1)) - 1;
-                        var cell = Data.componentParameter.electrolyticCell[cellIndex];
-                        if (parameterName.Contains("flow"))
-                        {
-                            if (j - 1 < cell.flow.Count)
-                            {
-                                cell.flow[j - 1] = value;
-                            }
-                        }
-                        else if (parameterName.Contains("ps"))
-                        {
-                            if (j - 1 < cell.ps.Count)
-                            {
-                                cell.ps[j - 1] = value;
-                            }
-                        }
-                        else if (parameterName.Contains("current"))
-                        {
-                            if (j - 1 < 1)
-                            {
-                                cell.current = value;
-                            }
-                        }
+                        DataRow dr1 = dt1.NewRow();
+                        DataRow dr2 = dt2.NewRow();
+                        dt1.Rows.Add(dr1);
+                        dt2.Rows.Add(dr2);
                     }
-                    else if (parameterName.StartsWith("泵"))
-                    {
-                        int pumpIndex = int.Parse(parameterName.Substring(1, 1)) - 1;
-                        var pump = Data.componentParameter.pump[pumpIndex];
-                        if (parameterName.Contains("flow"))
-                        {
-                            if (j - 1 < pump.flow.Count)
-                            {
-                                pump.flow[j - 1] = value;
-                            }
-                        }
-                        else if (parameterName.Contains("ps"))
-                        {
-                            if (j - 1 < pump.ps.Count)
-                            {
-                                pump.ps[j - 1] = value;
-                            }
-                        }
-                    }
-                    else if (parameterName.Contains("阴极分离器"))
-                    {
-                        var cathodeSeparator = Data.componentParameter.cathodeSeparator;
-                        if (parameterName.Contains("flow"))
-                        {
-                            if (j - 1 < cathodeSeparator.flow.Count)
-                            {
-                                cathodeSeparator.flow[j - 1] = value;
-                            }
-                        }
-                        else if (parameterName.Contains("ps"))
-                        {
-                            if (j - 1 < cathodeSeparator.ps.Count)
-                            {
-                                cathodeSeparator.ps[j - 1] = value;
-                            }
-                        }
-                    }
-                    else if (parameterName.Contains("阳极分离器"))
-                    {
-                        var anodeSeparator = Data.componentParameter.anodeSeparator;
-                        if (parameterName.Contains("flow"))
-                        {
-                            if (j - 1 < anodeSeparator.flow.Count)
-                            {
-                                anodeSeparator.flow[j - 1] = value;
-                            }
-                        }
-                        else if (parameterName.Contains("ps"))
-                        {
-                            if (j - 1 < anodeSeparator.ps.Count)
-                            {
-                                anodeSeparator.ps[j - 1] = value;
-                            }
-                        }
-                    }
-                    else if (parameterName.Contains("阴极阀门"))
-                    {
-                        var cathodeValve = Data.componentParameter.cathodeValve;
-                        if (parameterName.Contains("flow"))
-                        {
-                            if (j - 1 < cathodeValve.flow.Count)
-                            {
-                                cathodeValve.flow[j - 1] = value;
-                            }
-                        }
-                        else if (parameterName.Contains("ps"))
-                        {
-                            if (j - 1 < cathodeValve.ps.Count)
-                            {
-                                cathodeValve.ps[j - 1] = value;
-                            }
-                        }
-                    }
-                    else if (parameterName.Contains("阳极阀门"))
-                    {
-                        var anodeValve = Data.componentParameter.anodeValve;
-                        if (parameterName.Contains("flow"))
-                        {
-                            if (j - 1 < anodeValve.flow.Count)
-                            {
-                                anodeValve.flow[j - 1] = value;
-                            }
-                        }
-                        else if (parameterName.Contains("ps"))
-                        {
-                            if (j - 1 < anodeValve.ps.Count)
-                            {
-                                anodeValve.ps[j - 1] = value;
-                            }
-                        }
-                    }
-                    else if (parameterName.Contains("平衡管线"))
-                    {
-                        var balancePipe = Data.componentParameter.balancePipe;
-                        if (parameterName.Contains("flow"))
-                        {
-                            if (j - 1 < balancePipe.flow.Count)
-                            {
-                                balancePipe.flow[j - 1] = value;
-                            }
-                        }
-                        else if (parameterName.Contains("ps"))
-                        {
-                            if (j - 1 < balancePipe.ps.Count)
-                            {
-                                balancePipe.ps[j - 1] = value;
-                            }
-                        }
-                    }
+                    return;
                 }
             }
-        }
 
+            if (selectedNode == "阴极分离器")
+            {
+                dataGridView3.Visible = false;
+                tableLayoutPanel1.ColumnStyles[3].Width = 0;
+
+                for (int j = 0; j < Data.componentParameter.cathodeSeparator.flow.Count; j++)
+                {
+                    dt1.Rows.Add(Data.componentParameter.cathodeSeparator.flow[j]);
+                }
+                dataGridView1.DataSource = dt1;
+
+                for (int j = 0; j < Data.componentParameter.cathodeSeparator.ps.Count; j++)
+                {
+                    dt2.Rows.Add(Data.componentParameter.cathodeSeparator.ps[j]);
+                }
+                dataGridView2.DataSource = dt2;
+
+                for (int j = 0; j < 50; j++)
+                {
+                    DataRow dr1 = dt1.NewRow();
+                    DataRow dr2 = dt2.NewRow();
+                    dt1.Rows.Add(dr1);
+                    dt2.Rows.Add(dr2);
+                }
+
+                return;
+            }
+            else if (selectedNode == "阳极分离器")
+            {
+                dataGridView3.Visible = false;
+                tableLayoutPanel1.ColumnStyles[3].Width = 0;
+
+                for (int j = 0; j < Data.componentParameter.anodeSeparator.flow.Count; j++)
+                {
+                    dt1.Rows.Add(Data.componentParameter.anodeSeparator.flow[j]);
+                }
+                dataGridView1.DataSource = dt1;
+
+                for (int j = 0; j < Data.componentParameter.anodeSeparator.ps.Count; j++)
+                {
+                    dt2.Rows.Add(Data.componentParameter.anodeSeparator.ps[j]);
+                }
+                dataGridView2.DataSource = dt2;
+
+                for (int j = 0; j < 50; j++)
+                {
+                    DataRow dr1 = dt1.NewRow();
+                    DataRow dr2 = dt2.NewRow();
+                    dt1.Rows.Add(dr1);
+                    dt2.Rows.Add(dr2);
+                }
+                return;
+            }
+            else if (selectedNode == "阴极阀门")
+            {
+                dataGridView3.Visible = false;
+                tableLayoutPanel1.ColumnStyles[3].Width = 0;
+
+                for (int j = 0; j < Data.componentParameter.cathodeValve.flow.Count; j++)
+                {
+                    dt1.Rows.Add(Data.componentParameter.cathodeValve.flow[j]);
+                }
+                dataGridView1.DataSource = dt1;
+
+                for (int j = 0; j < Data.componentParameter.cathodeValve.ps.Count; j++)
+                {
+                    dt2.Rows.Add(Data.componentParameter.cathodeValve.ps[j]);
+                }
+                dataGridView2.DataSource = dt2;
+
+                for (int j = 0; j < 50; j++)
+                {
+                    DataRow dr1 = dt1.NewRow();
+                    DataRow dr2 = dt2.NewRow();
+                    dt1.Rows.Add(dr1);
+                    dt2.Rows.Add(dr2);
+                }
+                return;
+            }
+            else if (selectedNode == "阳极阀门")
+            {
+                dataGridView3.Visible = false;
+                tableLayoutPanel1.ColumnStyles[3].Width = 0;
+
+                for (int j = 0; j < Data.componentParameter.anodeValve.flow.Count; j++)
+                {
+                    dt1.Rows.Add(Data.componentParameter.anodeValve.flow[j]);
+                }
+                dataGridView1.DataSource = dt1;
+
+                for (int j = 0; j < Data.componentParameter.anodeValve.ps.Count; j++)
+                {
+                    dt2.Rows.Add(Data.componentParameter.anodeValve.ps[j]);
+                }
+                dataGridView2.DataSource = dt2;
+
+                for (int j = 0; j < 50; j++)
+                {
+                    DataRow dr1 = dt1.NewRow();
+                    DataRow dr2 = dt2.NewRow();
+                    dt1.Rows.Add(dr1);
+                    dt2.Rows.Add(dr2);
+                }
+                return;
+            }
+            else if (selectedNode == "平衡管线")
+            {
+                dataGridView3.Visible = false;
+                tableLayoutPanel1.ColumnStyles[3].Width = 0;
+
+                for (int j = 0; j < Data.componentParameter.balancePipe.flow.Count; j++)
+                {
+                    dt1.Rows.Add(Data.componentParameter.balancePipe.flow[j]);
+                }
+                dataGridView1.DataSource = dt1;
+
+                for (int j = 0; j < Data.componentParameter.balancePipe.ps.Count; j++)
+                {
+                    dt2.Rows.Add(Data.componentParameter.balancePipe.ps[j]);
+                }
+                dataGridView2.DataSource = dt2;
+
+                for (int j = 0; j < 50; j++)
+                {
+                    DataRow dr1 = dt1.NewRow();
+                    DataRow dr2 = dt2.NewRow();
+                    dt1.Rows.Add(dr1);
+                    dt2.Rows.Add(dr2);
+                }
+                return;
+            }
+        }
 
     }
-
 }
+

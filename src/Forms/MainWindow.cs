@@ -26,6 +26,7 @@ namespace ElectCell_HMI
             打开ToolStripMenuItem_Click(null, null);
             InitializeControlPanel();
             AdjustDataGridViewStyles(this);
+            BeautifyControls(this);
         }
 
         public void InitializeTreeView()
@@ -987,7 +988,42 @@ namespace ElectCell_HMI
             }
         }
 
+        public void BeautifyControls(Control parent)
+        {
+            foreach (Control control in parent.Controls)
+            {
+                // 设置字体
+                control.Font = new Font("Microsoft YaHei", 10);
 
+                // 设置背景颜色
+                control.BackColor = Color.White;
+
+                // 设置前景颜色
+                control.ForeColor = Color.Black;
+
+                // 如果控件是按钮，设置按钮的样式
+                if (control is Button button)
+                {
+                    button.FlatStyle = FlatStyle.Flat;
+                    button.FlatAppearance.BorderColor = Color.Gray;
+                    button.FlatAppearance.BorderSize = 1;
+                }
+
+                // 如果控件是DataGridView，设置DataGridView的样式
+                if (control is DataGridView dataGridView)
+                {
+                    dataGridView.BackgroundColor = Color.White;
+                    dataGridView.DefaultCellStyle.Font = new Font("Microsoft YaHei", 10);
+                    dataGridView.ColumnHeadersDefaultCellStyle.Font = new Font("Microsoft YaHei", 10, FontStyle.Bold);
+                }
+
+                // 递归调用以美化子控件
+                if (control.HasChildren)
+                {
+                    BeautifyControls(control);
+                }
+            }
+        }
 
 
 

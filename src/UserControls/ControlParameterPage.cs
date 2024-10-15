@@ -47,7 +47,6 @@ namespace ElectCell_HMI
             for (int i = 0; i < 25; i++)
             {
                 DataRow dr = dt.NewRow();
-                dr["序号"] = i + 15;
                 dt.Rows.Add(dr);
             }
 
