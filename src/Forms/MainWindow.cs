@@ -1183,5 +1183,40 @@ namespace ElectCell_HMI
                 Console.WriteLine(ex.StackTrace.ToString());
             }
         }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            打开ToolStripMenuItem_Click(sender, e);
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            保存ToolStripMenuItem_Click(sender, e);
+        }
+
+        private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void 另存ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            另存ToolStripMenuItem_Click(sender, e);
+        }
+
+        private void toolStripButton4_Click(object sender, EventArgs e)
+        {
+            开始计算ToolStripMenuItem_Click(sender, e);
+        }
+
+        private void toolStripButton5_Click(object sender, EventArgs e)
+        {
+            停止计算ToolStripMenuItem_Click(sender, e);
+        }
     }
 }
