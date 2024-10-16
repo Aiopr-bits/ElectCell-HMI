@@ -31,7 +31,6 @@ namespace ElectCell_HMI
             }
         }
 
-
         void dataGridView1LoadData(int time)
         {
             DataTable dt = new DataTable();

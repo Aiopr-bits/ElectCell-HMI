@@ -68,7 +68,6 @@ namespace ElectCell_HMI
                 dataPoints4.Add(new PointF(x, y));
             }
             DrawGraph(dataPoints4, pictureBox4);
-
         }
 
         private void TrendMonitorPage_Resize(object sender, EventArgs e)

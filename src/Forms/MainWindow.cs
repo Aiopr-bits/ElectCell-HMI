@@ -172,7 +172,7 @@ namespace ElectCell_HMI
             tableLayoutPanel1.Controls.Add(trendMonitor, 1, 0);
             trendMonitor.Hide();
 
-            simulationResult = new SimulationResultPage();
+            simulationResult = new SimulationResultPage(this);
             simulationResult.Dock = DockStyle.Fill;
             tableLayoutPanel1.Controls.Add(simulationResult, 1, 0);
             simulationResult.Hide();
