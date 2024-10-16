@@ -945,38 +945,24 @@ namespace ElectCell_HMI
             foreach (Control control in parent.Controls)
             {
                 // 全局字体和颜色设置
-                control.Font = new Font("Microsoft YaHei", 10);
-                control.BackColor = Color.White;
-                control.ForeColor = Color.Black;
+                control.Font = new Font("Segoe UI", 10);
+                control.BackColor = Color.FromArgb(240, 240, 240);
+                control.ForeColor = Color.FromArgb(50, 50, 50);
 
-                if (control is Button button) // 按钮
+                if (control is DataGridView dataGridView) // 数据表格
                 {
-                    button.BackColor = Color.FromArgb(70, 130, 180);
-                    button.ForeColor = Color.White;
-                    button.FlatStyle = FlatStyle.Flat;
-                    button.FlatAppearance.BorderSize = 0;
-                    button.Font = new Font(button.Font.FontFamily, 10, FontStyle.Bold);
-
-                    // 鼠标事件 - 悬停、离开、按下、松开
-                    button.MouseEnter += (s, e) => button.BackColor = Color.FromArgb(100, 149, 237);
-                    button.MouseLeave += (s, e) => button.BackColor = Color.FromArgb(70, 130, 180);
-                    button.MouseDown += (s, e) => button.BackColor = Color.FromArgb(65, 105, 225);
-                    button.MouseUp += (s, e) => button.BackColor = Color.FromArgb(70, 130, 180);
-                }
-                else if (control is DataGridView dataGridView) // 数据表格
-                {
-                    dataGridView.BackgroundColor = Color.White;
-                    dataGridView.BorderStyle = BorderStyle.FixedSingle;
-                    dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.Single;
-                    dataGridView.DefaultCellStyle.SelectionBackColor = Color.FromArgb(173, 216, 230);
-                    dataGridView.DefaultCellStyle.SelectionForeColor = Color.Black;
-                    dataGridView.DefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
-                    dataGridView.DefaultCellStyle.ForeColor = Color.Black;
+                    dataGridView.BackgroundColor = Color.FromArgb(240, 240, 240);
+                    dataGridView.BorderStyle = BorderStyle.None;
+                    dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+                    dataGridView.DefaultCellStyle.SelectionBackColor = Color.FromArgb(144, 238, 144);
+                    dataGridView.DefaultCellStyle.SelectionForeColor = Color.FromArgb(50, 50, 50);
+                    dataGridView.DefaultCellStyle.BackColor = Color.FromArgb(255, 255, 255);
+                    dataGridView.DefaultCellStyle.ForeColor = Color.FromArgb(50, 50, 50);
                     dataGridView.DefaultCellStyle.Font = new Font(dataGridView.Font.FontFamily, 10);
-                    dataGridView.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(220, 220, 220);
-                    dataGridView.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(70, 130, 180);
+                    dataGridView.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
+                    dataGridView.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(60, 179, 113);
                     dataGridView.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-                    dataGridView.ColumnHeadersDefaultCellStyle.Font = new Font(dataGridView.Font.FontFamily, 12, FontStyle.Bold);
+                    dataGridView.ColumnHeadersDefaultCellStyle.Font = new Font(dataGridView.Font.FontFamily, 12, FontStyle.Regular);
                     dataGridView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                     dataGridView.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                     dataGridView.EnableHeadersVisualStyles = false;
@@ -1007,17 +993,17 @@ namespace ElectCell_HMI
                 }
                 else if (control is TreeView treeView) // 树视图
                 {
-                    treeView.BackColor = Color.White;
-                    treeView.ForeColor = Color.Black;
+                    treeView.BackColor = Color.FromArgb(240, 240, 240);
+                    treeView.ForeColor = Color.FromArgb(50, 50, 50);
                     treeView.Font = new Font(treeView.Font.FontFamily, 10);
-                    treeView.BorderStyle = BorderStyle.FixedSingle;
+                    treeView.BorderStyle = BorderStyle.None;
 
                     // 自定义绘制节点
                     treeView.DrawMode = TreeViewDrawMode.OwnerDrawText;
                     treeView.DrawNode += (s, e) =>
                     {
                         e.DrawDefault = true;
-                        Color nodeBackColor = (e.State & TreeNodeStates.Selected) != 0 ? Color.FromArgb(173, 216, 230) : treeView.BackColor;
+                        Color nodeBackColor = (e.State & TreeNodeStates.Selected) != 0 ? Color.FromArgb(144, 238, 144) : treeView.BackColor;
                         e.Graphics.FillRectangle(new SolidBrush(nodeBackColor), e.Bounds);
                         TextRenderer.DrawText(e.Graphics, e.Node.Text, treeView.Font, e.Bounds, treeView.ForeColor, TextFormatFlags.GlyphOverhangPadding);
                     };
@@ -1034,14 +1020,67 @@ namespace ElectCell_HMI
                 else if (control is Label label) // 标签
                 {
                     label.BackColor = Color.Transparent;
-                    label.ForeColor = Color.FromArgb(70, 130, 180);
-                    label.Font = new Font(label.Font.FontFamily, 10, FontStyle.Bold);
+                    label.ForeColor = Color.FromArgb(60, 179, 113);
+                    label.Font = new Font(label.Font.FontFamily, 10, FontStyle.Regular);
                     label.TextAlign = ContentAlignment.MiddleCenter;
                     label.BorderStyle = BorderStyle.None;
 
                     // 鼠标事件 - 悬停、离开
-                    label.MouseEnter += (s, e) => label.ForeColor = Color.FromArgb(100, 149, 237);
-                    label.MouseLeave += (s, e) => label.ForeColor = Color.FromArgb(70, 130, 180);
+                    label.MouseEnter += (s, e) => label.ForeColor = Color.FromArgb(46, 139, 87);
+                    label.MouseLeave += (s, e) => label.ForeColor = Color.FromArgb(60, 179, 113);
+                }
+                else if (control is RichTextBox richTextBox) // 富文本框
+                {
+                    richTextBox.BackColor = Color.FromArgb(255, 255, 255);
+                    richTextBox.ForeColor = Color.FromArgb(50, 50, 50);
+                    richTextBox.Font = new Font(richTextBox.Font.FontFamily, 10);
+                    richTextBox.BorderStyle = BorderStyle.FixedSingle;
+                }
+                else if (control is PictureBox pictureBox) // 图片框
+                {
+                    pictureBox.BackColor = Color.FromArgb(240, 240, 240);
+                    pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    pictureBox.BorderStyle = BorderStyle.FixedSingle;
+                }
+                else if (control is MenuStrip menuStrip) // 菜单栏
+                {
+                    menuStrip.BackColor = Color.FromArgb(60, 179, 113);
+                    menuStrip.ForeColor = Color.White;
+                    menuStrip.Font = new Font(menuStrip.Font.FontFamily, 10);
+                    foreach (ToolStripMenuItem item in menuStrip.Items)
+                    {
+                        item.BackColor = Color.FromArgb(60, 179, 113);
+                        item.ForeColor = Color.White;
+                        item.Font = new Font(item.Font.FontFamily, 10);
+                        item.MouseEnter += (s, e) => item.BackColor = Color.FromArgb(46, 139, 87);
+                        item.MouseLeave += (s, e) => item.BackColor = Color.FromArgb(60, 179, 113);
+                    }
+                }
+                else if (control is ToolStrip toolStrip) // 工具栏
+                {
+                    toolStrip.BackColor = Color.FromArgb(60, 179, 113);
+                    toolStrip.ForeColor = Color.White;
+                    toolStrip.Font = new Font(toolStrip.Font.FontFamily, 10);
+                    foreach (ToolStripItem item in toolStrip.Items)
+                    {
+                        item.BackColor = Color.FromArgb(60, 179, 113);
+                        item.ForeColor = Color.White;
+                        item.Font = new Font(item.Font.FontFamily, 10);
+                        item.MouseEnter += (s, e) => item.BackColor = Color.FromArgb(46, 139, 87);
+                        item.MouseLeave += (s, e) => item.BackColor = Color.FromArgb(60, 179, 113);
+                    }
+                }
+                else if (control is StatusStrip statusStrip) // 状态栏
+                {
+                    statusStrip.BackColor = Color.FromArgb(60, 179, 113);
+                    statusStrip.ForeColor = Color.White;
+                    statusStrip.Font = new Font(statusStrip.Font.FontFamily, 10);
+                    foreach (ToolStripItem item in statusStrip.Items)
+                    {
+                        item.BackColor = Color.FromArgb(60, 179, 113);
+                        item.ForeColor = Color.White;
+                        item.Font = new Font(item.Font.FontFamily, 10);
+                    }
                 }
                 else if (control.HasChildren)
                 {
