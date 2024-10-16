@@ -1101,6 +1101,9 @@ namespace ElectCell_HMI
                             MessageBox.Show("计算完成！");
                         }
                         isStoppedManually = false; // 重置标志
+
+                        readResultFile(path);
+                        dataPlayback.comboBox1LoadData();
                     });
                 };
 

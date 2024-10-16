@@ -20,6 +20,7 @@ namespace ElectCell_HMI
 
         public void comboBox1LoadData()
         {
+            comboBox1.Items.Clear();
             if (Data.result.result.Count > 0)
             {
                 for (int i = 0; i < Data.result.result.Count; i++)
