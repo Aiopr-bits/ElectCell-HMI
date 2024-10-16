@@ -1184,16 +1184,6 @@ namespace ElectCell_HMI
             }
         }
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-            打开ToolStripMenuItem_Click(sender, e);
-        }
-
-        private void toolStripButton2_Click(object sender, EventArgs e)
-        {
-            保存ToolStripMenuItem_Click(sender, e);
-        }
-
         private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -1202,6 +1192,16 @@ namespace ElectCell_HMI
         private void 另存ToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            打开ToolStripMenuItem_Click(sender, e);
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            保存ToolStripMenuItem_Click(sender, e);
         }
 
         private void toolStripButton3_Click(object sender, EventArgs e)
@@ -1217,6 +1217,11 @@ namespace ElectCell_HMI
         private void toolStripButton5_Click(object sender, EventArgs e)
         {
             停止计算ToolStripMenuItem_Click(sender, e);
+        }
+
+        private void toolStripButton6_Click(object sender, EventArgs e)
+        {
+            退出ToolStripMenuItem_Click(sender, e);
         }
     }
 }

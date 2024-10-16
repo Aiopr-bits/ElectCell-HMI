@@ -117,14 +117,14 @@
             // 开始计算ToolStripMenuItem
             // 
             this.开始计算ToolStripMenuItem.Name = "开始计算ToolStripMenuItem";
-            this.开始计算ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.开始计算ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.开始计算ToolStripMenuItem.Text = "开始计算";
             this.开始计算ToolStripMenuItem.Click += new System.EventHandler(this.开始计算ToolStripMenuItem_Click);
             // 
             // 停止计算ToolStripMenuItem
             // 
             this.停止计算ToolStripMenuItem.Name = "停止计算ToolStripMenuItem";
-            this.停止计算ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.停止计算ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.停止计算ToolStripMenuItem.Text = "停止计算";
             this.停止计算ToolStripMenuItem.Click += new System.EventHandler(this.停止计算ToolStripMenuItem_Click);
             // 
@@ -214,6 +214,7 @@
             this.toolStripButton6.Name = "toolStripButton6";
             this.toolStripButton6.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton6.Text = "退出";
+            this.toolStripButton6.Click += new System.EventHandler(this.toolStripButton6_Click);
             // 
             // statusStrip1
             // 
