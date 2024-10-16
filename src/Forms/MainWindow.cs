@@ -1089,8 +1089,6 @@ namespace ElectCell_HMI
             }
         }
 
-
-
         public void InitializeTimer()
         {
             timer1 = new System.Windows.Forms.Timer();

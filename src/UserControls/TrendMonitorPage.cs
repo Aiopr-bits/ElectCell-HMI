@@ -83,10 +83,17 @@ namespace ElectCell_HMI
             if (pictureBox.Width == 0 || pictureBox.Height == 0 || dataPoints.Count == 0)
                 return;
 
-            Bitmap bitmap = new Bitmap(pictureBox.Width, pictureBox.Height);
+            // 创建一个高分辨率的 Bitmap
+            int scaleFactor = 4; // 放大倍数
+            Bitmap bitmap = new Bitmap(pictureBox.Width * scaleFactor, pictureBox.Height * scaleFactor);
             using (Graphics g = Graphics.FromImage(bitmap))
             {
                 g.Clear(Color.White);
+
+                // 启用抗锯齿
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
 
                 // 计算数据点的最大值和最小值
                 float minX = dataPoints.Min(p => p.X);
@@ -102,51 +109,55 @@ namespace ElectCell_HMI
                 }
 
                 // 设置坐标轴
-                Pen axisPen = new Pen(Color.Black, 2);
-                g.DrawLine(axisPen, 50, 10, 50, pictureBox.Height - 50); // Y轴
-                g.DrawLine(axisPen, 50, pictureBox.Height - 50, pictureBox.Width - 10, pictureBox.Height - 50); // X轴
+                Pen axisPen = new Pen(Color.Black, 2 * scaleFactor);
+                g.DrawLine(axisPen, 50 * scaleFactor, 10 * scaleFactor, 50 * scaleFactor, (pictureBox.Height - 50) * scaleFactor); // Y轴
+                g.DrawLine(axisPen, 50 * scaleFactor, (pictureBox.Height - 50) * scaleFactor, (pictureBox.Width - 10) * scaleFactor, (pictureBox.Height - 50) * scaleFactor); // X轴
 
                 // 绘制网格线和坐标标签
-                Pen gridPen = new Pen(Color.LightGray, 1);
-                Font labelFont = new Font("Arial", 8);
-                for (int i = 50; i < pictureBox.Width - 10; i += 40) // 增加间隔
+                Pen gridPen = new Pen(Color.LightGray, 1 * scaleFactor);
+                Font labelFont = new Font("Arial", 8 * scaleFactor);
+                for (int i = 50 * scaleFactor; i < (pictureBox.Width - 10) * scaleFactor; i += 40 * scaleFactor) // 增加间隔
                 {
-                    g.DrawLine(gridPen, i, 10, i, pictureBox.Height - 50);
-                    float xValue = minX + (i - 50) / (float)(pictureBox.Width - 60) * (maxX - minX);
-                    g.DrawString(xValue.ToString("0.0"), labelFont, Brushes.Black, new PointF(i, pictureBox.Height - 45));
+                    g.DrawLine(gridPen, i, 10 * scaleFactor, i, (pictureBox.Height - 50) * scaleFactor);
+                    float xValue = minX + (i - 50 * scaleFactor) / (float)((pictureBox.Width - 60) * scaleFactor) * (maxX - minX);
+                    g.DrawString(xValue.ToString("0.0"), labelFont, Brushes.Black, new PointF(i, (pictureBox.Height - 45) * scaleFactor));
                 }
-                for (int i = 10; i < pictureBox.Height - 50; i += 20)
+                for (int i = 10 * scaleFactor; i < (pictureBox.Height - 50) * scaleFactor; i += 20 * scaleFactor)
                 {
-                    g.DrawLine(gridPen, 50, i, pictureBox.Width - 10, i);
-                    float yValue = maxY - (i - 10) / (float)(pictureBox.Height - 60) * (maxY - minY);
-                    g.DrawString(yValue.ToString("0.0"), labelFont, Brushes.Black, new PointF(5, i - 5));
+                    g.DrawLine(gridPen, 50 * scaleFactor, i, (pictureBox.Width - 10) * scaleFactor, i);
+                    float yValue = maxY - (i - 10 * scaleFactor) / (float)((pictureBox.Height - 60) * scaleFactor) * (maxY - minY);
+                    g.DrawString(yValue.ToString("0.0"), labelFont, Brushes.Black, new PointF(5 * scaleFactor, i - 5 * scaleFactor));
                 }
 
                 // 绘制数据点
                 if (dataPoints.Count > 1)
                 {
-                    Pen dataPen = new Pen(Color.Blue, 2);
+                    Pen dataPen = new Pen(Color.Blue, 2 * scaleFactor);
                     for (int i = 1; i < dataPoints.Count; i++)
                     {
-                        PointF p1 = new PointF(50 + (dataPoints[i - 1].X - minX) / (maxX - minX) * (pictureBox.Width - 60),
-                                               pictureBox.Height - 50 - (dataPoints[i - 1].Y - minY) / (maxY - minY) * (pictureBox.Height - 60));
-                        PointF p2 = new PointF(50 + (dataPoints[i].X - minX) / (maxX - minX) * (pictureBox.Width - 60),
-                                               pictureBox.Height - 50 - (dataPoints[i].Y - minY) / (maxY - minY) * (pictureBox.Height - 60));
+                        PointF p1 = new PointF(50 * scaleFactor + (dataPoints[i - 1].X - minX) / (maxX - minX) * (pictureBox.Width - 60) * scaleFactor,
+                                               (pictureBox.Height - 50) * scaleFactor - (dataPoints[i - 1].Y - minY) / (maxY - minY) * (pictureBox.Height - 60) * scaleFactor);
+                        PointF p2 = new PointF(50 * scaleFactor + (dataPoints[i].X - minX) / (maxX - minX) * (pictureBox.Width - 60) * scaleFactor,
+                                               (pictureBox.Height - 50) * scaleFactor - (dataPoints[i].Y - minY) / (maxY - minY) * (pictureBox.Height - 60) * scaleFactor);
                         g.DrawLine(dataPen, p1, p2);
                     }
                 }
 
                 // 绘制标题
-                //Font titleFont = new Font("Arial", 14, FontStyle.Bold);
-                //g.DrawString("", titleFont, Brushes.Black, new PointF(pictureBox.Width / 2 - 50, 10));
+                //Font titleFont = new Font("Arial", 14 * scaleFactor, FontStyle.Bold);
+                //g.DrawString("", titleFont, Brushes.Black, new PointF((pictureBox.Width / 2 - 50) * scaleFactor, 10 * scaleFactor));
 
                 // 绘制坐标轴标签
-                //g.DrawString("X轴", labelFont, Brushes.Black, new PointF(pictureBox.Width - 30, pictureBox.Height - 40));
-                //g.DrawString("Y轴", labelFont, Brushes.Black, new PointF(10, 20));
+                //g.DrawString("X轴", labelFont, Brushes.Black, new PointF((pictureBox.Width - 30) * scaleFactor, (pictureBox.Height - 40) * scaleFactor));
+                //g.DrawString("Y轴", labelFont, Brushes.Black, new PointF(10 * scaleFactor, 20 * scaleFactor));
             }
 
+            // 缩放 Bitmap 到 PictureBox 的大小
+            pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox.Image = bitmap;
         }
+
+
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
