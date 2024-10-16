@@ -103,7 +103,6 @@
             this.求解计算ToolStripMenuItem.Name = "求解计算ToolStripMenuItem";
             this.求解计算ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.求解计算ToolStripMenuItem.Text = "仿真计算";
-            this.求解计算ToolStripMenuItem.Click += new System.EventHandler(this.求解计算ToolStripMenuItem_Click);
             // 
             // 开始计算ToolStripMenuItem
             // 

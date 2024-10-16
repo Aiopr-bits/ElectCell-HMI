@@ -34,7 +34,6 @@ namespace ElectCell_HMI
             InitializeTreeView();
             打开ToolStripMenuItem_Click(null, null);
             InitializeControlPanel();
-            AdjustDataGridViewStyles(this);
             BeautifyControls(this);
             InitializeTimer();
         }
@@ -55,7 +54,7 @@ namespace ElectCell_HMI
             //simulationParamsNode.Nodes.Add(new TreeNode("ps参数配置"));
             simulationParamsNode.Nodes.Add(new TreeNode("工艺参数配置"));
             simulationParamsNode.Nodes.Add(new TreeNode("部件参数配置"));
-         
+
             TreeNode variableListNode = new TreeNode("变量清单");
             TreeNode faultInjectionNode = new TreeNode("故障注入");
             TreeNode autoTestNode = new TreeNode("自动测试");
@@ -855,73 +854,6 @@ namespace ElectCell_HMI
             Application.Exit();
         }
 
-        public void AdjustDataGridViewStyles(Control parent)
-        {
-            foreach (Control control in parent.Controls)
-            {
-                if (control is DataGridView dataGridView)
-                {
-                    dataGridView.BackgroundColor = Color.FromArgb(255, 255, 255);
-                    dataGridView.BorderStyle = BorderStyle.FixedSingle;
-                    dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.Single;
-                    dataGridView.DefaultCellStyle.SelectionBackColor = Color.FromArgb(173, 216, 230);
-                    dataGridView.DefaultCellStyle.SelectionForeColor = Color.Black;
-                    dataGridView.DefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
-                    dataGridView.DefaultCellStyle.ForeColor = Color.Black;
-                    dataGridView.DefaultCellStyle.Font = new Font(dataGridView.Font.FontFamily, 10);
-                    dataGridView.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(220, 220, 220);
-                    dataGridView.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(70, 130, 180);
-                    dataGridView.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-                    dataGridView.ColumnHeadersDefaultCellStyle.Font = new Font(dataGridView.Font.FontFamily, 12, FontStyle.Bold);
-                    dataGridView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                    dataGridView.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                    dataGridView.EnableHeadersVisualStyles = false;
-                    dataGridView.GridColor = Color.FromArgb(200, 200, 200);
-                    dataGridView.RowHeadersVisible = false;
-                    dataGridView.RowHeadersDefaultCellStyle.BackColor = Color.FromArgb(70, 130, 180);
-                    dataGridView.RowHeadersDefaultCellStyle.ForeColor = Color.White;
-                    dataGridView.RowHeadersDefaultCellStyle.Font = new Font(dataGridView.Font.FontFamily, 12, FontStyle.Bold);
-                    dataGridView.RowHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-                    dataGridView.RowHeadersWidth = 160;
-
-                    dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                    dataGridView.Dock = DockStyle.Fill;
-                    dataGridView.AllowUserToAddRows = false;
-                    foreach (DataGridViewColumn column in dataGridView.Columns)
-                    {
-                        column.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    }
-                    dataGridView.AllowUserToDeleteRows = false;
-                    dataGridView.AllowUserToResizeColumns = false;
-                    dataGridView.AllowUserToResizeRows = false;
-                    dataGridView.ScrollBars = ScrollBars.None;
-
-                    // 添加 MouseWheel 事件处理程序
-                    dataGridView.MouseWheel += (s, e) =>
-                    {
-                        if (e.Delta > 0)
-                        {
-                            if (dataGridView.FirstDisplayedScrollingRowIndex > 0)
-                            {
-                                dataGridView.FirstDisplayedScrollingRowIndex--;
-                            }
-                        }
-                        else if (e.Delta < 0)
-                        {
-                            if (dataGridView.FirstDisplayedScrollingRowIndex < dataGridView.RowCount - 1)
-                            {
-                                dataGridView.FirstDisplayedScrollingRowIndex++;
-                            }
-                        }
-                    };
-                }
-                else if (control.HasChildren)
-                {
-                    AdjustDataGridViewStyles(control);
-                }
-            }
-        }
-
         public void 退出ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -1012,43 +944,117 @@ namespace ElectCell_HMI
         {
             foreach (Control control in parent.Controls)
             {
-                // 设置字体
+                // 全局字体和颜色设置
                 control.Font = new Font("Microsoft YaHei", 10);
-
-                // 设置背景颜色
                 control.BackColor = Color.White;
-
-                // 设置前景颜色
                 control.ForeColor = Color.Black;
 
-                // 如果控件是按钮，设置按钮的样式
-                if (control is Button button)
+                if (control is Button button) // 按钮
                 {
+                    button.BackColor = Color.FromArgb(70, 130, 180);
+                    button.ForeColor = Color.White;
                     button.FlatStyle = FlatStyle.Flat;
-                    button.FlatAppearance.BorderColor = Color.Gray;
-                    button.FlatAppearance.BorderSize = 1;
-                }
+                    button.FlatAppearance.BorderSize = 0;
+                    button.Font = new Font(button.Font.FontFamily, 10, FontStyle.Bold);
 
-                // 如果控件是DataGridView，设置DataGridView的样式
-                if (control is DataGridView dataGridView)
+                    // 鼠标事件 - 悬停、离开、按下、松开
+                    button.MouseEnter += (s, e) => button.BackColor = Color.FromArgb(100, 149, 237);
+                    button.MouseLeave += (s, e) => button.BackColor = Color.FromArgb(70, 130, 180);
+                    button.MouseDown += (s, e) => button.BackColor = Color.FromArgb(65, 105, 225);
+                    button.MouseUp += (s, e) => button.BackColor = Color.FromArgb(70, 130, 180);
+                }
+                else if (control is DataGridView dataGridView) // 数据表格
                 {
                     dataGridView.BackgroundColor = Color.White;
-                    dataGridView.DefaultCellStyle.Font = new Font("Microsoft YaHei", 10);
-                    dataGridView.ColumnHeadersDefaultCellStyle.Font = new Font("Microsoft YaHei", 10, FontStyle.Bold);
-                }
+                    dataGridView.BorderStyle = BorderStyle.FixedSingle;
+                    dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.Single;
+                    dataGridView.DefaultCellStyle.SelectionBackColor = Color.FromArgb(173, 216, 230);
+                    dataGridView.DefaultCellStyle.SelectionForeColor = Color.Black;
+                    dataGridView.DefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
+                    dataGridView.DefaultCellStyle.ForeColor = Color.Black;
+                    dataGridView.DefaultCellStyle.Font = new Font(dataGridView.Font.FontFamily, 10);
+                    dataGridView.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(220, 220, 220);
+                    dataGridView.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(70, 130, 180);
+                    dataGridView.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+                    dataGridView.ColumnHeadersDefaultCellStyle.Font = new Font(dataGridView.Font.FontFamily, 12, FontStyle.Bold);
+                    dataGridView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    dataGridView.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                    dataGridView.EnableHeadersVisualStyles = false;
+                    dataGridView.GridColor = Color.FromArgb(200, 200, 200);
+                    dataGridView.RowHeadersVisible = false;
+                    dataGridView.RowHeadersWidth = 160;
 
-                // 递归调用以美化子控件
-                if (control.HasChildren)
+                    // 禁用用户的某些操作
+                    dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    dataGridView.Dock = DockStyle.Fill;
+                    dataGridView.AllowUserToAddRows = false;
+                    foreach (DataGridViewColumn column in dataGridView.Columns)
+                    {
+                        column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    }
+                    dataGridView.AllowUserToDeleteRows = false;
+                    dataGridView.AllowUserToResizeColumns = false;
+                    dataGridView.AllowUserToResizeRows = false;
+                    dataGridView.ScrollBars = ScrollBars.None;
+
+                    // 滚轮事件
+                    dataGridView.MouseWheel += (s, e) =>
+                    {
+                        int newIndex = dataGridView.FirstDisplayedScrollingRowIndex - e.Delta / SystemInformation.MouseWheelScrollDelta;
+                        newIndex = Math.Max(0, Math.Min(newIndex, dataGridView.RowCount - 1));
+                        dataGridView.FirstDisplayedScrollingRowIndex = newIndex;
+                    };
+                }
+                else if (control is TreeView treeView) // 树视图
+                {
+                    treeView.BackColor = Color.White;
+                    treeView.ForeColor = Color.Black;
+                    treeView.Font = new Font(treeView.Font.FontFamily, 10);
+                    treeView.BorderStyle = BorderStyle.FixedSingle;
+
+                    // 自定义绘制节点
+                    treeView.DrawMode = TreeViewDrawMode.OwnerDrawText;
+                    treeView.DrawNode += (s, e) =>
+                    {
+                        e.DrawDefault = true;
+                        Color nodeBackColor = (e.State & TreeNodeStates.Selected) != 0 ? Color.FromArgb(173, 216, 230) : treeView.BackColor;
+                        e.Graphics.FillRectangle(new SolidBrush(nodeBackColor), e.Bounds);
+                        TextRenderer.DrawText(e.Graphics, e.Node.Text, treeView.Font, e.Bounds, treeView.ForeColor, TextFormatFlags.GlyphOverhangPadding);
+                    };
+
+                    treeView.ItemHeight = 25;
+                    treeView.Scrollable = true;
+
+                    // 滚轮事件
+                    treeView.MouseWheel += (s, e) =>
+                    {
+                        treeView.TopNode = e.Delta > 0 ? treeView.TopNode?.PrevVisibleNode : treeView.TopNode?.NextVisibleNode;
+                    };
+                }
+                else if (control is Label label) // 标签
+                {
+                    label.BackColor = Color.Transparent;
+                    label.ForeColor = Color.FromArgb(70, 130, 180);
+                    label.Font = new Font(label.Font.FontFamily, 10, FontStyle.Bold);
+                    label.TextAlign = ContentAlignment.MiddleCenter;
+                    label.BorderStyle = BorderStyle.None;
+
+                    // 鼠标事件 - 悬停、离开
+                    label.MouseEnter += (s, e) => label.ForeColor = Color.FromArgb(100, 149, 237);
+                    label.MouseLeave += (s, e) => label.ForeColor = Color.FromArgb(70, 130, 180);
+                }
+                else if (control.HasChildren)
                 {
                     BeautifyControls(control);
                 }
             }
         }
 
+
         public void InitializeTimer()
         {
             timer1 = new System.Windows.Forms.Timer();
-            timer1.Interval = 10; 
+            timer1.Interval = 10;
             timer1.Tick += Timer1_Tick;
         }
 
@@ -1138,11 +1144,6 @@ namespace ElectCell_HMI
             {
                 Console.WriteLine(ex.StackTrace.ToString());
             }
-        }
-
-        private void 求解计算ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
