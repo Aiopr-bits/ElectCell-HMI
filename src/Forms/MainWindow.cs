@@ -24,6 +24,8 @@ namespace ElectCell_HMI
 
         private Process proc;
         private bool isStoppedManually = false;
+        ToolStripStatusLabel leftStatusLabel;
+        ToolStripStatusLabel rightStatusLabel;
 
         public event EventHandler TimerTicked; // 定义事件
 
@@ -36,6 +38,23 @@ namespace ElectCell_HMI
             InitializeControlPanel();
             BeautifyControls(this);
             InitializeTimer();
+
+            InitializeStatusStrip();
+        }
+
+        private void InitializeStatusStrip()
+        { 
+            leftStatusLabel = new ToolStripStatusLabel();
+            leftStatusLabel.Text = "";
+            ToolStripStatusLabel springLabel = new ToolStripStatusLabel();
+            springLabel.Spring = true;
+            rightStatusLabel = new ToolStripStatusLabel();
+            rightStatusLabel.Text = "";
+            rightStatusLabel.TextAlign = ContentAlignment.MiddleRight;
+            statusStrip1.Items.Add(leftStatusLabel);
+            statusStrip1.Items.Add(springLabel);
+            statusStrip1.Items.Add(rightStatusLabel);
+            this.Controls.Add(statusStrip1);
         }
 
         public void InitializeTreeView()
@@ -85,38 +104,47 @@ namespace ElectCell_HMI
                 case "控制参数配置":
                     HideAllParameterPages();
                     controlParameter.Show();
+                    leftStatusLabel.Text = "控制参数配置";
                     break;
                 case "几何参数配置":
                     HideAllParameterPages();
                     geometricParameter.Show();
+                    leftStatusLabel.Text = "几何参数配置";
                     break;
                 case "flow参数配置":
                     HideAllParameterPages();
                     flowParameter.Show();
+                    leftStatusLabel.Text = "flow参数配置";
                     break;
                 case "ps参数配置":
                     HideAllParameterPages();
                     psParameter.Show();
+                    leftStatusLabel.Text = "ps参数配置";
                     break;
                 case "工艺参数配置":
                     HideAllParameterPages();
                     processParameter.Show();
+                    leftStatusLabel.Text = "工艺参数配置";
                     break;
                 case "部件参数配置":
                     HideAllParameterPages();
                     componentParameter.Show();
+                    leftStatusLabel.Text = "部件参数配置";
                     break;
                 case "趋势监控":
                     HideAllParameterPages();
                     trendMonitor.Show();
+                    leftStatusLabel.Text = "趋势监控";
                     break;
                 case "仿真结果":
                     HideAllParameterPages();
                     simulationResult.Show();
+                    leftStatusLabel.Text = "仿真结果";
                     break;
                 case "数据回放":
                     HideAllParameterPages();
                     dataPlayback.Show();
+                    leftStatusLabel.Text = "数据回放";
                     break;
             }
         }
