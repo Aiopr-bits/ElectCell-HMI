@@ -32,6 +32,8 @@
             this.另存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.求解计算ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.开始计算ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.停止计算ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.查看曲线ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -39,8 +41,6 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.开始计算ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.停止计算ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -102,7 +102,22 @@
             this.停止计算ToolStripMenuItem});
             this.求解计算ToolStripMenuItem.Name = "求解计算ToolStripMenuItem";
             this.求解计算ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
-            this.求解计算ToolStripMenuItem.Text = "求解计算";
+            this.求解计算ToolStripMenuItem.Text = "仿真计算";
+            this.求解计算ToolStripMenuItem.Click += new System.EventHandler(this.求解计算ToolStripMenuItem_Click);
+            // 
+            // 开始计算ToolStripMenuItem
+            // 
+            this.开始计算ToolStripMenuItem.Name = "开始计算ToolStripMenuItem";
+            this.开始计算ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.开始计算ToolStripMenuItem.Text = "开始计算";
+            this.开始计算ToolStripMenuItem.Click += new System.EventHandler(this.开始计算ToolStripMenuItem_Click);
+            // 
+            // 停止计算ToolStripMenuItem
+            // 
+            this.停止计算ToolStripMenuItem.Name = "停止计算ToolStripMenuItem";
+            this.停止计算ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.停止计算ToolStripMenuItem.Text = "停止计算";
+            this.停止计算ToolStripMenuItem.Click += new System.EventHandler(this.停止计算ToolStripMenuItem_Click);
             // 
             // 查看曲线ToolStripMenuItem
             // 
@@ -155,20 +170,6 @@
             this.treeView1.Size = new System.Drawing.Size(214, 628);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
-            // 
-            // 开始计算ToolStripMenuItem
-            // 
-            this.开始计算ToolStripMenuItem.Name = "开始计算ToolStripMenuItem";
-            this.开始计算ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.开始计算ToolStripMenuItem.Text = "开始计算";
-            this.开始计算ToolStripMenuItem.Click += new System.EventHandler(this.开始计算ToolStripMenuItem_Click);
-            // 
-            // 停止计算ToolStripMenuItem
-            // 
-            this.停止计算ToolStripMenuItem.Name = "停止计算ToolStripMenuItem";
-            this.停止计算ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.停止计算ToolStripMenuItem.Text = "停止计算";
-            this.停止计算ToolStripMenuItem.Click += new System.EventHandler(this.停止计算ToolStripMenuItem_Click);
             // 
             // MainWindow
             // 

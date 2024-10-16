@@ -1139,5 +1139,10 @@ namespace ElectCell_HMI
                 Console.WriteLine(ex.StackTrace.ToString());
             }
         }
+
+        private void 求解计算ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
