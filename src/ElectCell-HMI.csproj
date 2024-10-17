@@ -64,6 +64,12 @@
     <Compile Include="Forms\StartPage.Designer.cs">
       <DependentUpon>StartPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ProcessDrawingPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ProcessDrawingPage.Designer.cs">
+      <DependentUpon>ProcessDrawingPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\SimulationResultPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -118,6 +124,9 @@
     <Compile Include="UserControls\ControlParameterPage.Designer.cs">
       <DependentUpon>ControlParameterPage.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UserControls\ProcessDrawingPage.resx">
+      <DependentUpon>ProcessDrawingPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\SimulationResultPage.resx">
       <DependentUpon>SimulationResultPage.cs</DependentUpon>
     </EmbeddedResource>

@@ -21,6 +21,7 @@ namespace ElectCell_HMI
         public TrendMonitorPage trendMonitor;                   // 趋势监控页面
         public SimulationResultPage simulationResult;           // 仿真结果页面
         public DataPlaybackPage dataPlayback;                   // 数据回放页面
+        public ProcessDrawingPage processDrawing;               // 工艺图绘制页面
 
         private Process proc;
         private bool isStoppedManually = false;
@@ -42,7 +43,7 @@ namespace ElectCell_HMI
         }
 
         private void InitializeStatusStrip()
-        { 
+        {
             leftStatusLabel = new ToolStripStatusLabel();
             leftStatusLabel.Text = "";
             ToolStripStatusLabel springLabel = new ToolStripStatusLabel();
@@ -68,8 +69,6 @@ namespace ElectCell_HMI
             TreeNode simulationParamsNode = new TreeNode("仿真参数配置");
             simulationParamsNode.Nodes.Add(new TreeNode("控制参数配置"));
             simulationParamsNode.Nodes.Add(new TreeNode("几何参数配置"));
-            //simulationParamsNode.Nodes.Add(new TreeNode("flow参数配置"));
-            //simulationParamsNode.Nodes.Add(new TreeNode("ps参数配置"));
             simulationParamsNode.Nodes.Add(new TreeNode("工艺参数配置"));
             simulationParamsNode.Nodes.Add(new TreeNode("部件参数配置"));
 
@@ -78,6 +77,7 @@ namespace ElectCell_HMI
             TreeNode autoTestNode = new TreeNode("自动测试");
 
             TreeNode dataMonitoringNode = new TreeNode("数据监控");
+            dataMonitoringNode.Nodes.Add(new TreeNode("工艺图"));
             dataMonitoringNode.Nodes.Add(new TreeNode("趋势监控"));
             dataMonitoringNode.Nodes.Add(new TreeNode("仿真结果"));
             dataMonitoringNode.Nodes.Add(new TreeNode("数据列表"));
@@ -130,6 +130,11 @@ namespace ElectCell_HMI
                     componentParameter.Show();
                     leftStatusLabel.Text = "部件参数配置";
                     break;
+                case "工艺图":
+                    HideAllParameterPages();
+                    processDrawing.Show();
+                    leftStatusLabel.Text = "工艺图";
+                    break;
                 case "趋势监控":
                     HideAllParameterPages();
                     trendMonitor.Show();
@@ -156,9 +161,11 @@ namespace ElectCell_HMI
             psParameter.Hide();
             processParameter.Hide();
             componentParameter.Hide();
+            processDrawing.Hide();
             trendMonitor.Hide();
             simulationResult.Hide();
             dataPlayback.Hide();
+
         }
 
         public void InitializeControlPanel()
@@ -193,11 +200,17 @@ namespace ElectCell_HMI
             tableLayoutPanel1.Controls.Add(componentParameter, 1, 0);
             componentParameter.Hide();
 
+            processDrawing = new ProcessDrawingPage(this);
+            processDrawing.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Controls.Add(processDrawing, 1, 0);
+            processDrawing.Hide();
+
             trendMonitor = new TrendMonitorPage(this);
             trendMonitor.Dock = DockStyle.Fill;
             tableLayoutPanel1.Controls.Add(trendMonitor, 1, 0);
             trendMonitor.Hide();
 
+            processDrawing.Hide();
             simulationResult = new SimulationResultPage(this);
             simulationResult.Dock = DockStyle.Fill;
             tableLayoutPanel1.Controls.Add(simulationResult, 1, 0);
