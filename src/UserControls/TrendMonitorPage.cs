@@ -17,6 +17,7 @@ namespace ElectCell_HMI
         private List<PointF> dataPoints2;
         private List<PointF> dataPoints3;
         private List<PointF> dataPoints4;
+        int comboBox1Index, comboBox2Index, comboBox3Index, comboBox4Index;
 
         public TrendMonitorPage(MainWindow mainWindow)
         {
@@ -28,6 +29,11 @@ namespace ElectCell_HMI
             dataPoints2 = new List<PointF>();
             dataPoints3 = new List<PointF>();
             dataPoints4 = new List<PointF>();
+
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox3.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox4.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
         private void MainWindow_TimerTicked(object sender, EventArgs e)
@@ -36,7 +42,7 @@ namespace ElectCell_HMI
             for (int i = 0; i < Data.result.result.Count; i++)
             {
                 float x = (float)Data.result.result[i][0];
-                float y = (float)Data.result.result[i][1];
+                float y = (float)Data.result.result[i][comboBox1Index+1];
                 dataPoints1.Add(new PointF(x, y));
             }
             DrawGraph(dataPoints1,pictureBox1);
@@ -45,7 +51,7 @@ namespace ElectCell_HMI
             for (int i = 0; i < Data.result.result.Count; i++)
             {
                 float x = (float)Data.result.result[i][0];
-                float y = (float)Data.result.result[i][2];
+                float y = (float)Data.result.result[i][comboBox2Index+1];
                 dataPoints2.Add(new PointF(x, y));
             }
             DrawGraph(dataPoints2, pictureBox2);
@@ -54,20 +60,35 @@ namespace ElectCell_HMI
             for (int i = 0; i < Data.result.result.Count; i++)
             {
                 float x = (float)Data.result.result[i][0];
-                float y = (float)Data.result.result[i][3];
+                float y = (float)Data.result.result[i][comboBox3Index+1];
                 dataPoints3.Add(new PointF(x, y));
             }
             DrawGraph(dataPoints3, pictureBox3);
 
-            //添加一个随时间变化的正交曲线
             dataPoints4.Clear();
             for (int i = 0; i < Data.result.result.Count; i++)
             {
-                float x = (float)Data.result.result[i][0]/100;
-                float y = (float)Math.Sin(x);
+                float x = (float)Data.result.result[i][0];
+                float y = (float)Data.result.result[i][comboBox4Index+1];
                 dataPoints4.Add(new PointF(x, y));
             }
             DrawGraph(dataPoints4, pictureBox4);
+
+            if (comboBox1.Items.Count == 0)
+            {
+                for (int i = 1; i < Data.result.header.Count; i++)
+                {
+                    comboBox1.Items.Add(Data.result.header[i]);
+                    comboBox2.Items.Add(Data.result.header[i]);
+                    comboBox3.Items.Add(Data.result.header[i]);
+                    comboBox4.Items.Add(Data.result.header[i]);
+                }
+
+                comboBox1.SelectedIndex = 0;
+                comboBox2.SelectedIndex = 24;
+                comboBox3.SelectedIndex = 32;
+                comboBox4.SelectedIndex = 40;
+            }
         }
 
         private void TrendMonitorPage_Resize(object sender, EventArgs e)
@@ -157,11 +178,56 @@ namespace ElectCell_HMI
             pictureBox.Image = bitmap;
         }
 
-
-
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            comboBox1Index= comboBox1.SelectedIndex;
+            dataPoints1.Clear();
+            for (int i = 0; i < Data.result.result.Count; i++)
+            {
+                float x = (float)Data.result.result[i][0];
+                float y = (float)Data.result.result[i][comboBox1Index + 1];
+                dataPoints1.Add(new PointF(x, y));
+            }
+            DrawGraph(dataPoints1, pictureBox1);
+        }
 
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboBox2Index = comboBox2.SelectedIndex;
+            dataPoints2.Clear();
+            for (int i = 0; i < Data.result.result.Count; i++)
+            {
+                float x = (float)Data.result.result[i][0];
+                float y = (float)Data.result.result[i][comboBox2Index + 1];
+                dataPoints2.Add(new PointF(x, y));
+            }
+            DrawGraph(dataPoints2, pictureBox2);
+        }
+
+        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboBox3Index = comboBox3.SelectedIndex;
+            dataPoints3.Clear();
+            for (int i = 0; i < Data.result.result.Count; i++)
+            {
+                float x = (float)Data.result.result[i][0];
+                float y = (float)Data.result.result[i][comboBox3Index + 1];
+                dataPoints3.Add(new PointF(x, y));
+            }
+            DrawGraph(dataPoints3, pictureBox3);
+        }
+
+        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            comboBox4Index = comboBox4.SelectedIndex;
+            dataPoints4.Clear();
+            for (int i = 0; i < Data.result.result.Count; i++)
+            {
+                float x = (float)Data.result.result[i][0];
+                float y = (float)Data.result.result[i][comboBox4Index + 1];
+                dataPoints4.Add(new PointF(x, y));
+            }
+            DrawGraph(dataPoints4, pictureBox4);
         }
     }
 }
