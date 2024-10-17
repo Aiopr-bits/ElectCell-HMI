@@ -38,7 +38,6 @@ namespace ElectCell_HMI
             InitializeControlPanel();
             BeautifyControls(this);
             InitializeTimer();
-
             InitializeStatusStrip();
         }
 
@@ -1214,7 +1213,14 @@ namespace ElectCell_HMI
 
         private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            controlParameter.SaveData();
+            geometricParameter.SaveData();
+            processParameter.SaveData();
+            componentParameter.SaveData();
 
+            saveFile(path);
+
+            MessageBox.Show("保存成功！");
         }
 
         private void 另存ToolStripMenuItem_Click(object sender, EventArgs e)

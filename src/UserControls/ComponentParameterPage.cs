@@ -579,6 +579,107 @@ namespace ElectCell_HMI
             }
         }
 
+        public void SaveData()
+        {
+            //// 保存 dataGridView1 的数据
+            //foreach (DataGridViewRow row in dataGridView1.Rows)
+            //{
+            //    if (row.IsNewRow || row.Cells["Flow"].Value == null || string.IsNullOrWhiteSpace(row.Cells["Flow"].Value.ToString()))
+            //    {
+            //        continue;
+            //    }
+
+            //    double flowValue = Convert.ToDouble(row.Cells["Flow"].Value);
+            //    // 假设 Data.componentParameter.electrolyticCell[0] 是当前选中的电解槽
+            //    var cell = Data.componentParameter.electrolyticCell[0];
+            //    cell.flow.Add(flowValue);
+            //    Data.componentParameter.electrolyticCell[0] = cell;
+            //}
+
+            //// 保存 dataGridView2 的数据
+            //foreach (DataGridViewRow row in dataGridView2.Rows)
+            //{
+            //    if (row.IsNewRow || row.Cells["Ps"].Value == null || string.IsNullOrWhiteSpace(row.Cells["Ps"].Value.ToString()))
+            //    {
+            //        continue;
+            //    }
+
+            //    double psValue = Convert.ToDouble(row.Cells["Ps"].Value);
+            //    // 假设 Data.componentParameter.electrolyticCell[0] 是当前选中的电解槽
+            //    var cell = Data.componentParameter.electrolyticCell[0];
+            //    cell.ps.Add(psValue);
+            //    Data.componentParameter.electrolyticCell[0] = cell;
+            //}
+
+            //// 保存 dataGridView3 的数据
+            //foreach (DataGridViewRow row in dataGridView3.Rows)
+            //{
+            //    if (row.IsNewRow || row.Cells["I_current"].Value == null || string.IsNullOrWhiteSpace(row.Cells["I_current"].Value.ToString()))
+            //    {
+            //        continue;
+            //    }
+
+            //    double currentValue = Convert.ToDouble(row.Cells["I_current"].Value);
+            //    // 假设 Data.componentParameter.electrolyticCell[0] 是当前选中的电解槽
+            //    var cell = Data.componentParameter.electrolyticCell[0];
+            //    cell.current = currentValue;
+            //    Data.componentParameter.electrolyticCell[0] = cell;
+            //}
+
+            //// 保存 dataGridView4 的数据
+            //foreach (DataGridViewRow row in dataGridView4.Rows)
+            //{
+            //    if (row.IsNewRow || row.Cells["Flow号"].Value == null || string.IsNullOrWhiteSpace(row.Cells["Flow号"].Value.ToString()) ||
+            //        row.Cells["氢气"].Value == null || string.IsNullOrWhiteSpace(row.Cells["氢气"].Value.ToString()) ||
+            //        row.Cells["氧气"].Value == null || string.IsNullOrWhiteSpace(row.Cells["氧气"].Value.ToString()) ||
+            //        row.Cells["水"].Value == null || string.IsNullOrWhiteSpace(row.Cells["水"].Value.ToString()) ||
+            //        row.Cells["管道直径"].Value == null || string.IsNullOrWhiteSpace(row.Cells["管道直径"].Value.ToString()) ||
+            //        row.Cells["管道长度"].Value == null || string.IsNullOrWhiteSpace(row.Cells["管道长度"].Value.ToString()))
+            //    {
+            //        continue;
+            //    }
+
+            //    int flowNumber = Convert.ToInt32(row.Cells["Flow号"].Value);
+            //    double hydrogen = Convert.ToDouble(row.Cells["氢气"].Value);
+            //    double oxygen = Convert.ToDouble(row.Cells["氧气"].Value);
+            //    double water = Convert.ToDouble(row.Cells["水"].Value);
+            //    double pipeDiameter = Convert.ToDouble(row.Cells["管道直径"].Value);
+            //    double pipeLength = Convert.ToDouble(row.Cells["管道长度"].Value);
+
+            //    // 假设 Data.flowParameter.flow 是一个 List<List<double>>
+            //    Data.flowParameter.flow.Add(new List<double> { flowNumber, hydrogen, oxygen, water, pipeDiameter, pipeLength });
+            //}
+
+            //// 保存 dataGridView5 的数据
+            //foreach (DataGridViewRow row in dataGridView5.Rows)
+            //{
+            //    if (row.IsNewRow || row.Cells["PS号"].Value == null || string.IsNullOrWhiteSpace(row.Cells["PS号"].Value.ToString()) ||
+            //        row.Cells["物质的量"].Value == null || string.IsNullOrWhiteSpace(row.Cells["物质的量"].Value.ToString()) ||
+            //        row.Cells["摩尔体积"].Value == null || string.IsNullOrWhiteSpace(row.Cells["摩尔体积"].Value.ToString()) ||
+            //        row.Cells["压强"].Value == null || string.IsNullOrWhiteSpace(row.Cells["压强"].Value.ToString()) ||
+            //        row.Cells["液体高度"].Value == null || string.IsNullOrWhiteSpace(row.Cells["液体高度"].Value.ToString()) ||
+            //        row.Cells["气体高度"].Value == null || string.IsNullOrWhiteSpace(row.Cells["气体高度"].Value.ToString()) ||
+            //        row.Cells["氢气"].Value == null || string.IsNullOrWhiteSpace(row.Cells["氢气"].Value.ToString()) ||
+            //        row.Cells["氧气"].Value == null || string.IsNullOrWhiteSpace(row.Cells["氧气"].Value.ToString()))
+            //    {
+            //        continue;
+            //    }
+
+            //    int psNumber = Convert.ToInt32(row.Cells["PS号"].Value);
+            //    double substanceAmount = Convert.ToDouble(row.Cells["物质的量"].Value);
+            //    double molarVolume = Convert.ToDouble(row.Cells["摩尔体积"].Value);
+            //    double pressure = Convert.ToDouble(row.Cells["压强"].Value);
+            //    double liquidHeight = Convert.ToDouble(row.Cells["液体高度"].Value);
+            //    double gasHeight = Convert.ToDouble(row.Cells["气体高度"].Value);
+            //    double hydrogen = Convert.ToDouble(row.Cells["氢气"].Value);
+            //    double oxygen = Convert.ToDouble(row.Cells["氧气"].Value);
+
+            //    // 假设 Data.psParameter.ps 是一个 List<List<double>>
+            //    Data.psParameter.ps.Add(new List<double> { psNumber, substanceAmount, molarVolume, pressure, liquidHeight, gasHeight, hydrogen, oxygen });
+            //}
+        }
+
+
     }
 }
 

@@ -97,5 +97,187 @@ namespace ElectCell_HMI
             dt.Rows.Add(dr);
         }
 
+        public void SaveData()
+        {
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.Cells["变量名"].Value == null || string.IsNullOrWhiteSpace(row.Cells["变量名"].Value.ToString()) ||
+                    row.Cells["变量值"].Value == null || string.IsNullOrWhiteSpace(row.Cells["变量值"].Value.ToString()))
+                {
+                    return;
+                }
+
+                string variableName = row.Cells["变量名"].Value.ToString();
+                double variableValue = Convert.ToDouble(row.Cells["变量值"].Value);
+
+                switch (variableName)
+                {
+                    case "sigma_e_1":
+                        Data.processParameter.sigma_e_1 = variableValue;
+                        break;
+                    case "sigma_h2_r1":
+                        Data.processParameter.sigma_h2_r1 = variableValue;
+                        break;
+                    case "sigma_h2o_r1":
+                        Data.processParameter.sigma_h2o_r1 = variableValue;
+                        break;
+                    case "sigma_e_2":
+                        Data.processParameter.sigma_e_2 = variableValue;
+                        break;
+                    case "sigma_h2o_r2":
+                        Data.processParameter.sigma_h2o_r2 = variableValue;
+                        break;
+                    case "sigma_o2_r2":
+                        Data.processParameter.sigma_o2_r2 = variableValue;
+                        break;
+                    case "eta_F":
+                        Data.processParameter.eta_F = variableValue;
+                        break;
+                    case "F":
+                        Data.processParameter.F = variableValue;
+                        break;
+                    case "n_cell":
+                        Data.processParameter.n_cell = variableValue;
+                        break;
+                    case "a_cell":
+                        Data.processParameter.a_cell = variableValue;
+                        break;
+                    case "A_mem":
+                        Data.processParameter.A_mem = variableValue;
+                        break;
+                    case "thickness_mem":
+                        Data.processParameter.thickness_mem = variableValue;
+                        break;
+                    case "porosity_mem":
+                        Data.processParameter.porosity_mem = variableValue;
+                        break;
+                    case "tortuosity_mem":
+                        Data.processParameter.tortuosity_mem = variableValue;
+                        break;
+                    case "wt_KOHsln":
+                        Data.processParameter.wt_KOHsln = variableValue;
+                        break;
+                    case "k":
+                        Data.processParameter.k = variableValue;
+                        break;
+                    case "D_h2":
+                        Data.processParameter.D_h2 = variableValue;
+                        break;
+                    case "D_o2":
+                        Data.processParameter.D_o2 = variableValue;
+                        break;
+                    case "k_x_h2":
+                        Data.processParameter.k_x_h2 = variableValue;
+                        break;
+                    case "k_x_o2":
+                        Data.processParameter.k_x_o2 = variableValue;
+                        break;
+                    case "eps_h2_Darcy":
+                        Data.processParameter.eps_h2_Darcy = variableValue;
+                        break;
+                    case "eps_o2_Darcy":
+                        Data.processParameter.eps_o2_Darcy = variableValue;
+                        break;
+                    case "tao_b":
+                        Data.processParameter.tao_b = variableValue;
+                        break;
+                    case "FC_flash":
+                        Data.processParameter.FC_flash = variableValue;
+                        break;
+                    case "R":
+                        Data.processParameter.R = variableValue;
+                        break;
+                    case "eta":
+                        Data.processParameter.eta = variableValue;
+                        break;
+                    case "M_h2":
+                        Data.processParameter.M_h2 = variableValue;
+                        break;
+                    case "M_o2":
+                        Data.processParameter.M_o2 = variableValue;
+                        break;
+                    case "M_n2":
+                        Data.processParameter.M_n2 = variableValue;
+                        break;
+                    case "M_koh":
+                        Data.processParameter.M_koh = variableValue;
+                        break;
+                    case "M_h2o":
+                        Data.processParameter.M_h2o = variableValue;
+                        break;
+                    case "rho_h2o":
+                        Data.processParameter.rho_h2o = variableValue;
+                        break;
+                    case "rho_h2":
+                        Data.processParameter.rho_h2 = variableValue;
+                        break;
+                    case "rho_o2":
+                        Data.processParameter.rho_o2 = variableValue;
+                        break;
+                    case "rho_sln_koh":
+                        Data.processParameter.rho_sln_koh = variableValue;
+                        break;
+                    case "g":
+                        Data.processParameter.g = variableValue;
+                        break;
+                    case "Re7_0":
+                        Data.processParameter.Re7_0 = variableValue;
+                        break;
+                    case "mu":
+                        Data.processParameter.mu = variableValue;
+                        break;
+                    case "cv1":
+                        Data.processParameter.cv1 = variableValue;
+                        break;
+                    case "cv2":
+                        Data.processParameter.cv2 = variableValue;
+                        break;
+                    case "P_cathode_sep_out":
+                        Data.processParameter.P_cathode_sep_out = variableValue;
+                        break;
+                    case "P_anode_sep_out":
+                        Data.processParameter.P_anode_sep_out = variableValue;
+                        break;
+                    case "P_env":
+                        Data.processParameter.P_env = variableValue;
+                        break;
+                    case "T_elin0":
+                        Data.processParameter.T_elin0 = variableValue;
+                        break;
+                    case "T_k0":
+                        Data.processParameter.T_k0 = variableValue;
+                        break;
+                    case "T_K":
+                        Data.processParameter.T_K = variableValue;
+                        break;
+                    case "T_btout":
+                        Data.processParameter.T_btout = variableValue;
+                        break;
+                    case "T_btout0":
+                        Data.processParameter.T_btout0 = variableValue;
+                        break;
+                    case "T_cw_in":
+                        Data.processParameter.T_cw_in = variableValue;
+                        break;
+                    case "T_cw_out0":
+                        Data.processParameter.T_cw_out0 = variableValue;
+                        break;
+                    case "T_ambi":
+                        Data.processParameter.T_ambi = variableValue;
+                        break;
+                    case "T_pipeout0":
+                        Data.processParameter.T_pipeout0 = variableValue;
+                        break;
+                    case "T_btout_ano0":
+                        Data.processParameter.T_btout_ano0 = variableValue;
+                        break;
+                    case "T_btout_cat0":
+                        Data.processParameter.T_btout_cat0 = variableValue;
+                        break;
+                }
+            }
+        }
+
+
     }
 }

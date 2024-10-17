@@ -65,5 +65,70 @@ namespace ElectCell_HMI
             dt.Rows.Add(dr);
         }
 
+        public void SaveData()
+        {
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.Cells["变量名"].Value == null || string.IsNullOrWhiteSpace(row.Cells["变量名"].Value.ToString()) ||
+                    row.Cells["变量值"].Value == null || string.IsNullOrWhiteSpace(row.Cells["变量值"].Value.ToString()))
+                {
+                    return;
+                }
+
+                string variableName = row.Cells["变量名"].Value.ToString();
+                double variableValue = Convert.ToDouble(row.Cells["变量值"].Value);
+
+                switch (variableName)
+                {
+                    case "L_ca2se":
+                        Data.geometryParameter.L_ca2se = variableValue;
+                        break;
+                    case "L_an2se":
+                        Data.geometryParameter.L_an2se = variableValue;
+                        break;
+                    case "D_sc":
+                        Data.geometryParameter.D_sc = variableValue;
+                        break;
+                    case "l_sc":
+                        Data.geometryParameter.l_sc = variableValue;
+                        break;
+                    case "thickness_cat":
+                        Data.geometryParameter.thickness_cat = variableValue;
+                        break;
+                    case "thickness_ano":
+                        Data.geometryParameter.thickness_ano = variableValue;
+                        break;
+                    case "distance_am":
+                        Data.geometryParameter.distance_am = variableValue;
+                        break;
+                    case "distance_cm":
+                        Data.geometryParameter.distance_cm = variableValue;
+                        break;
+                    case "Volume_hotside":
+                        Data.geometryParameter.Volume_hotside = variableValue;
+                        break;
+                    case "Volume_codeside":
+                        Data.geometryParameter.Volume_codeside = variableValue;
+                        break;
+                    case "di_stack":
+                        Data.geometryParameter.di_stack = variableValue;
+                        break;
+                    case "Area_sep":
+                        Data.geometryParameter.Area_sep = variableValue;
+                        break;
+                    case "Area_stack":
+                        Data.geometryParameter.Area_stack = variableValue;
+                        break;
+                    case "C_tsep":
+                        Data.geometryParameter.C_tsep = variableValue;
+                        break;
+                    case "C_tk":
+                        Data.geometryParameter.C_tk = variableValue;
+                        break;
+                }
+            }
+        }
+
+
     }
 }

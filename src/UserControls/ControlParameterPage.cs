@@ -64,6 +64,68 @@ namespace ElectCell_HMI
             dt.Rows.Add(dr);
         }
 
+        public void SaveData()
+        {
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.Cells["变量名"].Value == null || string.IsNullOrWhiteSpace(row.Cells["变量名"].Value.ToString()) ||
+                    row.Cells["变量值"].Value == null || string.IsNullOrWhiteSpace(row.Cells["变量值"].Value.ToString()))
+                {
+                    return;
+                }
+
+                string variableName = row.Cells["变量名"].Value.ToString();
+                double variableValue = Convert.ToDouble(row.Cells["变量值"].Value);
+
+                switch (variableName)
+                {
+                    case "start_time":
+                        Data.controlParameter.start_time = variableValue;
+                        break;
+                    case "end_time":
+                        Data.controlParameter.end_time = variableValue;
+                        break;
+                    case "delta_t":
+                        Data.controlParameter.delta_t = variableValue;
+                        break;
+                    case "cal_current":
+                        Data.controlParameter.cal_current = Convert.ToBoolean(variableValue);
+                        break;
+                    case "cal_valve":
+                        Data.controlParameter.cal_valve = Convert.ToBoolean(variableValue);
+                        break;
+                    case "cal_pump":
+                        Data.controlParameter.cal_pump = Convert.ToBoolean(variableValue);
+                        break;
+                    case "cal_balance_pipe":
+                        Data.controlParameter.cal_balance_pipe = Convert.ToBoolean(variableValue);
+                        break;
+                    case "cal_mini_1":
+                        Data.controlParameter.cal_mini_1 = Convert.ToBoolean(variableValue);
+                        break;
+                    case "cal_mini_2":
+                        Data.controlParameter.cal_mini_2 = Convert.ToBoolean(variableValue);
+                        break;
+                    case "use_ff_static":
+                        Data.controlParameter.use_ff_static = Convert.ToBoolean(variableValue);
+                        break;
+                    case "IsMixed_circleType":
+                        Data.controlParameter.IsMixed_circleType = Convert.ToBoolean(variableValue);
+                        break;
+                    case "cal_superSat_fickTrans":
+                        Data.controlParameter.cal_superSat_fickTrans = Convert.ToBoolean(variableValue);
+                        break;
+                    case "cal_ShellTube_heatExchanger":
+                        Data.controlParameter.cal_ShellTube_heatExchanger = Convert.ToBoolean(variableValue);
+                        break;
+                    case "cal_Ele_heater":
+                        Data.controlParameter.cal_Ele_heater = Convert.ToBoolean(variableValue);
+                        break;
+                }
+            }
+        }
+
+
 
     }
 }
