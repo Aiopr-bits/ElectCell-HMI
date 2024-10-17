@@ -1225,7 +1225,24 @@ namespace ElectCell_HMI
 
         private void 另存ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
+            {
+                folderBrowserDialog.Description = "请选择保存文件夹";
 
+                if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string newPath = folderBrowserDialog.SelectedPath;
+
+                    controlParameter.SaveData();
+                    geometricParameter.SaveData();
+                    processParameter.SaveData();
+                    componentParameter.SaveData();
+
+                    saveFile(newPath);
+
+                    MessageBox.Show("另存成功！");
+                }
+            }
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
