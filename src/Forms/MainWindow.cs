@@ -1144,7 +1144,7 @@ namespace ElectCell_HMI
 
         private async void 开始计算ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[4].Nodes[0];
+            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[4].Nodes[1];
 
             try
             {
