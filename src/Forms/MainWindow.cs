@@ -986,14 +986,14 @@ namespace ElectCell_HMI
             {
                 // 全局字体和颜色设置
                 control.Font = new Font("Arial", 10);
-                control.BackColor = Color.FromArgb(255, 255, 255);
+                control.BackColor = Color.FromArgb(239, 239, 239);
                 control.ForeColor = Color.FromArgb(30, 30, 30);
 
                 if (control is DataGridView dataGridView) // 数据表格
                 {
-                    dataGridView.BackgroundColor = Color.FromArgb(255, 255, 255);
-                    dataGridView.BorderStyle = BorderStyle.None;
-                    dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+                    dataGridView.BackgroundColor = Color.FromArgb(239, 239, 239);
+                    dataGridView.BorderStyle = BorderStyle.FixedSingle;
+                    dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.Single;
                     dataGridView.DefaultCellStyle.SelectionBackColor = Color.FromArgb(173, 216, 230);
                     dataGridView.DefaultCellStyle.SelectionForeColor = Color.FromArgb(30, 30, 30);
                     dataGridView.DefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
@@ -1033,10 +1033,10 @@ namespace ElectCell_HMI
                 }
                 else if (control is TreeView treeView) // 树视图
                 {
-                    treeView.BackColor = Color.FromArgb(255, 255, 255);
+                    treeView.BackColor = Color.FromArgb(239, 239, 239);
                     treeView.ForeColor = Color.FromArgb(30, 30, 30);
                     treeView.Font = new Font(treeView.Font.FontFamily, 10);
-                    treeView.BorderStyle = BorderStyle.None;
+                    treeView.BorderStyle = BorderStyle.FixedSingle;
 
                     // 自定义绘制节点
                     treeView.DrawMode = TreeViewDrawMode.OwnerDrawText;
@@ -1071,14 +1071,14 @@ namespace ElectCell_HMI
                 }
                 else if (control is RichTextBox richTextBox) // 富文本框
                 {
-                    richTextBox.BackColor = Color.FromArgb(255, 255, 255);
+                    richTextBox.BackColor = Color.FromArgb(239, 239, 239);
                     richTextBox.ForeColor = Color.FromArgb(30, 30, 30);
                     richTextBox.Font = new Font(richTextBox.Font.FontFamily, 10);
                     richTextBox.BorderStyle = BorderStyle.FixedSingle;
                 }
                 else if (control is PictureBox pictureBox) // 图片框
                 {
-                    pictureBox.BackColor = Color.FromArgb(255, 255, 255);
+                    pictureBox.BackColor = Color.FromArgb(239, 239, 239);
                     pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     pictureBox.BorderStyle = BorderStyle.FixedSingle;
                 }
