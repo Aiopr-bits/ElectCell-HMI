@@ -81,9 +81,9 @@
             this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(658, 3);
+            this.comboBox1.Location = new System.Drawing.Point(705, 3);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(127, 20);
+            this.comboBox1.Size = new System.Drawing.Size(80, 20);
             this.comboBox1.TabIndex = 0;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -91,9 +91,9 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(527, 0);
+            this.label1.Location = new System.Drawing.Point(627, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(125, 22);
+            this.label1.Size = new System.Drawing.Size(72, 22);
             this.label1.TabIndex = 1;
             this.label1.Text = "Time:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;

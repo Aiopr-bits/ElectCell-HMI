@@ -94,36 +94,8 @@ namespace ElectCell_HMI
             treeView1.Nodes.Add(rootNode);
         }
 
-        public void RestoreTreeViewColor()
-        {
-            if (treeView1 == null)
-                return;
-
-            void SetNodeColor(TreeNodeCollection nodes)
-            {
-                foreach (TreeNode node in nodes)
-                {
-                    node.ForeColor = Color.Black;
-                    node.BackColor = Color.FromArgb(239,239,239);
-
-                    if (node.Nodes.Count > 0)
-                    {
-                        SetNodeColor(node.Nodes);
-                    }
-                }
-            }
-
-            SetNodeColor(treeView1.Nodes);
-        }
-
-
         public void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            //处理节点颜色
-            RestoreTreeViewColor();
-            e.Node.BackColor = Color.FromArgb(0, 120, 215);
-            e.Node.ForeColor = Color.White;
-
             switch (e.Node.Text)
             {
                 case "控制参数配置":
@@ -992,7 +964,55 @@ namespace ElectCell_HMI
 
         public void 关于ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("软件版本：V1.0", "关于");
+            MessageBox.Show("软件版本：V1.1", "关于");
+        }
+
+        private void TreeView_DrawNode(object sender, DrawTreeNodeEventArgs e)
+        {
+            // 自定义节点的绘制
+            if (e.Node.IsSelected)
+            {
+                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(0, 120, 215)), e.Bounds);
+                TextRenderer.DrawText(e.Graphics, e.Node.Text, e.Node.NodeFont ?? ((TreeView)sender).Font, e.Bounds, Color.FromArgb(239, 239, 239));
+            }
+            else
+            {
+                e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(239, 239, 239)), e.Bounds);
+                TextRenderer.DrawText(e.Graphics, e.Node.Text, e.Node.NodeFont ?? ((TreeView)sender).Font, e.Bounds, e.Node.ForeColor);
+            }
+        }
+
+
+        private void TreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            // 单击节点文本时展开或收起节点
+            if (e.Node.IsExpanded)
+            {
+                e.Node.Collapse();
+            }
+            else
+            {
+                e.Node.Expand();
+            }
+        }
+
+        private void SetNodeIcon(TreeNode node)
+        {
+            if (node.Nodes.Count > 0)
+            {
+                node.ImageIndex = 1; // 有子节点的图标
+                node.SelectedImageIndex = 1; // 有子节点的图标
+            }
+            else
+            {
+                node.ImageIndex = 0; // 没有子节点的图标
+                node.SelectedImageIndex = 0; // 没有子节点的图标
+            }
+
+            foreach (TreeNode childNode in node.Nodes)
+            {
+                SetNodeIcon(childNode);
+            }
         }
 
         public void BeautifyControls(Control parent)
@@ -1048,19 +1068,40 @@ namespace ElectCell_HMI
                 }
                 else if (control is TreeView treeView) // 树视图
                 {
-                    treeView.BackColor = Color.FromArgb(239, 239, 239);
-                    treeView.ForeColor = Color.FromArgb(30, 30, 30);
-                    treeView.Font = new Font(treeView.Font.FontFamily, 10);
-                    treeView.BorderStyle = BorderStyle.FixedSingle;
+                    treeView.DrawMode = TreeViewDrawMode.OwnerDrawText;
+                    treeView.ShowLines = false;
+                    treeView.ShowRootLines = false;
+                    treeView.ShowPlusMinus = false;
 
-                    treeView.ItemHeight = 25;
-                    treeView.Scrollable = true;
+                    // 处理DrawNode事件
+                    treeView.DrawNode += TreeView_DrawNode;
 
-                    // 滚轮事件
-                    treeView.MouseWheel += (s, e) =>
+                    // 处理NodeMouseClick事件
+                    treeView.NodeMouseClick += TreeView_NodeMouseClick;
+
+                    // 创建ImageList并添加图标
+                    ImageList imageList = new ImageList();
+                    imageList.Images.Add(Image.FromFile(".\\res\\文件.png")); // 没有子节点的图标
+                    imageList.Images.Add(Image.FromFile(".\\res\\文件夹.png")); // 有子节点的图标
+
+                    treeView.ImageList = imageList;
+
+                    // 设置节点的图标
+                    foreach (TreeNode node in treeView.Nodes)
                     {
-                        treeView.TopNode = e.Delta > 0 ? treeView.TopNode?.PrevVisibleNode : treeView.TopNode?.NextVisibleNode;
-                    };
+                        SetNodeIcon(node);
+                    }
+
+                    // 设置StateImageList
+                    ImageList stateImageList = new ImageList();
+                    stateImageList.ImageSize = new Size(64, 64);
+                    stateImageList.Images.Add(Image.FromFile(".\\res\\展开.png")); // 展开图标
+                    stateImageList.Images.Add(Image.FromFile(".\\res\\收起.png")); // 收起图标
+
+                    treeView.StateImageList = stateImageList;
+
+                    treeView.BeforeExpand += (s, e) => e.Node.StateImageIndex = 0; // 展开图标
+                    treeView.BeforeCollapse += (s, e) => e.Node.StateImageIndex = 1; // 收起图标
                 }
                 else if (control is Label label) // 标签
                 {
