@@ -34,6 +34,12 @@ namespace ElectCell_HMI
             comboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox3.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox4.DropDownStyle = ComboBoxStyle.DropDownList;
+
+            // 初始化每个 PictureBox
+            DrawGraph(new List<PointF>(), pictureBox1,false);
+            DrawGraph(new List<PointF>(), pictureBox2, false);
+            DrawGraph(new List<PointF>(), pictureBox3, false);
+            DrawGraph(new List<PointF>(), pictureBox4, false);
         }
 
         private void MainWindow_TimerTicked(object sender, EventArgs e)
@@ -108,9 +114,9 @@ namespace ElectCell_HMI
             DrawGraph(dataPoints4, pictureBox4);
         }
 
-        private void DrawGraph(List<PointF> dataPoints, System.Windows.Forms.PictureBox pictureBox)
+        private void DrawGraph(List<PointF> dataPoints, System.Windows.Forms.PictureBox pictureBox, bool drawDataPoints = true)
         {
-            if (pictureBox.Width == 0 || pictureBox.Height == 0 || dataPoints.Count == 0)
+            if (pictureBox.Width == 0 || pictureBox.Height == 0)
                 return;
 
             // 创建一个高分辨率的 Bitmap
@@ -125,11 +131,16 @@ namespace ElectCell_HMI
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
                 g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
 
-                // 计算数据点的最大值和最小值
-                float minX = dataPoints.Min(p => p.X);
-                float maxX = dataPoints.Max(p => p.X);
-                float minY = dataPoints.Min(p => p.Y);
-                float maxY = dataPoints.Max(p => p.Y);
+                // 设置坐标轴
+                Pen axisPen = new Pen(Color.Black, 2 * scaleFactor);
+                g.DrawLine(axisPen, 50 * scaleFactor, 10 * scaleFactor, 50 * scaleFactor, (pictureBox.Height - 50) * scaleFactor); // Y轴
+                g.DrawLine(axisPen, 50 * scaleFactor, (pictureBox.Height - 50) * scaleFactor, (pictureBox.Width - 10) * scaleFactor, (pictureBox.Height - 50) * scaleFactor); // X轴
+
+                // 计算数据点的最小值和最大值
+                float minX = dataPoints.Count > 0 ? dataPoints.Min(p => p.X) : 0;
+                float maxX = dataPoints.Count > 0 ? dataPoints.Max(p => p.X) : 100;
+                float minY = dataPoints.Count > 0 ? dataPoints.Min(p => p.Y) : 0;
+                float maxY = dataPoints.Count > 0 ? dataPoints.Max(p => p.Y) : 100;
 
                 // 如果 minY 和 maxY 相等，设置一个默认范围
                 if (minY == maxY)
@@ -138,29 +149,24 @@ namespace ElectCell_HMI
                     maxY += 1;
                 }
 
-                // 设置坐标轴
-                Pen axisPen = new Pen(Color.Black, 2 * scaleFactor);
-                g.DrawLine(axisPen, 50 * scaleFactor, 10 * scaleFactor, 50 * scaleFactor, (pictureBox.Height - 50) * scaleFactor); // Y轴
-                g.DrawLine(axisPen, 50 * scaleFactor, (pictureBox.Height - 50) * scaleFactor, (pictureBox.Width - 10) * scaleFactor, (pictureBox.Height - 50) * scaleFactor); // X轴
-
                 // 绘制网格线和坐标标签
                 Pen gridPen = new Pen(Color.LightGray, 1 * scaleFactor);
                 Font labelFont = new Font("Arial", 8 * scaleFactor);
                 for (int i = 50 * scaleFactor; i < (pictureBox.Width - 10) * scaleFactor; i += 40 * scaleFactor) // 增加间隔
                 {
                     g.DrawLine(gridPen, i, 10 * scaleFactor, i, (pictureBox.Height - 50) * scaleFactor);
-                    float xValue = minX + (i - 50 * scaleFactor) / (float)((pictureBox.Width - 60) * scaleFactor) * (maxX - minX);
-                    g.DrawString(xValue.ToString("0"), labelFont, Brushes.Black, new PointF(i, (pictureBox.Height - 45) * scaleFactor));
+                    float labelX = minX + (i - 50 * scaleFactor) / (float)((pictureBox.Width - 60) * scaleFactor) * (maxX - minX);
+                    g.DrawString(labelX.ToString("0.0"), labelFont, Brushes.Black, new PointF(i, (pictureBox.Height - 45) * scaleFactor));
                 }
                 for (int i = 10 * scaleFactor; i < (pictureBox.Height - 50) * scaleFactor; i += 20 * scaleFactor)
                 {
                     g.DrawLine(gridPen, 50 * scaleFactor, i, (pictureBox.Width - 10) * scaleFactor, i);
-                    float yValue = maxY - (i - 10 * scaleFactor) / (float)((pictureBox.Height - 60) * scaleFactor) * (maxY - minY);
-                    g.DrawString(yValue.ToString("0"), labelFont, Brushes.Black, new PointF(5 * scaleFactor, i - 5 * scaleFactor));
+                    float labelY = maxY - (i - 10 * scaleFactor) / (float)((pictureBox.Height - 60) * scaleFactor) * (maxY - minY);
+                    g.DrawString(labelY.ToString("0.0"), labelFont, Brushes.Black, new PointF(5 * scaleFactor, i - 5 * scaleFactor));
                 }
 
                 // 绘制数据点
-                if (dataPoints.Count > 1)
+                if (drawDataPoints && dataPoints.Count > 1)
                 {
                     Pen dataPen = new Pen(Color.Blue, 2 * scaleFactor);
                     for (int i = 1; i < dataPoints.Count; i++)
@@ -172,21 +178,12 @@ namespace ElectCell_HMI
                         g.DrawLine(dataPen, p1, p2);
                     }
                 }
-
-                // 绘制标题
-                //Font titleFont = new Font("Arial", 14 * scaleFactor, FontStyle.Bold);
-                //g.DrawString("", titleFont, Brushes.Black, new PointF((pictureBox.Width / 2 - 50) * scaleFactor, 10 * scaleFactor));
-
-                // 绘制坐标轴标签
-                //g.DrawString("X轴", labelFont, Brushes.Black, new PointF((pictureBox.Width - 30) * scaleFactor, (pictureBox.Height - 40) * scaleFactor));
-                //g.DrawString("Y轴", labelFont, Brushes.Black, new PointF(10 * scaleFactor, 20 * scaleFactor));
             }
 
             // 缩放 Bitmap 到 PictureBox 的大小
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox.Image = bitmap;
         }
-
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
