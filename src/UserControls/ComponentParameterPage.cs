@@ -19,7 +19,6 @@ namespace ElectCell_HMI
             InitializeComponent();
             initTreeview();
             originalColumnWidth = tableLayoutPanel3.ColumnStyles[2].Width;
-
             treeView1.SelectedNode = treeView1.Nodes[0].Nodes[0].Nodes[0];
         }
 

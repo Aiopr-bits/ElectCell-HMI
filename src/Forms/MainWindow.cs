@@ -1066,20 +1066,9 @@ namespace ElectCell_HMI
                 {
                     label.BackColor = Color.Transparent;
                     label.ForeColor = Color.FromArgb(70, 130, 180);
-                    label.Font = new Font(label.Font.FontFamily, 10, FontStyle.Regular);
+                    label.Font = new Font(label.Font.FontFamily, 15, FontStyle.Bold);
                     label.TextAlign = ContentAlignment.MiddleCenter;
                     label.BorderStyle = BorderStyle.None;
-
-                    // 鼠标事件 - 悬停、离开
-                    label.MouseEnter += (s, e) => label.ForeColor = Color.FromArgb(30, 144, 255);
-                    label.MouseLeave += (s, e) => label.ForeColor = Color.FromArgb(70, 130, 180);
-                }
-                else if (control is RichTextBox richTextBox) // 富文本框
-                {
-                    richTextBox.BackColor = Color.FromArgb(239, 239, 239);
-                    richTextBox.ForeColor = Color.FromArgb(30, 30, 30);
-                    richTextBox.Font = new Font(richTextBox.Font.FontFamily, 10);
-                    richTextBox.BorderStyle = BorderStyle.FixedSingle;
                 }
                 else if (control is PictureBox pictureBox) // 图片框
                 {
