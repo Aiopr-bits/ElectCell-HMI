@@ -65,8 +65,35 @@ namespace ElectCell_HMI
             treeView1.ExpandAll();
         }
 
+        public void RestoreTreeViewColor()
+        {
+            if (treeView1 == null)
+                return;
+
+            void SetNodeColor(TreeNodeCollection nodes)
+            {
+                foreach (TreeNode node in nodes)
+                {
+                    node.ForeColor = Color.Black;
+                    node.BackColor = Color.FromArgb(239, 239, 239);
+
+                    if (node.Nodes.Count > 0)
+                    {
+                        SetNodeColor(node.Nodes);
+                    }
+                }
+            }
+
+            SetNodeColor(treeView1.Nodes);
+        }
+
         public void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            //处理节点颜色
+            RestoreTreeViewColor();
+            e.Node.BackColor = Color.FromArgb(0, 120, 215);
+            e.Node.ForeColor = Color.White;
+
             string selectedNode = e.Node.Text;
             DataTable dt1 = new DataTable();
             DataTable dt2 = new DataTable();

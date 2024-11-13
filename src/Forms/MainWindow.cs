@@ -96,8 +96,36 @@ namespace ElectCell_HMI
             treeView1.Nodes.Add(rootNode);
         }
 
+        public void RestoreTreeViewColor()
+        {
+            if (treeView1 == null)
+                return;
+
+            void SetNodeColor(TreeNodeCollection nodes)
+            {
+                foreach (TreeNode node in nodes)
+                {
+                    node.ForeColor = Color.Black;
+                    node.BackColor = Color.FromArgb(239,239,239);
+
+                    if (node.Nodes.Count > 0)
+                    {
+                        SetNodeColor(node.Nodes);
+                    }
+                }
+            }
+
+            SetNodeColor(treeView1.Nodes);
+        }
+
+
         public void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            //处理节点颜色
+            RestoreTreeViewColor();
+            e.Node.BackColor = Color.FromArgb(0, 120, 215);
+            e.Node.ForeColor = Color.White;
+
             switch (e.Node.Text)
             {
                 case "控制参数配置":
@@ -1037,16 +1065,6 @@ namespace ElectCell_HMI
                     treeView.ForeColor = Color.FromArgb(30, 30, 30);
                     treeView.Font = new Font(treeView.Font.FontFamily, 10);
                     treeView.BorderStyle = BorderStyle.FixedSingle;
-
-                    // 自定义绘制节点
-                    treeView.DrawMode = TreeViewDrawMode.OwnerDrawText;
-                    treeView.DrawNode += (s, e) =>
-                    {
-                        e.DrawDefault = true;
-                        Color nodeBackColor = (e.State & TreeNodeStates.Selected) != 0 ? Color.FromArgb(173, 216, 230) : treeView.BackColor;
-                        e.Graphics.FillRectangle(new SolidBrush(nodeBackColor), e.Bounds);
-                        TextRenderer.DrawText(e.Graphics, e.Node.Text, treeView.Font, e.Bounds, treeView.ForeColor, TextFormatFlags.GlyphOverhangPadding);
-                    };
 
                     treeView.ItemHeight = 25;
                     treeView.Scrollable = true;
