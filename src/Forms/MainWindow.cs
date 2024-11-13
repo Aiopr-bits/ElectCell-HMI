@@ -18,7 +18,6 @@ namespace ElectCell_HMI
         public PSParameterPage psParameter;                     // ps参数配置页面
         public ProcessParameterPage processParameter;           // 工艺参数配置页面
         public ComponentParameterPage componentParameter;       // 部件参数配置页面
-        public TrendMonitorPage trendMonitor;                   // 趋势监控页面
         public SimulationResultPage simulationResult;           // 仿真结果页面
         public DataPlaybackPage dataPlayback;                   // 数据回放页面
         public ProcessDrawingPage processDrawing;               // 系统工艺绘制页面
@@ -78,7 +77,6 @@ namespace ElectCell_HMI
 
             TreeNode dataMonitoringNode = new TreeNode("数据监控");
             dataMonitoringNode.Nodes.Add(new TreeNode("系统工艺"));
-            dataMonitoringNode.Nodes.Add(new TreeNode("趋势监控"));
             dataMonitoringNode.Nodes.Add(new TreeNode("仿真结果"));
             dataMonitoringNode.Nodes.Add(new TreeNode("数据列表"));
 
@@ -163,11 +161,6 @@ namespace ElectCell_HMI
                     processDrawing.Show();
                     leftStatusLabel.Text = "系统工艺";
                     break;
-                case "趋势监控":
-                    HideAllParameterPages();
-                    trendMonitor.Show();
-                    leftStatusLabel.Text = "趋势监控";
-                    break;
                 case "仿真结果":
                     HideAllParameterPages();
                     simulationResult.Show();
@@ -190,7 +183,6 @@ namespace ElectCell_HMI
             processParameter.Hide();
             componentParameter.Hide();
             processDrawing.Hide();
-            trendMonitor.Hide();
             simulationResult.Hide();
             dataPlayback.Hide();
 
@@ -232,11 +224,6 @@ namespace ElectCell_HMI
             processDrawing.Dock = DockStyle.Fill;
             tableLayoutPanel1.Controls.Add(processDrawing, 1, 0);
             processDrawing.Hide();
-
-            trendMonitor = new TrendMonitorPage(this);
-            trendMonitor.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Controls.Add(trendMonitor, 1, 0);
-            trendMonitor.Hide();
 
             processDrawing.Hide();
             simulationResult = new SimulationResultPage(this);
@@ -1166,11 +1153,6 @@ namespace ElectCell_HMI
 
             try
             {
-                trendMonitor.richTextBox1.Clear();
-
-                trendMonitor.richTextBox1.ReadOnly = true;
-                trendMonitor.richTextBox1.Font = new Font(trendMonitor.richTextBox1.Font.FontFamily, 10);
-
                 proc = new Process();
                 proc.StartInfo.FileName = "aeSLN.exe";
                 proc.StartInfo.CreateNoWindow = true;
@@ -1183,30 +1165,22 @@ namespace ElectCell_HMI
                 {
                     if (args.Data != null)
                     {
-                        trendMonitor.richTextBox1.Invoke((MethodInvoker)delegate
-                        {
-                            trendMonitor.richTextBox1.AppendText(args.Data + Environment.NewLine);
-                            trendMonitor.richTextBox1.SelectionStart = trendMonitor.richTextBox1.Text.Length;
-                            trendMonitor.richTextBox1.ScrollToCaret();
-                            trendMonitor.richTextBox1.Refresh();
-                        });
+                        // 处理标准输出数据
+                        Console.WriteLine(args.Data);
                     }
                 };
 
                 proc.Exited += (s, args) =>
                 {
-                    trendMonitor.richTextBox1.Invoke((MethodInvoker)delegate
+                    timer1.Stop();
+                    if (!isStoppedManually)
                     {
-                        timer1.Stop();
-                        if (!isStoppedManually)
-                        {
-                            MessageBox.Show("计算完成！");
-                        }
-                        isStoppedManually = false; // 重置标志
+                        MessageBox.Show("计算完成！");
+                    }
+                    isStoppedManually = false; // 重置标志
 
-                        readResultFile(path);
-                        dataPlayback.comboBox1LoadData();
-                    });
+                    readResultFile(path);
+                    dataPlayback.comboBox1LoadData();
                 };
 
                 isStoppedManually = false; // 重置标志
@@ -1219,6 +1193,7 @@ namespace ElectCell_HMI
                 Console.WriteLine(ex.StackTrace.ToString());
             }
         }
+
 
         private async void 停止计算ToolStripMenuItem_Click(object sender, EventArgs e)
         {
