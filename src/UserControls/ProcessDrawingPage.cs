@@ -124,7 +124,7 @@ namespace ElectCell_HMI
             Bitmap bitmap = new Bitmap(pictureBox.Width * scaleFactor, pictureBox.Height * scaleFactor);
             using (Graphics g = Graphics.FromImage(bitmap))
             {
-                g.Clear(Color.White);
+                g.Clear(Color.Black); // 设置背景为黑色
 
                 // 启用抗锯齿
                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -132,7 +132,7 @@ namespace ElectCell_HMI
                 g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
 
                 // 设置坐标轴
-                Pen axisPen = new Pen(Color.Black, 2 * scaleFactor);
+                Pen axisPen = new Pen(Color.White, 2 * scaleFactor); // 设置坐标轴为白色
                 g.DrawLine(axisPen, 50 * scaleFactor, 10 * scaleFactor, 50 * scaleFactor, (pictureBox.Height - 50) * scaleFactor); // Y轴
                 g.DrawLine(axisPen, 50 * scaleFactor, (pictureBox.Height - 50) * scaleFactor, (pictureBox.Width - 10) * scaleFactor, (pictureBox.Height - 50) * scaleFactor); // X轴
 
@@ -150,25 +150,26 @@ namespace ElectCell_HMI
                 }
 
                 // 绘制网格线和坐标标签
-                Pen gridPen = new Pen(Color.LightGray, 1 * scaleFactor);
+                Pen gridPen = new Pen(Color.Gray, 1 * scaleFactor); // 设置网格线为灰色
                 Font labelFont = new Font("Arial", 8 * scaleFactor);
+                Brush labelBrush = Brushes.White; // 设置标签为白色
                 for (int i = 50 * scaleFactor; i < (pictureBox.Width - 10) * scaleFactor; i += 40 * scaleFactor) // 增加间隔
                 {
                     g.DrawLine(gridPen, i, 10 * scaleFactor, i, (pictureBox.Height - 50) * scaleFactor);
                     float labelX = minX + (i - 50 * scaleFactor) / (float)((pictureBox.Width - 60) * scaleFactor) * (maxX - minX);
-                    g.DrawString(Math.Round(labelX).ToString(), labelFont, Brushes.Black, new PointF(i, (pictureBox.Height - 45) * scaleFactor));
+                    g.DrawString(Math.Round(labelX).ToString(), labelFont, labelBrush, new PointF(i, (pictureBox.Height - 45) * scaleFactor));
                 }
                 for (int i = 10 * scaleFactor; i < (pictureBox.Height - 50) * scaleFactor; i += 20 * scaleFactor)
                 {
                     g.DrawLine(gridPen, 50 * scaleFactor, i, (pictureBox.Width - 10) * scaleFactor, i);
                     float labelY = maxY - (i - 10 * scaleFactor) / (float)((pictureBox.Height - 60) * scaleFactor) * (maxY - minY);
-                    g.DrawString(Math.Round(labelY).ToString(), labelFont, Brushes.Black, new PointF(5 * scaleFactor, i - 5 * scaleFactor));
+                    g.DrawString(Math.Round(labelY).ToString(), labelFont, labelBrush, new PointF(5 * scaleFactor, i - 5 * scaleFactor));
                 }
 
                 // 绘制数据点
                 if (drawDataPoints && dataPoints.Count > 1)
                 {
-                    Pen dataPen = new Pen(Color.Blue, 2 * scaleFactor);
+                    Pen dataPen = new Pen(Color.Cyan, 2 * scaleFactor); // 设置数据线为青色
                     for (int i = 1; i < dataPoints.Count; i++)
                     {
                         PointF p1 = new PointF(50 * scaleFactor + (dataPoints[i - 1].X - minX) / (maxX - minX) * (pictureBox.Width - 60) * scaleFactor,
@@ -184,6 +185,7 @@ namespace ElectCell_HMI
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox.Image = bitmap;
         }
+
 
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
