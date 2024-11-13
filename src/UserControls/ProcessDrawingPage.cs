@@ -150,13 +150,13 @@ namespace ElectCell_HMI
                 {
                     g.DrawLine(gridPen, i, 10 * scaleFactor, i, (pictureBox.Height - 50) * scaleFactor);
                     float xValue = minX + (i - 50 * scaleFactor) / (float)((pictureBox.Width - 60) * scaleFactor) * (maxX - minX);
-                    g.DrawString(xValue.ToString("0.0"), labelFont, Brushes.Black, new PointF(i, (pictureBox.Height - 45) * scaleFactor));
+                    g.DrawString(xValue.ToString("0"), labelFont, Brushes.Black, new PointF(i, (pictureBox.Height - 45) * scaleFactor));
                 }
                 for (int i = 10 * scaleFactor; i < (pictureBox.Height - 50) * scaleFactor; i += 20 * scaleFactor)
                 {
                     g.DrawLine(gridPen, 50 * scaleFactor, i, (pictureBox.Width - 10) * scaleFactor, i);
                     float yValue = maxY - (i - 10 * scaleFactor) / (float)((pictureBox.Height - 60) * scaleFactor) * (maxY - minY);
-                    g.DrawString(yValue.ToString("0.0"), labelFont, Brushes.Black, new PointF(5 * scaleFactor, i - 5 * scaleFactor));
+                    g.DrawString(yValue.ToString("0"), labelFont, Brushes.Black, new PointF(5 * scaleFactor, i - 5 * scaleFactor));
                 }
 
                 // 绘制数据点
@@ -186,6 +186,7 @@ namespace ElectCell_HMI
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox.Image = bitmap;
         }
+
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
