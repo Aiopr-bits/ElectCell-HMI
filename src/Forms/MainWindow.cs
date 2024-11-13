@@ -21,7 +21,7 @@ namespace ElectCell_HMI
         public TrendMonitorPage trendMonitor;                   // 趋势监控页面
         public SimulationResultPage simulationResult;           // 仿真结果页面
         public DataPlaybackPage dataPlayback;                   // 数据回放页面
-        public ProcessDrawingPage processDrawing;               // 工艺图绘制页面
+        public ProcessDrawingPage processDrawing;               // 系统工艺绘制页面
 
         private Process proc;
         private bool isStoppedManually = false;
@@ -77,7 +77,7 @@ namespace ElectCell_HMI
             TreeNode autoTestNode = new TreeNode("自动测试");
 
             TreeNode dataMonitoringNode = new TreeNode("数据监控");
-            dataMonitoringNode.Nodes.Add(new TreeNode("工艺图"));
+            dataMonitoringNode.Nodes.Add(new TreeNode("系统工艺"));
             dataMonitoringNode.Nodes.Add(new TreeNode("趋势监控"));
             dataMonitoringNode.Nodes.Add(new TreeNode("仿真结果"));
             dataMonitoringNode.Nodes.Add(new TreeNode("数据列表"));
@@ -130,10 +130,10 @@ namespace ElectCell_HMI
                     componentParameter.Show();
                     leftStatusLabel.Text = "部件参数配置";
                     break;
-                case "工艺图":
+                case "系统工艺":
                     HideAllParameterPages();
                     processDrawing.Show();
-                    leftStatusLabel.Text = "工艺图";
+                    leftStatusLabel.Text = "系统工艺";
                     break;
                 case "趋势监控":
                     HideAllParameterPages();
