@@ -1106,7 +1106,7 @@ namespace ElectCell_HMI
                 else if (control is Label label) // 标签
                 {
                     label.BackColor = Color.Transparent;
-                    label.ForeColor = Color.FromArgb(70, 130, 180);
+                    //label.ForeColor = Color.FromArgb(70, 130, 180);
                     label.Font = new Font(label.Font.FontFamily, 15, FontStyle.Bold);
                     label.TextAlign = ContentAlignment.MiddleCenter;
                     label.BorderStyle = BorderStyle.None;

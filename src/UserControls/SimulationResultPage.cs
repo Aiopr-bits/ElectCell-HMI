@@ -36,7 +36,6 @@ namespace ElectCell_HMI
             int time = (int)Data.result.result[Data.result.result.Count - 1][0];
 
             DataTable dt = new DataTable();
-            dt.Columns.Add("当前时间步", typeof(int));
             dt.Columns.Add("变量名", typeof(string));
             dt.Columns.Add("变量值", typeof(string));
             dt.Columns.Add("单位", typeof(string));
@@ -50,7 +49,6 @@ namespace ElectCell_HMI
                     for (int j = 1; j < Data.result.result[i].Count; j++)
                     {
                         DataRow dr = dt.NewRow();
-                        dr["当前时间步"] = time;
                         dr["变量名"] = Data.result.header[j];
                         dr["变量值"] = Data.result.result[i][j];
                         dr["单位"] = "m/s";
@@ -58,6 +56,10 @@ namespace ElectCell_HMI
                         dr["含义"] = "参数含义";
                         dt.Rows.Add(dr);
                     }
+
+                    this.label2.Text = time.ToString();
+                    this.label2.TextAlign = ContentAlignment.MiddleLeft;
+
                     break;
                 }
             }
