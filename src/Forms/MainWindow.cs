@@ -18,6 +18,7 @@ namespace ElectCell_HMI
         public PSParameterPage psParameter;                     // ps参数配置页面
         public ProcessParameterPage processParameter;           // 工艺参数配置页面
         public ComponentParameterPage componentParameter;       // 部件参数配置页面
+        public VariableListPage variableList;                   // 变量清单页面
         public SimulationResultPage simulationResult;           // 仿真结果页面
         public DataPlaybackPage dataPlayback;                   // 数据回放页面
         public ProcessDrawingPage processDrawing;               // 系统工艺绘制页面
@@ -128,6 +129,11 @@ namespace ElectCell_HMI
                     componentParameter.Show();
                     leftStatusLabel.Text = "部件参数配置";
                     break;
+                case "变量清单":
+                    HideAllParameterPages();
+                    variableList.Show();
+                    leftStatusLabel.Text = "变量清单";
+                    break;
                 case "系统工艺":
                     HideAllParameterPages();
                     processDrawing.Show();
@@ -154,6 +160,7 @@ namespace ElectCell_HMI
             psParameter.Hide();
             processParameter.Hide();
             componentParameter.Hide();
+            variableList.Hide();
             processDrawing.Hide();
             simulationResult.Hide();
             dataPlayback.Hide();
@@ -191,6 +198,11 @@ namespace ElectCell_HMI
             componentParameter.Dock = DockStyle.Fill;
             tableLayoutPanel1.Controls.Add(componentParameter, 1, 0);
             componentParameter.Hide();
+
+            variableList = new VariableListPage();
+            variableList.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Controls.Add(variableList, 1, 0);
+            variableList.Hide();
 
             processDrawing = new ProcessDrawingPage(this);
             processDrawing.Dock = DockStyle.Fill;
@@ -1056,7 +1068,6 @@ namespace ElectCell_HMI
                     dataGridView.AllowUserToDeleteRows = false;
                     dataGridView.AllowUserToResizeColumns = false;
                     dataGridView.AllowUserToResizeRows = false;
-                    dataGridView.ScrollBars = ScrollBars.None;
 
                     // 滚轮事件
                     dataGridView.MouseWheel += (s, e) =>

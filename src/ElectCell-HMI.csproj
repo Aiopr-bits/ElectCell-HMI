@@ -70,6 +70,12 @@
     <Compile Include="UserControls\ProcessDrawingPage.Designer.cs">
       <DependentUpon>ProcessDrawingPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\VariableListPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\VariableListPage.Designer.cs">
+      <DependentUpon>VariableListPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\SimulationResultPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -126,6 +132,9 @@
     </Compile>
     <EmbeddedResource Include="UserControls\ProcessDrawingPage.resx">
       <DependentUpon>ProcessDrawingPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\VariableListPage.resx">
+      <DependentUpon>VariableListPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\SimulationResultPage.resx">
       <DependentUpon>SimulationResultPage.cs</DependentUpon>
