@@ -1216,7 +1216,10 @@ namespace ElectCell_HMI
                     timer1.Stop();
                     if (!isStoppedManually)
                     {
-                        MessageBox.Show("计算完成！");
+                        this.Invoke((MethodInvoker)delegate
+                        {
+                            MessageBox.Show(this, "计算完成！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        });
                     }
                     isStoppedManually = false; // 重置标志
 
@@ -1250,7 +1253,10 @@ namespace ElectCell_HMI
                     });
                 }
                 timer1.Stop();
-                MessageBox.Show("计算已停止！");
+                this.Invoke((MethodInvoker)delegate
+                {
+                    MessageBox.Show(this, "计算已停止！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                });
             }
             catch (Exception ex)
             {
