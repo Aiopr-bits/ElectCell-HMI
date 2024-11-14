@@ -95,7 +95,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(72, 22);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Time:";
+            this.label1.Text = "时间：";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // dataGridView1
