@@ -149,7 +149,7 @@ namespace ElectCell_HMI
                     AddProcessParameter(dt, "阳极分离器", "子部件-" + Data.psParameter.ps[j][0], "物质的量", Data.psParameter.ps[j][1].ToString(), "mol", "RW", "变量含义");
                     AddProcessParameter(dt, "阳极分离器", "子部件-" + Data.psParameter.ps[j][0], "摩尔体积", Data.psParameter.ps[j][2].ToString(), "m^3", "RW", "变量含义");
                     AddProcessParameter(dt, "阳极分离器", "子部件-" + Data.psParameter.ps[j][0], "压强", Data.psParameter.ps[j][3].ToString(), "Pa", "RW", "变量含义");
-                    AddProcessParameter(dt, "阳极分��器", "子部件-" + Data.psParameter.ps[j][0], "液体高度", Data.psParameter.ps[j][4].ToString(), "m", "RW", "变量含义");
+                    AddProcessParameter(dt, "阳极分离器", "子部件-" + Data.psParameter.ps[j][0], "液体高度", Data.psParameter.ps[j][4].ToString(), "m", "RW", "变量含义");
                     AddProcessParameter(dt, "阳极分离器", "子部件-" + Data.psParameter.ps[j][0], "气体高度", Data.psParameter.ps[j][5].ToString(), "m", "RW", "变量含义");
                     AddProcessParameter(dt, "阳极分离器", "子部件-" + Data.psParameter.ps[j][0], "氢气", Data.psParameter.ps[j][6].ToString(), "m/s", "RW", "变量含义");
                 }
