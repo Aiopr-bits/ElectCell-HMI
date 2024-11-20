@@ -12,11 +12,11 @@ namespace ElectCell_HMI
 {
     public partial class TrendMonitorPage : UserControl
     {
-        private MainWindow mainWindow;
-        private List<PointF> dataPoints1;
-        private List<PointF> dataPoints2;
-        private List<PointF> dataPoints3;
-        private List<PointF> dataPoints4;
+        public MainWindow mainWindow;
+        public List<PointF> dataPoints1;
+        public List<PointF> dataPoints2;
+        public List<PointF> dataPoints3;
+        public List<PointF> dataPoints4;
         int comboBox1Index, comboBox2Index, comboBox3Index, comboBox4Index;
 
         public TrendMonitorPage(MainWindow mainWindow)
@@ -36,7 +36,7 @@ namespace ElectCell_HMI
             comboBox4.DropDownStyle = ComboBoxStyle.DropDownList;
         }
 
-        private void MainWindow_TimerTicked(object sender, EventArgs e)
+        public void MainWindow_TimerTicked(object sender, EventArgs e)
         {
             dataPoints1.Clear();
             for (int i = 0; i < Data.result.result.Count; i++)
@@ -91,7 +91,7 @@ namespace ElectCell_HMI
             }
         }
 
-        private void TrendMonitorPage_Resize(object sender, EventArgs e)
+        public void TrendMonitorPage_Resize(object sender, EventArgs e)
         {
             DrawGraph(dataPoints1, pictureBox1);
             DrawGraph(dataPoints2, pictureBox2);
@@ -99,7 +99,7 @@ namespace ElectCell_HMI
             DrawGraph(dataPoints4, pictureBox4);
         }
 
-        private void DrawGraph(List<PointF> dataPoints, System.Windows.Forms.PictureBox pictureBox)
+        public void DrawGraph(List<PointF> dataPoints, System.Windows.Forms.PictureBox pictureBox)
         {
             if (pictureBox.Width == 0 || pictureBox.Height == 0 || dataPoints.Count == 0)
                 return;
@@ -178,7 +178,7 @@ namespace ElectCell_HMI
             pictureBox.Image = bitmap;
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        public void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             comboBox1Index= comboBox1.SelectedIndex;
             dataPoints1.Clear();
@@ -191,7 +191,7 @@ namespace ElectCell_HMI
             DrawGraph(dataPoints1, pictureBox1);
         }
 
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        public void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             comboBox2Index = comboBox2.SelectedIndex;
             dataPoints2.Clear();
@@ -204,7 +204,7 @@ namespace ElectCell_HMI
             DrawGraph(dataPoints2, pictureBox2);
         }
 
-        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        public void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
             comboBox3Index = comboBox3.SelectedIndex;
             dataPoints3.Clear();
@@ -217,7 +217,7 @@ namespace ElectCell_HMI
             DrawGraph(dataPoints3, pictureBox3);
         }
 
-        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        public void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
         {
             comboBox4Index = comboBox4.SelectedIndex;
             dataPoints4.Clear();

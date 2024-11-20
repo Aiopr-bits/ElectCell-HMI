@@ -21,10 +21,10 @@ namespace ElectCell_HMI
         public VariableListPage variableList;                   // 变量清单页面
         public SimulationResultPage simulationResult;           // 仿真结果页面
         public DataPlaybackPage dataPlayback;                   // 数据回放页面
-        public ProcessDrawingPage processDrawing;               // 系统工艺绘制页面
+        public SystemTechnologyPage processDrawing;               // 系统工艺绘制页面
 
-        private Process proc;
-        private bool isStoppedManually = false;
+        public Process proc;
+        public bool isStoppedManually = false;
         ToolStripStatusLabel leftStatusLabel;
         ToolStripStatusLabel rightStatusLabel;
 
@@ -40,9 +40,22 @@ namespace ElectCell_HMI
             BeautifyControls(this);
             InitializeTimer();
             InitializeStatusStrip();
+
+            componentParameter.label1.BackColor = Color.Transparent;
+            componentParameter.label1.Font = new Font(componentParameter.label1.Font.FontFamily, 15, FontStyle.Bold);
+            componentParameter.label1.TextAlign = ContentAlignment.MiddleCenter;
+            componentParameter.label1.BorderStyle = BorderStyle.None;
+            componentParameter.label2.BackColor = Color.Transparent;
+            componentParameter.label2.Font = new Font(componentParameter.label2.Font.FontFamily, 15, FontStyle.Bold);
+            componentParameter.label2.TextAlign = ContentAlignment.MiddleCenter;
+            componentParameter.label2.BorderStyle = BorderStyle.None;
+            simulationResult.label2.BackColor = Color.Transparent;
+            simulationResult.label2.Font = new Font(simulationResult.label2.Font.FontFamily, 12, FontStyle.Bold);
+            simulationResult.label2.TextAlign = ContentAlignment.MiddleCenter;
+            simulationResult.label2.BorderStyle = BorderStyle.None;
         }
 
-        private void InitializeStatusStrip()
+        public void InitializeStatusStrip()
         {
             leftStatusLabel = new ToolStripStatusLabel();
             leftStatusLabel.Text = "";
@@ -204,7 +217,7 @@ namespace ElectCell_HMI
             tableLayoutPanel1.Controls.Add(variableList, 1, 0);
             variableList.Hide();
 
-            processDrawing = new ProcessDrawingPage(this);
+            processDrawing = new SystemTechnologyPage(this);
             processDrawing.Dock = DockStyle.Fill;
             tableLayoutPanel1.Controls.Add(processDrawing, 1, 0);
             processDrawing.Hide();
@@ -979,7 +992,7 @@ namespace ElectCell_HMI
             MessageBox.Show("软件版本：V1.1", "关于");
         }
 
-        private void TreeView_DrawNode(object sender, DrawTreeNodeEventArgs e)
+        public void TreeView_DrawNode(object sender, DrawTreeNodeEventArgs e)
         {
             // 自定义节点的绘制
             if (e.Node.IsSelected)
@@ -995,7 +1008,7 @@ namespace ElectCell_HMI
         }
 
 
-        private void TreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        public void TreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             // 单击节点文本时展开或收起节点
             if (e.Node.IsExpanded)
@@ -1008,7 +1021,7 @@ namespace ElectCell_HMI
             }
         }
 
-        private void SetNodeIcon(TreeNode node)
+        public void SetNodeIcon(TreeNode node)
         {
             if (node.Nodes.Count > 0)
             {
@@ -1049,7 +1062,7 @@ namespace ElectCell_HMI
                     dataGridView.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(230, 230, 230);
                     dataGridView.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(70, 130, 180);
                     dataGridView.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
-                    dataGridView.ColumnHeadersDefaultCellStyle.Font = new Font(dataGridView.Font.FontFamily, 12, FontStyle.Bold);
+                    dataGridView.ColumnHeadersDefaultCellStyle.Font = new Font(dataGridView.Font.FontFamily, 10, FontStyle.Bold);
                     dataGridView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                     dataGridView.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                     dataGridView.EnableHeadersVisualStyles = false;
@@ -1113,14 +1126,6 @@ namespace ElectCell_HMI
 
                     treeView.BeforeExpand += (s, e) => e.Node.StateImageIndex = 0; // 展开图标
                     treeView.BeforeCollapse += (s, e) => e.Node.StateImageIndex = 1; // 收起图标
-                }
-                else if (control is Label label) // 标签
-                {
-                    label.BackColor = Color.Transparent;
-                    //label.ForeColor = Color.FromArgb(70, 130, 180);
-                    label.Font = new Font(label.Font.FontFamily, 15, FontStyle.Bold);
-                    label.TextAlign = ContentAlignment.MiddleCenter;
-                    label.BorderStyle = BorderStyle.None;
                 }
                 else if (control is PictureBox pictureBox) // 图片框
                 {
@@ -1188,7 +1193,7 @@ namespace ElectCell_HMI
             TimerTicked?.Invoke(this, EventArgs.Empty);
         }
 
-        private async void 开始计算ToolStripMenuItem_Click(object sender, EventArgs e)
+        public async void 开始计算ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             treeView1.SelectedNode = treeView1.Nodes[0].Nodes[4].Nodes[0];
 
@@ -1239,7 +1244,7 @@ namespace ElectCell_HMI
         }
 
 
-        private async void 停止计算ToolStripMenuItem_Click(object sender, EventArgs e)
+        public async void 停止计算ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
@@ -1264,7 +1269,7 @@ namespace ElectCell_HMI
             }
         }
 
-        private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
+        public void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             controlParameter.SaveData();
             geometricParameter.SaveData();
@@ -1276,7 +1281,7 @@ namespace ElectCell_HMI
             MessageBox.Show("保存成功！");
         }
 
-        private void 另存ToolStripMenuItem_Click(object sender, EventArgs e)
+        public void 另存ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
             {
@@ -1298,32 +1303,32 @@ namespace ElectCell_HMI
             }
         }
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
+        public void toolStripButton1_Click(object sender, EventArgs e)
         {
             打开ToolStripMenuItem_Click(sender, e);
         }
 
-        private void toolStripButton2_Click(object sender, EventArgs e)
+        public void toolStripButton2_Click(object sender, EventArgs e)
         {
             保存ToolStripMenuItem_Click(sender, e);
         }
 
-        private void toolStripButton3_Click(object sender, EventArgs e)
+        public void toolStripButton3_Click(object sender, EventArgs e)
         {
             另存ToolStripMenuItem_Click(sender, e);
         }
 
-        private void toolStripButton4_Click(object sender, EventArgs e)
+        public void toolStripButton4_Click(object sender, EventArgs e)
         {
             开始计算ToolStripMenuItem_Click(sender, e);
         }
 
-        private void toolStripButton5_Click(object sender, EventArgs e)
+        public void toolStripButton5_Click(object sender, EventArgs e)
         {
             停止计算ToolStripMenuItem_Click(sender, e);
         }
 
-        private void toolStripButton6_Click(object sender, EventArgs e)
+        public void toolStripButton6_Click(object sender, EventArgs e)
         {
             退出ToolStripMenuItem_Click(sender, e);
         }

@@ -288,15 +288,15 @@
         public System.Windows.Forms.ToolStripMenuItem 关于ToolStripMenuItem;
         public string path;
         public System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.ToolStripMenuItem 开始计算ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 停止计算ToolStripMenuItem;
-        private System.ComponentModel.IContainer components;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
-        private System.Windows.Forms.ToolStripButton toolStripButton4;
-        private System.Windows.Forms.ToolStripButton toolStripButton5;
-        private System.Windows.Forms.ToolStripButton toolStripButton6;
+        public System.Windows.Forms.ToolStripMenuItem 开始计算ToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem 停止计算ToolStripMenuItem;
+        public System.ComponentModel.IContainer components;
+        public System.Windows.Forms.ToolStripButton toolStripButton1;
+        public System.Windows.Forms.ToolStripButton toolStripButton2;
+        public System.Windows.Forms.ToolStripButton toolStripButton3;
+        public System.Windows.Forms.ToolStripButton toolStripButton4;
+        public System.Windows.Forms.ToolStripButton toolStripButton5;
+        public System.Windows.Forms.ToolStripButton toolStripButton6;
     }
 }
 

@@ -64,11 +64,11 @@
     <Compile Include="Forms\StartPage.Designer.cs">
       <DependentUpon>StartPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\ProcessDrawingPage.cs">
+    <Compile Include="UserControls\SystemTechnologyPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControls\ProcessDrawingPage.Designer.cs">
-      <DependentUpon>ProcessDrawingPage.cs</DependentUpon>
+    <Compile Include="UserControls\SystemTechnologyPage.Designer.cs">
+      <DependentUpon>SystemTechnologyPage.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\VariableListPage.cs">
       <SubType>UserControl</SubType>
@@ -130,8 +130,8 @@
     <Compile Include="UserControls\ControlParameterPage.Designer.cs">
       <DependentUpon>ControlParameterPage.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="UserControls\ProcessDrawingPage.resx">
-      <DependentUpon>ProcessDrawingPage.cs</DependentUpon>
+    <EmbeddedResource Include="UserControls\SystemTechnologyPage.resx">
+      <DependentUpon>SystemTechnologyPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\VariableListPage.resx">
       <DependentUpon>VariableListPage.cs</DependentUpon>

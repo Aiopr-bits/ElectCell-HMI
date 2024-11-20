@@ -35,13 +35,13 @@ namespace ElectCell_HMI
             AddControlParameter(dt, 5, "cal_valve", Convert.ToDouble(Data.controlParameter.cal_valve), "-", "是否打开阀门");
             AddControlParameter(dt, 6, "cal_pump", Convert.ToDouble(Data.controlParameter.cal_pump), "-", "是否打开泵");
             AddControlParameter(dt, 7, "cal_balance_pipe", Convert.ToDouble(Data.controlParameter.cal_balance_pipe), "-", "是否打开平衡管路");
-            AddControlParameter(dt, 8, "cal_mini_1", Convert.ToDouble(Data.controlParameter.cal_mini_1), "-", "是否打开mini_1");
-            AddControlParameter(dt, 9, "cal_mini_2", Convert.ToDouble(Data.controlParameter.cal_mini_2), "-", "是否打开mini_2");
-            AddControlParameter(dt, 10, "use_ff_static", Convert.ToDouble(Data.controlParameter.use_ff_static), "-", "是否使用静态ff");
-            AddControlParameter(dt, 11, "IsMixed_circleType", Convert.ToDouble(Data.controlParameter.IsMixed_circleType), "-", "是否混合循环类型");
-            AddControlParameter(dt, 12, "cal_superSat_fickTrans", Convert.ToDouble(Data.controlParameter.cal_superSat_fickTrans), "-", "是否打开超饱和fickTrans");
-            AddControlParameter(dt, 13, "cal_ShellTube_heatExchanger", Convert.ToDouble(Data.controlParameter.cal_ShellTube_heatExchanger), "-", "是否打开壳管换热器");
-            AddControlParameter(dt, 14, "cal_Ele_heater", Convert.ToDouble(Data.controlParameter.cal_Ele_heater), "-", "是否打开电加热器");
+            AddControlParameter(dt, 8, "cal_mini_1", Convert.ToDouble(Data.controlParameter.cal_mini_1), "-", "是否进行电解槽阴阳极渗透计算");
+            AddControlParameter(dt, 9, "cal_mini_2", Convert.ToDouble(Data.controlParameter.cal_mini_2), "-", "是否进行气体沸腾率计算");
+            AddControlParameter(dt, 10, "use_ff_static", Convert.ToDouble(Data.controlParameter.use_ff_static), "-", "是否指定管道摩擦阻力系数");
+            AddControlParameter(dt, 11, "IsMixed_circleType", Convert.ToDouble(Data.controlParameter.IsMixed_circleType), "-", "是否采用混合模式计算泵模型");
+            AddControlParameter(dt, 12, "cal_superSat_fickTrans", Convert.ToDouble(Data.controlParameter.cal_superSat_fickTrans), "-", "是否计算过饱和氢气");
+            AddControlParameter(dt, 13, "cal_ShellTube_heatExchanger", Convert.ToDouble(Data.controlParameter.cal_ShellTube_heatExchanger), "-", "是否计算膜换热");
+            AddControlParameter(dt, 14, "cal_Ele_heater", Convert.ToDouble(Data.controlParameter.cal_Ele_heater), "-", "是否计算换热器模型");
 
             // 添加空行
             for (int i = 0; i < 25; i++)

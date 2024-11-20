@@ -166,9 +166,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(3, 205);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 20);
+            this.label2.Size = new System.Drawing.Size(53, 20);
             this.label2.TabIndex = 1;
-            this.label2.Text = "子部件";
+            this.label2.Text = "过程系统";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // dataGridView5

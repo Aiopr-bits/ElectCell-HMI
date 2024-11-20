@@ -31,7 +31,6 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
@@ -65,12 +64,10 @@
             // 
             // tableLayoutPanel2
             // 
-            this.tableLayoutPanel2.ColumnCount = 3;
+            this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 85F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 5F));
-            this.tableLayoutPanel2.Controls.Add(this.label1, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label2, 2, 0);
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel2.Controls.Add(this.label2, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -79,28 +76,16 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(788, 22);
             this.tableLayoutPanel2.TabIndex = 2;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(672, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 22);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "当前时间：";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // label2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(750, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 22);
             this.label2.TabIndex = 1;
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label2.Text = "当前时间：    ";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // SimulationResultPage
             // 
@@ -119,10 +104,9 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        public System.Windows.Forms.DataGridView dataGridView1;
+        public System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        public System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        public System.Windows.Forms.Label label2;
     }
 }

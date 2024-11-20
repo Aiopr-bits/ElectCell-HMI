@@ -194,14 +194,14 @@
 
         public System.Windows.Forms.RichTextBox richTextBox1;
         public System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox4;
+        public System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        public System.Windows.Forms.PictureBox pictureBox4;
+        public System.Windows.Forms.PictureBox pictureBox3;
+        public System.Windows.Forms.PictureBox pictureBox2;
+        public System.Windows.Forms.PictureBox pictureBox1;
+        public System.Windows.Forms.ComboBox comboBox1;
+        public System.Windows.Forms.ComboBox comboBox2;
+        public System.Windows.Forms.ComboBox comboBox3;
+        public System.Windows.Forms.ComboBox comboBox4;
     }
 }

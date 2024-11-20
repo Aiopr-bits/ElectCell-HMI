@@ -72,25 +72,25 @@ namespace ElectCell_HMI
             DataTable dt3 = new DataTable();
             DataTable dt4 = new DataTable();
             DataTable dt5 = new DataTable();
-            dt1.Columns.Add("Flow", typeof(double));
-            dt2.Columns.Add("Ps", typeof(double));
-            dt3.Columns.Add("I_current", typeof(double));
+            dt1.Columns.Add("流股", typeof(double));
+            dt2.Columns.Add("过程系统", typeof(double));
+            dt3.Columns.Add("电流（A）", typeof(double));
 
-            dt4.Columns.Add("Flow号", typeof(int));
-            dt4.Columns.Add("氢气", typeof(double));
-            dt4.Columns.Add("氧气", typeof(double));
-            dt4.Columns.Add("水", typeof(double));
-            dt4.Columns.Add("管道直径", typeof(double));
-            dt4.Columns.Add("管道长度", typeof(double));
+            dt4.Columns.Add("流股编号", typeof(int));
+            dt4.Columns.Add("氢气占比", typeof(double));
+            dt4.Columns.Add("氧气占比", typeof(double));
+            dt4.Columns.Add("水占比", typeof(double));
+            dt4.Columns.Add("直径（m）", typeof(double));
+            dt4.Columns.Add("长度（m）", typeof(double));
 
-            dt5.Columns.Add("PS号", typeof(int));
-            dt5.Columns.Add("物质的量", typeof(string));
-            dt5.Columns.Add("摩尔体积", typeof(string));
-            dt5.Columns.Add("压强", typeof(string));
-            dt5.Columns.Add("液体高度", typeof(string));
-            dt5.Columns.Add("气体高度", typeof(string));
-            dt5.Columns.Add("氢气", typeof(string));
-            dt5.Columns.Add("氧气", typeof(string));
+            dt5.Columns.Add("过程系统编号", typeof(int));
+            dt5.Columns.Add("总物质量", typeof(string));
+            dt5.Columns.Add("摩尔体积（m³/mol）", typeof(string));
+            dt5.Columns.Add("压力", typeof(string));
+            dt5.Columns.Add("液体高度（m）", typeof(string));
+            dt5.Columns.Add("气体高度（m）", typeof(string));
+            dt5.Columns.Add("氢气占比", typeof(string));
+            dt5.Columns.Add("氧气占比", typeof(string));
 
             for (int i = 0; i < Data.componentParameter.nElectrolyticCell; i++)
             {
@@ -118,12 +118,12 @@ namespace ElectCell_HMI
                         if (Data.componentParameter.electrolyticCell[i].flow.Contains(Data.flowParameter.flow[j][0]))
                         {
                             DataRow dr = dt4.NewRow();
-                            dr["Flow号"] = Data.flowParameter.flow[j][0];
-                            dr["氢气"] = Data.flowParameter.flow[j][1];
-                            dr["氧气"] = Data.flowParameter.flow[j][2];
-                            dr["水"] = Data.flowParameter.flow[j][3];
-                            dr["管道直径"] = Data.flowParameter.flow[j][4];
-                            dr["管道长度"] = Data.flowParameter.flow[j][5];
+                            dr["流股编号"] = Data.flowParameter.flow[j][0];
+                            dr["氢气占比"] = Data.flowParameter.flow[j][1];
+                            dr["氧气占比"] = Data.flowParameter.flow[j][2];
+                            dr["水占比"] = Data.flowParameter.flow[j][3];
+                            dr["直径（m）"] = Data.flowParameter.flow[j][4];
+                            dr["长度（m）"] = Data.flowParameter.flow[j][5];
                             dt4.Rows.Add(dr);
                         }
                     }
@@ -134,14 +134,14 @@ namespace ElectCell_HMI
                         if (Data.componentParameter.electrolyticCell[i].ps.Contains(Data.psParameter.ps[j][0]))
                         {
                             DataRow dr = dt5.NewRow();
-                            dr["PS号"] = Data.psParameter.ps[j][0];
-                            dr["物质的量"] = Data.psParameter.ps[j][1];
-                            dr["摩尔体积"] = Data.psParameter.ps[j][2];
-                            dr["压强"] = Data.psParameter.ps[j][3];
-                            dr["液体高度"] = Data.psParameter.ps[j][4];
-                            dr["气体高度"] = Data.psParameter.ps[j][5];
-                            dr["氢气"] = Data.psParameter.ps[j][6];
-                            dr["氧气"] = Data.psParameter.ps[j][7];
+                            dr["过程系统编号"] = Data.psParameter.ps[j][0];
+                            dr["总物质量"] = Data.psParameter.ps[j][1];
+                            dr["摩尔体积（m³/mol）"] = Data.psParameter.ps[j][2];
+                            dr["压力"] = Data.psParameter.ps[j][3];
+                            dr["液体高度（m）"] = Data.psParameter.ps[j][4];
+                            dr["气体高度（m）"] = Data.psParameter.ps[j][5];
+                            dr["氢气占比"] = Data.psParameter.ps[j][6];
+                            dr["氧气占比"] = Data.psParameter.ps[j][7];
                             dt5.Rows.Add(dr);
                         }
                     }
@@ -188,12 +188,12 @@ namespace ElectCell_HMI
                         if (Data.componentParameter.pump[i].flow.Contains(Data.flowParameter.flow[j][0]))
                         {
                             DataRow dr = dt4.NewRow();
-                            dr["Flow号"] = Data.flowParameter.flow[j][0];
-                            dr["氢气"] = Data.flowParameter.flow[j][1];
-                            dr["氧气"] = Data.flowParameter.flow[j][2];
-                            dr["水"] = Data.flowParameter.flow[j][3];
-                            dr["管道直径"] = Data.flowParameter.flow[j][4];
-                            dr["管道长度"] = Data.flowParameter.flow[j][5];
+                            dr["流股编号"] = Data.flowParameter.flow[j][0];
+                            dr["氢气占比"] = Data.flowParameter.flow[j][1];
+                            dr["氧气占比"] = Data.flowParameter.flow[j][2];
+                            dr["水占比"] = Data.flowParameter.flow[j][3];
+                            dr["直径（m）"] = Data.flowParameter.flow[j][4];
+                            dr["长度（m）"] = Data.flowParameter.flow[j][5];
                             dt4.Rows.Add(dr);
                         }
                     }
@@ -204,14 +204,14 @@ namespace ElectCell_HMI
                         if (Data.componentParameter.pump[i].ps.Contains(Data.psParameter.ps[j][0]))
                         {
                             DataRow dr = dt5.NewRow();
-                            dr["PS号"] = Data.psParameter.ps[j][0];
-                            dr["物质的量"] = Data.psParameter.ps[j][1];
-                            dr["摩尔体积"] = Data.psParameter.ps[j][2];
-                            dr["压强"] = Data.psParameter.ps[j][3];
-                            dr["液体高度"] = Data.psParameter.ps[j][4];
-                            dr["气体高度"] = Data.psParameter.ps[j][5];
-                            dr["氢气"] = Data.psParameter.ps[j][6];
-                            dr["氧气"] = Data.psParameter.ps[j][7];
+                            dr["过程系统编号"] = Data.psParameter.ps[j][0];
+                            dr["总物质量"] = Data.psParameter.ps[j][1];
+                            dr["摩尔体积（m³/mol）"] = Data.psParameter.ps[j][2];
+                            dr["压力"] = Data.psParameter.ps[j][3];
+                            dr["液体高度（m）"] = Data.psParameter.ps[j][4];
+                            dr["气体高度（m）"] = Data.psParameter.ps[j][5];
+                            dr["氢气占比"] = Data.psParameter.ps[j][6];
+                            dr["氧气占比"] = Data.psParameter.ps[j][7];
                             dt5.Rows.Add(dr);
                         }
                     }
@@ -257,12 +257,12 @@ namespace ElectCell_HMI
                     if (Data.componentParameter.cathodeSeparator.flow.Contains(Data.flowParameter.flow[j][0]))
                     {
                         DataRow dr = dt4.NewRow();
-                        dr["Flow号"] = Data.flowParameter.flow[j][0];
-                        dr["氢气"] = Data.flowParameter.flow[j][1];
-                        dr["氧气"] = Data.flowParameter.flow[j][2];
-                        dr["水"] = Data.flowParameter.flow[j][3];
-                        dr["管道直径"] = Data.flowParameter.flow[j][4];
-                        dr["管道长度"] = Data.flowParameter.flow[j][5];
+                        dr["流股编号"] = Data.flowParameter.flow[j][0];
+                        dr["氢气占比"] = Data.flowParameter.flow[j][1];
+                        dr["氧气占比"] = Data.flowParameter.flow[j][2];
+                        dr["水占比"] = Data.flowParameter.flow[j][3];
+                        dr["直径（m）"] = Data.flowParameter.flow[j][4];
+                        dr["长度（m）"] = Data.flowParameter.flow[j][5];
                         dt4.Rows.Add(dr);
                     }
                 }
@@ -273,14 +273,14 @@ namespace ElectCell_HMI
                     if (Data.componentParameter.cathodeSeparator.ps.Contains(Data.psParameter.ps[j][0]))
                     {
                         DataRow dr = dt5.NewRow();
-                        dr["PS号"] = Data.psParameter.ps[j][0];
-                        dr["物质的量"] = Data.psParameter.ps[j][1];
-                        dr["摩尔体积"] = Data.psParameter.ps[j][2];
-                        dr["压强"] = Data.psParameter.ps[j][3];
-                        dr["液体高度"] = Data.psParameter.ps[j][4];
-                        dr["气体高度"] = Data.psParameter.ps[j][5];
-                        dr["氢气"] = Data.psParameter.ps[j][6];
-                        dr["氧气"] = Data.psParameter.ps[j][7];
+                        dr["过程系统编号"] = Data.psParameter.ps[j][0];
+                        dr["总物质量"] = Data.psParameter.ps[j][1];
+                        dr["摩尔体积（m³/mol）"] = Data.psParameter.ps[j][2];
+                        dr["压力"] = Data.psParameter.ps[j][3];
+                        dr["液体高度（m）"] = Data.psParameter.ps[j][4];
+                        dr["气体高度（m）"] = Data.psParameter.ps[j][5];
+                        dr["氢气占比"] = Data.psParameter.ps[j][6];
+                        dr["氧气占比"] = Data.psParameter.ps[j][7];
                         dt5.Rows.Add(dr);
                     }
                 }
@@ -325,12 +325,12 @@ namespace ElectCell_HMI
                     if (Data.componentParameter.anodeSeparator.flow.Contains(Data.flowParameter.flow[j][0]))
                     {
                         DataRow dr = dt4.NewRow();
-                        dr["Flow号"] = Data.flowParameter.flow[j][0];
-                        dr["氢气"] = Data.flowParameter.flow[j][1];
-                        dr["氧气"] = Data.flowParameter.flow[j][2];
-                        dr["水"] = Data.flowParameter.flow[j][3];
-                        dr["管道直径"] = Data.flowParameter.flow[j][4];
-                        dr["管道长度"] = Data.flowParameter.flow[j][5];
+                        dr["流股编号"] = Data.flowParameter.flow[j][0];
+                        dr["氢气占比"] = Data.flowParameter.flow[j][1];
+                        dr["氧气占比"] = Data.flowParameter.flow[j][2];
+                        dr["水占比"] = Data.flowParameter.flow[j][3];
+                        dr["直径（m）"] = Data.flowParameter.flow[j][4];
+                        dr["长度（m）"] = Data.flowParameter.flow[j][5];
                         dt4.Rows.Add(dr);
                     }
                 }
@@ -341,14 +341,14 @@ namespace ElectCell_HMI
                     if (Data.componentParameter.anodeSeparator.ps.Contains(Data.psParameter.ps[j][0]))
                     {
                         DataRow dr = dt5.NewRow();
-                        dr["PS号"] = Data.psParameter.ps[j][0];
-                        dr["物质的量"] = Data.psParameter.ps[j][1];
-                        dr["摩尔体积"] = Data.psParameter.ps[j][2];
-                        dr["压强"] = Data.psParameter.ps[j][3];
-                        dr["液体高度"] = Data.psParameter.ps[j][4];
-                        dr["气体高度"] = Data.psParameter.ps[j][5];
-                        dr["氢气"] = Data.psParameter.ps[j][6];
-                        dr["氧气"] = Data.psParameter.ps[j][7];
+                        dr["过程系统编号"] = Data.psParameter.ps[j][0];
+                        dr["总物质量"] = Data.psParameter.ps[j][1];
+                        dr["摩尔体积（m³/mol）"] = Data.psParameter.ps[j][2];
+                        dr["压力"] = Data.psParameter.ps[j][3];
+                        dr["液体高度（m）"] = Data.psParameter.ps[j][4];
+                        dr["气体高度（m）"] = Data.psParameter.ps[j][5];
+                        dr["氢气占比"] = Data.psParameter.ps[j][6];
+                        dr["氧气占比"] = Data.psParameter.ps[j][7];
                         dt5.Rows.Add(dr);
                     }
                 }
@@ -393,12 +393,12 @@ namespace ElectCell_HMI
                     if (Data.componentParameter.cathodeValve.flow.Contains(Data.flowParameter.flow[j][0]))
                     {
                         DataRow dr = dt4.NewRow();
-                        dr["Flow号"] = Data.flowParameter.flow[j][0];
-                        dr["氢气"] = Data.flowParameter.flow[j][1];
-                        dr["氧气"] = Data.flowParameter.flow[j][2];
-                        dr["水"] = Data.flowParameter.flow[j][3];
-                        dr["管道直径"] = Data.flowParameter.flow[j][4];
-                        dr["管道长度"] = Data.flowParameter.flow[j][5];
+                        dr["流股编号"] = Data.flowParameter.flow[j][0];
+                        dr["氢气占比"] = Data.flowParameter.flow[j][1];
+                        dr["氧气占比"] = Data.flowParameter.flow[j][2];
+                        dr["水占比"] = Data.flowParameter.flow[j][3];
+                        dr["直径（m）"] = Data.flowParameter.flow[j][4];
+                        dr["长度（m）"] = Data.flowParameter.flow[j][5];
                         dt4.Rows.Add(dr);
                     }
                 }
@@ -409,14 +409,14 @@ namespace ElectCell_HMI
                     if (Data.componentParameter.cathodeValve.ps.Contains(Data.psParameter.ps[j][0]))
                     {
                         DataRow dr = dt5.NewRow();
-                        dr["PS号"] = Data.psParameter.ps[j][0];
-                        dr["物质的量"] = Data.psParameter.ps[j][1];
-                        dr["摩尔体积"] = Data.psParameter.ps[j][2];
-                        dr["压强"] = Data.psParameter.ps[j][3];
-                        dr["液体高度"] = Data.psParameter.ps[j][4];
-                        dr["气体高度"] = Data.psParameter.ps[j][5];
-                        dr["氢气"] = Data.psParameter.ps[j][6];
-                        dr["氧气"] = Data.psParameter.ps[j][7];
+                        dr["过程系统编号"] = Data.psParameter.ps[j][0];
+                        dr["总物质量"] = Data.psParameter.ps[j][1];
+                        dr["摩尔体积（m³/mol）"] = Data.psParameter.ps[j][2];
+                        dr["压力"] = Data.psParameter.ps[j][3];
+                        dr["液体高度（m）"] = Data.psParameter.ps[j][4];
+                        dr["气体高度（m）"] = Data.psParameter.ps[j][5];
+                        dr["氢气占比"] = Data.psParameter.ps[j][6];
+                        dr["氧气占比"] = Data.psParameter.ps[j][7];
                         dt5.Rows.Add(dr);
                     }
                 }
@@ -461,12 +461,12 @@ namespace ElectCell_HMI
                     if (Data.componentParameter.anodeValve.flow.Contains(Data.flowParameter.flow[j][0]))
                     {
                         DataRow dr = dt4.NewRow();
-                        dr["Flow号"] = Data.flowParameter.flow[j][0];
-                        dr["氢气"] = Data.flowParameter.flow[j][1];
-                        dr["氧气"] = Data.flowParameter.flow[j][2];
-                        dr["水"] = Data.flowParameter.flow[j][3];
-                        dr["管道直径"] = Data.flowParameter.flow[j][4];
-                        dr["管道长度"] = Data.flowParameter.flow[j][5];
+                        dr["流股编号"] = Data.flowParameter.flow[j][0];
+                        dr["氢气占比"] = Data.flowParameter.flow[j][1];
+                        dr["氧气占比"] = Data.flowParameter.flow[j][2];
+                        dr["水占比"] = Data.flowParameter.flow[j][3];
+                        dr["直径（m）"] = Data.flowParameter.flow[j][4];
+                        dr["长度（m）"] = Data.flowParameter.flow[j][5];
                         dt4.Rows.Add(dr);
                     }
                 }
@@ -477,14 +477,14 @@ namespace ElectCell_HMI
                     if (Data.componentParameter.anodeValve.ps.Contains(Data.psParameter.ps[j][0]))
                     {
                         DataRow dr = dt5.NewRow();
-                        dr["PS号"] = Data.psParameter.ps[j][0];
-                        dr["物质的量"] = Data.psParameter.ps[j][1];
-                        dr["摩尔体积"] = Data.psParameter.ps[j][2];
-                        dr["压强"] = Data.psParameter.ps[j][3];
-                        dr["液体高度"] = Data.psParameter.ps[j][4];
-                        dr["气体高度"] = Data.psParameter.ps[j][5];
-                        dr["氢气"] = Data.psParameter.ps[j][6];
-                        dr["氧气"] = Data.psParameter.ps[j][7];
+                        dr["过程系统编号"] = Data.psParameter.ps[j][0];
+                        dr["总物质量"] = Data.psParameter.ps[j][1];
+                        dr["摩尔体积（m³/mol）"] = Data.psParameter.ps[j][2];
+                        dr["压力"] = Data.psParameter.ps[j][3];
+                        dr["液体高度（m）"] = Data.psParameter.ps[j][4];
+                        dr["气体高度（m）"] = Data.psParameter.ps[j][5];
+                        dr["氢气占比"] = Data.psParameter.ps[j][6];
+                        dr["氧气占比"] = Data.psParameter.ps[j][7];
                         dt5.Rows.Add(dr);
                     }
                 }
@@ -529,12 +529,12 @@ namespace ElectCell_HMI
                     if (Data.componentParameter.balancePipe.flow.Contains(Data.flowParameter.flow[j][0]))
                     {
                         DataRow dr = dt4.NewRow();
-                        dr["Flow号"] = Data.flowParameter.flow[j][0];
-                        dr["氢气"] = Data.flowParameter.flow[j][1];
-                        dr["氧气"] = Data.flowParameter.flow[j][2];
-                        dr["水"] = Data.flowParameter.flow[j][3];
-                        dr["管道直径"] = Data.flowParameter.flow[j][4];
-                        dr["管道长度"] = Data.flowParameter.flow[j][5];
+                        dr["流股编号"] = Data.flowParameter.flow[j][0];
+                        dr["氢气占比"] = Data.flowParameter.flow[j][1];
+                        dr["氧气占比"] = Data.flowParameter.flow[j][2];
+                        dr["水占比"] = Data.flowParameter.flow[j][3];
+                        dr["直径（m）"] = Data.flowParameter.flow[j][4];
+                        dr["长度（m）"] = Data.flowParameter.flow[j][5];
                         dt4.Rows.Add(dr);
                     }
                 }
@@ -545,14 +545,14 @@ namespace ElectCell_HMI
                     if (Data.componentParameter.balancePipe.ps.Contains(Data.psParameter.ps[j][0]))
                     {
                         DataRow dr = dt5.NewRow();
-                        dr["PS号"] = Data.psParameter.ps[j][0];
-                        dr["物质的量"] = Data.psParameter.ps[j][1];
-                        dr["摩尔体积"] = Data.psParameter.ps[j][2];
-                        dr["压强"] = Data.psParameter.ps[j][3];
-                        dr["液体高度"] = Data.psParameter.ps[j][4];
-                        dr["气体高度"] = Data.psParameter.ps[j][5];
-                        dr["氢气"] = Data.psParameter.ps[j][6];
-                        dr["氧气"] = Data.psParameter.ps[j][7];
+                        dr["过程系统编号"] = Data.psParameter.ps[j][0];
+                        dr["总物质量"] = Data.psParameter.ps[j][1];
+                        dr["摩尔体积（m³/mol）"] = Data.psParameter.ps[j][2];
+                        dr["压力"] = Data.psParameter.ps[j][3];
+                        dr["液体高度（m）"] = Data.psParameter.ps[j][4];
+                        dr["气体高度（m）"] = Data.psParameter.ps[j][5];
+                        dr["氢气占比"] = Data.psParameter.ps[j][6];
+                        dr["氧气占比"] = Data.psParameter.ps[j][7];
                         dt5.Rows.Add(dr);
                     }
                 }
@@ -632,8 +632,8 @@ namespace ElectCell_HMI
             //        row.Cells["氢气"].Value == null || string.IsNullOrWhiteSpace(row.Cells["氢气"].Value.ToString()) ||
             //        row.Cells["氧气"].Value == null || string.IsNullOrWhiteSpace(row.Cells["氧气"].Value.ToString()) ||
             //        row.Cells["水"].Value == null || string.IsNullOrWhiteSpace(row.Cells["水"].Value.ToString()) ||
-            //        row.Cells["管道直径"].Value == null || string.IsNullOrWhiteSpace(row.Cells["管道直径"].Value.ToString()) ||
-            //        row.Cells["管道长度"].Value == null || string.IsNullOrWhiteSpace(row.Cells["管道长度"].Value.ToString()))
+            //        row.Cells["管道直径（m）"].Value == null || string.IsNullOrWhiteSpace(row.Cells["管道直径（m）"].Value.ToString()) ||
+            //        row.Cells["管道长度（m）"].Value == null || string.IsNullOrWhiteSpace(row.Cells["管道长度（m）"].Value.ToString()))
             //    {
             //        continue;
             //    }
@@ -642,8 +642,8 @@ namespace ElectCell_HMI
             //    double hydrogen = Convert.ToDouble(row.Cells["氢气"].Value);
             //    double oxygen = Convert.ToDouble(row.Cells["氧气"].Value);
             //    double water = Convert.ToDouble(row.Cells["水"].Value);
-            //    double pipeDiameter = Convert.ToDouble(row.Cells["管道直径"].Value);
-            //    double pipeLength = Convert.ToDouble(row.Cells["管道长度"].Value);
+            //    double pipeDiameter = Convert.ToDouble(row.Cells["管道直径（m）"].Value);
+            //    double pipeLength = Convert.ToDouble(row.Cells["管道长度（m）"].Value);
 
             //    // 假设 Data.flowParameter.flow 是一个 List<List<double>>
             //    Data.flowParameter.flow.Add(new List<double> { flowNumber, hydrogen, oxygen, water, pipeDiameter, pipeLength });
@@ -654,10 +654,10 @@ namespace ElectCell_HMI
             //{
             //    if (row.IsNewRow || row.Cells["PS号"].Value == null || string.IsNullOrWhiteSpace(row.Cells["PS号"].Value.ToString()) ||
             //        row.Cells["物质的量"].Value == null || string.IsNullOrWhiteSpace(row.Cells["物质的量"].Value.ToString()) ||
-            //        row.Cells["摩尔体积"].Value == null || string.IsNullOrWhiteSpace(row.Cells["摩尔体积"].Value.ToString()) ||
-            //        row.Cells["压强"].Value == null || string.IsNullOrWhiteSpace(row.Cells["压强"].Value.ToString()) ||
-            //        row.Cells["液体高度"].Value == null || string.IsNullOrWhiteSpace(row.Cells["液体高度"].Value.ToString()) ||
-            //        row.Cells["气体高度"].Value == null || string.IsNullOrWhiteSpace(row.Cells["气体高度"].Value.ToString()) ||
+            //        row.Cells["摩尔体积（m³/mol）"].Value == null || string.IsNullOrWhiteSpace(row.Cells["摩尔体积（m³/mol）"].Value.ToString()) ||
+            //        row.Cells["压力"].Value == null || string.IsNullOrWhiteSpace(row.Cells["压力"].Value.ToString()) ||
+            //        row.Cells["液体高度（m）"].Value == null || string.IsNullOrWhiteSpace(row.Cells["液体高度（m）"].Value.ToString()) ||
+            //        row.Cells["气体高度（m）"].Value == null || string.IsNullOrWhiteSpace(row.Cells["气体高度（m）"].Value.ToString()) ||
             //        row.Cells["氢气"].Value == null || string.IsNullOrWhiteSpace(row.Cells["氢气"].Value.ToString()) ||
             //        row.Cells["氧气"].Value == null || string.IsNullOrWhiteSpace(row.Cells["氧气"].Value.ToString()))
             //    {
@@ -666,10 +666,10 @@ namespace ElectCell_HMI
 
             //    int psNumber = Convert.ToInt32(row.Cells["PS号"].Value);
             //    double substanceAmount = Convert.ToDouble(row.Cells["物质的量"].Value);
-            //    double molarVolume = Convert.ToDouble(row.Cells["摩尔体积"].Value);
-            //    double pressure = Convert.ToDouble(row.Cells["压强"].Value);
-            //    double liquidHeight = Convert.ToDouble(row.Cells["液体高度"].Value);
-            //    double gasHeight = Convert.ToDouble(row.Cells["气体高度"].Value);
+            //    double molarVolume = Convert.ToDouble(row.Cells["摩尔体积（m³/mol）"].Value);
+            //    double pressure = Convert.ToDouble(row.Cells["压力"].Value);
+            //    double liquidHeight = Convert.ToDouble(row.Cells["液体高度（m）"].Value);
+            //    double gasHeight = Convert.ToDouble(row.Cells["气体高度（m）"].Value);
             //    double hydrogen = Convert.ToDouble(row.Cells["氢气"].Value);
             //    double oxygen = Convert.ToDouble(row.Cells["氧气"].Value);
 
