@@ -103,6 +103,14 @@ namespace ElectCell_HMI
         public List<List<double>> result;
     }
 
+    //泵特性曲线
+    public class PumpCharacteristic
+    {
+        public int nCharacteristicQH, nCharacteristicQP;
+        public List<List<double>> characteristicQH;
+        public List<List<double>> characteristicQP;
+    }
+
     public static class Data
     {
         public static ControlParameter controlParameter = new ControlParameter();           // 控制参数
@@ -112,5 +120,6 @@ namespace ElectCell_HMI
         public static ProcessParameter processParameter = new ProcessParameter();           // 工艺参数
         public static ComponentParameter componentParameter = new ComponentParameter();     // 部件参数
         public static Result result = new Result();                                         // 计算结果
+        public static PumpCharacteristic pumpCharacteristic = new PumpCharacteristic();     // 泵特性曲线
     }
 }

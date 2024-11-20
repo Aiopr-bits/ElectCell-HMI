@@ -64,6 +64,12 @@
     <Compile Include="Forms\StartPage.Designer.cs">
       <DependentUpon>StartPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\CharacteristicCurvePage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\CharacteristicCurvePage.Designer.cs">
+      <DependentUpon>CharacteristicCurvePage.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\SystemTechnologyPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -130,6 +136,9 @@
     <Compile Include="UserControls\ControlParameterPage.Designer.cs">
       <DependentUpon>ControlParameterPage.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UserControls\CharacteristicCurvePage.resx">
+      <DependentUpon>CharacteristicCurvePage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\SystemTechnologyPage.resx">
       <DependentUpon>SystemTechnologyPage.cs</DependentUpon>
     </EmbeddedResource>

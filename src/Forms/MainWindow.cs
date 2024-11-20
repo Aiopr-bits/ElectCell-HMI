@@ -19,6 +19,7 @@ namespace ElectCell_HMI
         public ProcessParameterPage processParameter;           // 工艺参数配置页面
         public ComponentParameterPage componentParameter;       // 部件参数配置页面
         public VariableListPage variableList;                   // 变量清单页面
+        public CharacteristicCurvePage CharacteristicCurvePage; // 特性曲线页面
         public SimulationResultPage simulationResult;           // 仿真结果页面
         public DataPlaybackPage dataPlayback;                   // 数据回放页面
         public SystemTechnologyPage processDrawing;               // 系统工艺绘制页面
@@ -45,14 +46,33 @@ namespace ElectCell_HMI
             componentParameter.label1.Font = new Font(componentParameter.label1.Font.FontFamily, 15, FontStyle.Bold);
             componentParameter.label1.TextAlign = ContentAlignment.MiddleCenter;
             componentParameter.label1.BorderStyle = BorderStyle.None;
+
             componentParameter.label2.BackColor = Color.Transparent;
             componentParameter.label2.Font = new Font(componentParameter.label2.Font.FontFamily, 15, FontStyle.Bold);
             componentParameter.label2.TextAlign = ContentAlignment.MiddleCenter;
             componentParameter.label2.BorderStyle = BorderStyle.None;
+
             simulationResult.label2.BackColor = Color.Transparent;
             simulationResult.label2.Font = new Font(simulationResult.label2.Font.FontFamily, 12, FontStyle.Bold);
             simulationResult.label2.TextAlign = ContentAlignment.MiddleCenter;
             simulationResult.label2.BorderStyle = BorderStyle.None;
+
+            CharacteristicCurvePage.label1.BackColor = Color.FromArgb(70, 130, 180);
+            //70,130,180
+            CharacteristicCurvePage.label1.ForeColor = Color.White;
+            CharacteristicCurvePage.label1.Font = new Font(CharacteristicCurvePage.label1.Font.FontFamily, 15, FontStyle.Bold);
+            CharacteristicCurvePage.label1.TextAlign = ContentAlignment.MiddleCenter;
+            CharacteristicCurvePage.label1.BorderStyle = BorderStyle.None;
+
+            CharacteristicCurvePage.label2.BackColor = Color.Transparent;
+            CharacteristicCurvePage.label2.Font = new Font(CharacteristicCurvePage.label2.Font.FontFamily, 9, FontStyle.Bold);
+            CharacteristicCurvePage.label2.TextAlign = ContentAlignment.MiddleCenter;
+            CharacteristicCurvePage.label2.BorderStyle = BorderStyle.None;
+
+            CharacteristicCurvePage.label3.BackColor = Color.Transparent;
+            CharacteristicCurvePage.label3.Font = new Font(CharacteristicCurvePage.label2.Font.FontFamily, 9, FontStyle.Bold);
+            CharacteristicCurvePage.label3.TextAlign = ContentAlignment.MiddleCenter;
+            CharacteristicCurvePage.label3.BorderStyle = BorderStyle.None;
         }
 
         public void InitializeStatusStrip()
@@ -86,7 +106,7 @@ namespace ElectCell_HMI
             simulationParamsNode.Nodes.Add(new TreeNode("部件参数配置"));
 
             TreeNode variableListNode = new TreeNode("变量清单");
-            TreeNode faultInjectionNode = new TreeNode("故障注入");
+            TreeNode characteristicCurveNode = new TreeNode("特性曲线");
             TreeNode autoTestNode = new TreeNode("自动测试");
 
             TreeNode dataMonitoringNode = new TreeNode("数据监控");
@@ -99,7 +119,7 @@ namespace ElectCell_HMI
             // 将子节点添加到根节点
             rootNode.Nodes.Add(simulationParamsNode);
             rootNode.Nodes.Add(variableListNode);
-            rootNode.Nodes.Add(faultInjectionNode);
+            rootNode.Nodes.Add(characteristicCurveNode);
             rootNode.Nodes.Add(autoTestNode);
             rootNode.Nodes.Add(dataMonitoringNode);
             rootNode.Nodes.Add(simulationResultsNode);
@@ -147,6 +167,11 @@ namespace ElectCell_HMI
                     variableList.Show();
                     leftStatusLabel.Text = "变量清单";
                     break;
+                case "特性曲线":
+                    HideAllParameterPages();
+                    CharacteristicCurvePage.Show();
+                    leftStatusLabel.Text = "特性曲线";
+                    break;
                 case "系统工艺":
                     HideAllParameterPages();
                     processDrawing.Show();
@@ -174,6 +199,7 @@ namespace ElectCell_HMI
             processParameter.Hide();
             componentParameter.Hide();
             variableList.Hide();
+            CharacteristicCurvePage.Hide();
             processDrawing.Hide();
             simulationResult.Hide();
             dataPlayback.Hide();
@@ -217,6 +243,11 @@ namespace ElectCell_HMI
             tableLayoutPanel1.Controls.Add(variableList, 1, 0);
             variableList.Hide();
 
+            CharacteristicCurvePage = new CharacteristicCurvePage();
+            CharacteristicCurvePage.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Controls.Add(CharacteristicCurvePage, 1, 0);
+            CharacteristicCurvePage.Hide();
+
             processDrawing = new SystemTechnologyPage(this);
             processDrawing.Dock = DockStyle.Fill;
             tableLayoutPanel1.Controls.Add(processDrawing, 1, 0);
@@ -236,11 +267,11 @@ namespace ElectCell_HMI
 
         public void readParametersFile(string path)
         {
-            path = path + "/data_input.csv";
+            string path_data_input = path + "/data_input.csv";
             string nextLine;
             string[] values;
 
-            using (StreamReader sr = new StreamReader(path))
+            using (StreamReader sr = new StreamReader(path_data_input))
             {
                 /*###########################控制参数###########################*/
                 nextLine = sr.ReadLine();
@@ -672,9 +703,57 @@ namespace ElectCell_HMI
                 sr.Close();
             }
 
+            string path_QH = path + "/QH.txt";
+            using (StreamReader sr = new StreamReader(path_QH))
+            {           
+                nextLine = sr.ReadLine();
+                {
+                    values = nextLine.Split('\t');
+                    Data.pumpCharacteristic.nCharacteristicQH = Convert.ToInt32(values[0]);
+                }
+                Data.pumpCharacteristic.characteristicQH = new List<List<double>>();
+                for (int i = 0; i < Data.pumpCharacteristic.nCharacteristicQH; i++)
+                {
+                    nextLine = sr.ReadLine();
+                    {
+                        values = nextLine.Split('\t');
+                        Data.pumpCharacteristic.characteristicQH.Add(new List<double>());
+                        for (int j = 0; j < 2; j++)
+                        {
+                            Data.pumpCharacteristic.characteristicQH[i].Add(Convert.ToDouble(values[j]));
+                        }
+                    }
+                }
+                sr.Close();
+            }
+
+            string path_QP = path + "/QP.txt";
+            using (StreamReader sr = new StreamReader(path_QP))
+            {
+                nextLine = sr.ReadLine();
+                {
+                    values = nextLine.Split('\t');
+                    Data.pumpCharacteristic.nCharacteristicQP = Convert.ToInt32(values[0]);
+                }
+                Data.pumpCharacteristic.characteristicQP = new List<List<double>>();
+                for (int i = 0; i < Data.pumpCharacteristic.nCharacteristicQP; i++)
+                {
+                    nextLine = sr.ReadLine();
+                    {
+                        values = nextLine.Split('\t');
+                        Data.pumpCharacteristic.characteristicQP.Add(new List<double>());
+                        for (int j = 0; j < 2; j++)
+                        {
+                            Data.pumpCharacteristic.characteristicQP[i].Add(Convert.ToDouble(values[j]));
+                        }
+                    }
+                }
+                sr.Close();
+            }
+
             using (StreamWriter sw = new StreamWriter("case_path.csv", false))
             {
-                sw.WriteLine(Path.GetDirectoryName(path));
+                sw.WriteLine(Path.GetDirectoryName(path_data_input));
             }
 
             treeView1.ExpandAll();
