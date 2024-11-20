@@ -13,7 +13,7 @@ namespace ElectCell_HMI
     // 几何参数
     public class GeometryParameter
     {
-        public double L_ca2se, L_an2se, D_sc, l_sc, thickness_cat, thickness_ano, distance_am, distance_cm;
+        public double L_ca2p, L_an2p,L_ca2se, L_an2se, D_sc, l_sc, thickness_cat, thickness_ano, distance_am, distance_cm;
         public double Volume_hotside, Volume_codeside, di_stack, Area_sep, Area_stack, C_tsep, C_tk;
     }
 

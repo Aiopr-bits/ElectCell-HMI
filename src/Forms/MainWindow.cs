@@ -284,14 +284,16 @@ namespace ElectCell_HMI
                 nextLine = sr.ReadLine();
                 {
                     values = nextLine.Split(',');
-                    Data.geometryParameter.L_ca2se = Convert.ToDouble(values[0]);
-                    Data.geometryParameter.L_an2se = Convert.ToDouble(values[1]);
-                    Data.geometryParameter.D_sc = Convert.ToDouble(values[2]);
-                    Data.geometryParameter.l_sc = Convert.ToDouble(values[3]);
-                    Data.geometryParameter.thickness_cat = Convert.ToDouble(values[4]);
-                    Data.geometryParameter.thickness_ano = Convert.ToDouble(values[5]);
-                    Data.geometryParameter.distance_am = Convert.ToDouble(values[6]);
-                    Data.geometryParameter.distance_cm = Convert.ToDouble(values[7]);
+                    Data.geometryParameter.L_ca2p = Convert.ToDouble(values[0]);
+                    Data.geometryParameter.L_an2p = Convert.ToDouble(values[1]);
+                    Data.geometryParameter.L_ca2se = Convert.ToDouble(values[2]);
+                    Data.geometryParameter.L_an2se = Convert.ToDouble(values[3]);
+                    Data.geometryParameter.D_sc = Convert.ToDouble(values[4]);
+                    Data.geometryParameter.l_sc = Convert.ToDouble(values[5]);
+                    Data.geometryParameter.thickness_cat = Convert.ToDouble(values[6]);
+                    Data.geometryParameter.thickness_ano = Convert.ToDouble(values[7]);
+                    Data.geometryParameter.distance_am = Convert.ToDouble(values[8]);
+                    Data.geometryParameter.distance_cm = Convert.ToDouble(values[9]);
                 }
                 nextLine = sr.ReadLine();
                 nextLine = sr.ReadLine();

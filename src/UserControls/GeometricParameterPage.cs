@@ -28,21 +28,24 @@ namespace ElectCell_HMI
             dt.Columns.Add("含义", typeof(string));
 
             // 添加几何参数数据
-            AddGeometryParameter(dt, 1, "L_ca2se", Data.geometryParameter.L_ca2se, "m", "阳极到隔膜的距离");
-            AddGeometryParameter(dt, 2, "L_an2se", Data.geometryParameter.L_an2se, "m", "阴极到隔膜的距离");
-            AddGeometryParameter(dt, 3, "D_sc", Data.geometryParameter.D_sc, "m", "短路距离");
-            AddGeometryParameter(dt, 4, "l_sc", Data.geometryParameter.l_sc, "m", "短路长度");
-            AddGeometryParameter(dt, 5, "thickness_cat", Data.geometryParameter.thickness_cat, "m", "阳极厚度");
-            AddGeometryParameter(dt, 6, "thickness_ano", Data.geometryParameter.thickness_ano, "m", "阴极厚度");
-            AddGeometryParameter(dt, 7, "distance_am", Data.geometryParameter.distance_am, "m", "阳极到膜的距离");
-            AddGeometryParameter(dt, 8, "distance_cm", Data.geometryParameter.distance_cm, "m", "阴极到膜的距离");
-            AddGeometryParameter(dt, 9, "Volume_hotside", Data.geometryParameter.Volume_hotside, "m³", "热侧体积");
-            AddGeometryParameter(dt, 10, "Volume_codeside", Data.geometryParameter.Volume_codeside, "m³", "冷侧体积");
-            AddGeometryParameter(dt, 11, "di_stack", Data.geometryParameter.di_stack, "m", "堆叠直径");
-            AddGeometryParameter(dt, 12, "Area_sep", Data.geometryParameter.Area_sep, "m²", "隔膜面积");
-            AddGeometryParameter(dt, 13, "Area_stack", Data.geometryParameter.Area_stack, "m²", "堆叠面积");
-            AddGeometryParameter(dt, 14, "C_tsep", Data.geometryParameter.C_tsep, "F", "隔膜电容");
-            AddGeometryParameter(dt, 15, "C_tk", Data.geometryParameter.C_tk, "F", "堆叠电容");
+            AddGeometryParameter(dt, 1, "L_ca2p", Data.geometryParameter.L_ca2p, "m", "阴极到泵管道距离");
+            AddGeometryParameter(dt, 2, "L_an2p", Data.geometryParameter.L_an2p, "m", "阳极到泵管道距离");
+            AddGeometryParameter(dt, 3, "L_ca2se", Data.geometryParameter.L_ca2se, "m", "阳极到隔膜的距离");
+            AddGeometryParameter(dt, 4, "L_an2se", Data.geometryParameter.L_an2se, "m", "阴极到隔膜的距离");
+            AddGeometryParameter(dt, 5, "D_sc", Data.geometryParameter.D_sc, "m", "短路距离");
+            AddGeometryParameter(dt, 6, "l_sc", Data.geometryParameter.l_sc, "m", "短路长度");
+            AddGeometryParameter(dt, 7, "thickness_cat", Data.geometryParameter.thickness_cat, "m", "阳极厚度");
+            AddGeometryParameter(dt, 8, "thickness_ano", Data.geometryParameter.thickness_ano, "m", "阴极厚度");
+            AddGeometryParameter(dt, 9, "distance_am", Data.geometryParameter.distance_am, "m", "阳极到膜的距离");
+            AddGeometryParameter(dt, 10, "distance_cm", Data.geometryParameter.distance_cm, "m", "阴极到膜的距离");
+            AddGeometryParameter(dt, 11, "Volume_hotside", Data.geometryParameter.Volume_hotside, "m³", "热侧体积");
+            AddGeometryParameter(dt, 12, "Volume_codeside", Data.geometryParameter.Volume_codeside, "m³", "冷侧体积");
+            AddGeometryParameter(dt, 13, "di_stack", Data.geometryParameter.di_stack, "m", "堆叠直径");
+            AddGeometryParameter(dt, 14, "Area_sep", Data.geometryParameter.Area_sep, "m²", "隔膜面积");
+            AddGeometryParameter(dt, 15, "Area_stack", Data.geometryParameter.Area_stack, "m²", "堆叠面积");
+            AddGeometryParameter(dt, 16, "C_tsep", Data.geometryParameter.C_tsep, "F", "隔膜电容");
+            AddGeometryParameter(dt, 17, "C_tk", Data.geometryParameter.C_tk, "F", "堆叠电容");
+
 
             // 添加空行
             for (int i = 0; i < 24; i++)
