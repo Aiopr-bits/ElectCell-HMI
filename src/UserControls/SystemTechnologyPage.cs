@@ -187,6 +187,9 @@ namespace ElectCell_HMI
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
                 g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
 
+                // 绘制曲线区域背景颜色
+                g.FillRectangle(new SolidBrush(Color.FromArgb(0, 64, 64)), 50 * scaleFactor, 10 * scaleFactor, (pictureBox.Width - 60) * scaleFactor, (pictureBox.Height - 60) * scaleFactor);
+
                 // 设置坐标轴
                 Pen axisPen = new Pen(Color.Black, 2 * scaleFactor);
                 g.DrawLine(axisPen, 50 * scaleFactor, 10 * scaleFactor, 50 * scaleFactor, (pictureBox.Height - 50) * scaleFactor); // Y轴
@@ -206,25 +209,28 @@ namespace ElectCell_HMI
                 }
 
                 // 绘制网格线和坐标标签
-                Pen gridPen = new Pen(Color.LightGray, 1 * scaleFactor);
+                Pen gridPen = new Pen(Color.FromArgb(0, 84, 27), 1 * scaleFactor);
                 Font labelFont = new Font("Arial", 8 * scaleFactor);
+                StringFormat stringFormat = new StringFormat();
+                stringFormat.Alignment = StringAlignment.Center; // 居中对齐
+
                 for (int i = 50 * scaleFactor; i < (pictureBox.Width - 10) * scaleFactor; i += 40 * scaleFactor) // 增加间隔
                 {
                     g.DrawLine(gridPen, i, 10 * scaleFactor, i, (pictureBox.Height - 50) * scaleFactor);
                     float labelX = minX + (i - 50 * scaleFactor) / (float)((pictureBox.Width - 60) * scaleFactor) * (maxX - minX);
-                    g.DrawString(Math.Round(labelX).ToString(), labelFont, Brushes.Black, new PointF(i, (pictureBox.Height - 45) * scaleFactor));
+                    g.DrawString(Math.Round(labelX).ToString(), labelFont, Brushes.Black, new PointF(i, (pictureBox.Height - 45) * scaleFactor), stringFormat); // 调整标签位置和对齐方式
                 }
                 for (int i = 10 * scaleFactor; i < (pictureBox.Height - 50) * scaleFactor; i += 20 * scaleFactor)
                 {
                     g.DrawLine(gridPen, 50 * scaleFactor, i, (pictureBox.Width - 10) * scaleFactor, i);
                     float labelY = maxY - (i - 10 * scaleFactor) / (float)((pictureBox.Height - 60) * scaleFactor) * (maxY - minY);
-                    g.DrawString(Math.Round(labelY).ToString(), labelFont, Brushes.Black, new PointF(5 * scaleFactor, i - 5 * scaleFactor));
+                    g.DrawString(Math.Round(labelY).ToString(), labelFont, Brushes.Black, new PointF(45 * scaleFactor, i - 5 * scaleFactor), new StringFormat { Alignment = StringAlignment.Far }); // 调整标签位置和对齐方式
                 }
 
                 // 绘制数据点
                 if (drawDataPoints && dataPoints.Count > 1)
                 {
-                    Pen dataPen = new Pen(Color.Blue, 2 * scaleFactor);
+                    Pen dataPen = new Pen(Color.FromArgb(200, 213, 13), 2 * scaleFactor);
                     for (int i = 1; i < dataPoints.Count; i++)
                     {
                         PointF p1 = new PointF(50 * scaleFactor + (dataPoints[i - 1].X - minX) / (maxX - minX) * (pictureBox.Width - 60) * scaleFactor,
