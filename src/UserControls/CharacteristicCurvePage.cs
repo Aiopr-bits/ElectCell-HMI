@@ -24,8 +24,8 @@ namespace ElectCell_HMI
 
         public void TrendMonitorPage_Resize(object sender, EventArgs e)
         {
-            DrawGraph(dataPointsQH, pictureBox1);
-            DrawGraph(dataPointsQH, pictureBox2);
+            DrawGraph(dataPointsQH, pictureBox1, true, "流量-扬程特性曲线");
+            DrawGraph(dataPointsQH, pictureBox2, true, "流量-压力特性曲线");
         }
 
         void dataGridView1LoadData()
@@ -63,16 +63,16 @@ namespace ElectCell_HMI
             {
                 dataPointsQH.Add(new PointF((float)Data.pumpCharacteristic.characteristicQH[i][0], (float)Data.pumpCharacteristic.characteristicQH[i][1]));
             }
-            DrawGraph(dataPointsQH, pictureBox1);
+            DrawGraph(dataPointsQH, pictureBox1, true, "流量扬程特性曲线");
 
             for (int i = 0; i < Data.pumpCharacteristic.nCharacteristicQP; i++)
             {
                 dataPointsQP.Add(new PointF((float)Data.pumpCharacteristic.characteristicQP[i][0], (float)Data.pumpCharacteristic.characteristicQP[i][1]));
             }
-            DrawGraph(dataPointsQP, pictureBox2);
+            DrawGraph(dataPointsQP, pictureBox2, true, "流量-压力特性曲线");
         }
 
-        public void DrawGraph(List<PointF> dataPoints, System.Windows.Forms.PictureBox pictureBox, bool drawDataPoints = true)
+        public void DrawGraph(List<PointF> dataPoints, System.Windows.Forms.PictureBox pictureBox, bool drawDataPoints = true, string curveName = "")
         {
             if (pictureBox.Width == 0 || pictureBox.Height == 0)
                 return;
@@ -141,6 +141,20 @@ namespace ElectCell_HMI
                                                (pictureBox.Height - 50) * scaleFactor - (dataPoints[i].Y - minY) / (maxY - minY) * (pictureBox.Height - 60) * scaleFactor);
                         g.DrawLine(dataPen, p1, p2);
                     }
+                }
+
+                if (curveName != "")
+                {
+                    // 绘制图例
+                    Font legendFont = new Font("Arial", 10 * scaleFactor, FontStyle.Bold); // 调整字体大小
+                    SizeF legendSize = g.MeasureString(curveName, legendFont);
+                    RectangleF legendRect = new RectangleF((pictureBox.Width - 10) * scaleFactor - legendSize.Width - 60 * scaleFactor, 10 * scaleFactor, legendSize.Width + 60 * scaleFactor, legendSize.Height + 5 * scaleFactor); // 调整图例区域宽度
+                    g.FillRectangle(new SolidBrush(Color.FromArgb(0, 64, 64)), legendRect); // 设置背景颜色
+                    g.DrawString(curveName, legendFont, Brushes.White, new PointF(legendRect.X + 5 * scaleFactor, legendRect.Y + 2.5f * scaleFactor)); // 设置字体颜色为白色
+
+                    // 绘制曲线示例
+                    Pen legendPen = new Pen(Color.FromArgb(200, 213, 13), 2 * scaleFactor);
+                    g.DrawLine(legendPen, legendRect.X + legendSize.Width + 10 * scaleFactor, legendRect.Y + legendRect.Height / 2, legendRect.X + legendSize.Width + 50 * scaleFactor, legendRect.Y + legendRect.Height / 2); // 曲线长度设置为现在的2倍
                 }
             }
 

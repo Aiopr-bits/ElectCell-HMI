@@ -87,9 +87,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(3, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(109, 12);
+            this.label3.Size = new System.Drawing.Size(116, 12);
             this.label3.TabIndex = 1;
-            this.label3.Text = "流量压力特性曲线";
+            this.label3.Text = "流量-压力特性曲线";
             // 
             // pictureBox2
             // 

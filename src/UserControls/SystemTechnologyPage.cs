@@ -56,7 +56,8 @@ namespace ElectCell_HMI
                 float y = (float)Data.result.result[i][comboBox1Index + 1];
                 dataPoints1.Add(new PointF(x, y));
             }
-            DrawGraph(dataPoints1, pictureBox1);
+            string comboBox1Text = comboBox1.SelectedItem != null ? comboBox1.SelectedItem.ToString() : string.Empty;
+            DrawGraph(dataPoints1, pictureBox1, true, comboBox1Text);
 
             dataPoints2.Clear();
             for (int i = 0; i < Data.result.result.Count; i++)
@@ -65,7 +66,8 @@ namespace ElectCell_HMI
                 float y = (float)Data.result.result[i][comboBox2Index + 1];
                 dataPoints2.Add(new PointF(x, y));
             }
-            DrawGraph(dataPoints2, pictureBox2);
+            string comboBox2Text = comboBox2.SelectedItem != null ? comboBox2.SelectedItem.ToString() : string.Empty;
+            DrawGraph(dataPoints2, pictureBox2, true, comboBox2Text);
 
             dataPoints3.Clear();
             for (int i = 0; i < Data.result.result.Count; i++)
@@ -74,7 +76,8 @@ namespace ElectCell_HMI
                 float y = (float)Data.result.result[i][comboBox3Index + 1];
                 dataPoints3.Add(new PointF(x, y));
             }
-            DrawGraph(dataPoints3, pictureBox3);
+            string comboBox3Text = comboBox3.SelectedItem != null ? comboBox3.SelectedItem.ToString() : string.Empty;
+            DrawGraph(dataPoints3, pictureBox3, true, comboBox3Text);
 
             dataPoints4.Clear();
             for (int i = 0; i < Data.result.result.Count; i++)
@@ -83,7 +86,8 @@ namespace ElectCell_HMI
                 float y = (float)Data.result.result[i][comboBox4Index + 1];
                 dataPoints4.Add(new PointF(x, y));
             }
-            DrawGraph(dataPoints4, pictureBox4);
+            string comboBox4Text = comboBox4.SelectedItem != null ? comboBox4.SelectedItem.ToString() : string.Empty;
+            DrawGraph(dataPoints4, pictureBox4, true, comboBox4Text);
 
             if (comboBox1.Items.Count == 0)
             {
@@ -164,13 +168,18 @@ namespace ElectCell_HMI
 
         public void TrendMonitorPage_Resize(object sender, EventArgs e)
         {
-            DrawGraph(dataPoints1, pictureBox1);
-            DrawGraph(dataPoints2, pictureBox2);
-            DrawGraph(dataPoints3, pictureBox3);
-            DrawGraph(dataPoints4, pictureBox4);
+            string comboBox1Text = comboBox1.SelectedItem != null ? comboBox1.SelectedItem.ToString() : string.Empty;
+            string comboBox2Text = comboBox2.SelectedItem != null ? comboBox2.SelectedItem.ToString() : string.Empty;
+            string comboBox3Text = comboBox3.SelectedItem != null ? comboBox3.SelectedItem.ToString() : string.Empty;
+            string comboBox4Text = comboBox4.SelectedItem != null ? comboBox4.SelectedItem.ToString() : string.Empty;
+
+            DrawGraph(dataPoints1, pictureBox1, true, comboBox1Text);
+            DrawGraph(dataPoints2, pictureBox2, true, comboBox2Text);
+            DrawGraph(dataPoints3, pictureBox3, true, comboBox3Text);
+            DrawGraph(dataPoints4, pictureBox4, true, comboBox4Text);
         }
 
-        public void DrawGraph(List<PointF> dataPoints, System.Windows.Forms.PictureBox pictureBox, bool drawDataPoints = true)
+        public void DrawGraph(List<PointF> dataPoints, System.Windows.Forms.PictureBox pictureBox, bool drawDataPoints = true, string curveName = "")
         {
             if (pictureBox.Width == 0 || pictureBox.Height == 0)
                 return;
@@ -240,6 +249,20 @@ namespace ElectCell_HMI
                         g.DrawLine(dataPen, p1, p2);
                     }
                 }
+
+                if (curveName != "")
+                {
+                    // 绘制图例
+                    Font legendFont = new Font("Arial", 10 * scaleFactor, FontStyle.Bold); // 调整字体大小
+                    SizeF legendSize = g.MeasureString(curveName, legendFont);
+                    RectangleF legendRect = new RectangleF((pictureBox.Width - 10) * scaleFactor - legendSize.Width - 60 * scaleFactor, 10 * scaleFactor, legendSize.Width + 60 * scaleFactor, legendSize.Height + 5 * scaleFactor); // 调整图例区域宽度
+                    g.FillRectangle(new SolidBrush(Color.FromArgb(0, 64, 64)), legendRect); // 设置背景颜色
+                    g.DrawString(curveName, legendFont, Brushes.White, new PointF(legendRect.X + 5 * scaleFactor, legendRect.Y + 2.5f * scaleFactor)); // 设置字体颜色为白色
+
+                    // 绘制曲线示例
+                    Pen legendPen = new Pen(Color.FromArgb(200, 213, 13), 2 * scaleFactor);
+                    g.DrawLine(legendPen, legendRect.X + legendSize.Width + 10 * scaleFactor, legendRect.Y + legendRect.Height / 2, legendRect.X + legendSize.Width + 50 * scaleFactor, legendRect.Y + legendRect.Height / 2); // 曲线长度设置为现在的2倍
+                }
             }
 
             // 缩放 Bitmap 到 PictureBox 的大小
@@ -257,7 +280,8 @@ namespace ElectCell_HMI
                 float y = (float)Data.result.result[i][comboBox1Index + 1];
                 dataPoints1.Add(new PointF(x, y));
             }
-            DrawGraph(dataPoints1, pictureBox1);
+            string comboBox1Text = comboBox1.SelectedItem != null ? comboBox1.SelectedItem.ToString() : string.Empty;
+            DrawGraph(dataPoints1, pictureBox1, true, comboBox1Text);
         }
 
         public void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -270,7 +294,8 @@ namespace ElectCell_HMI
                 float y = (float)Data.result.result[i][comboBox2Index + 1];
                 dataPoints2.Add(new PointF(x, y));
             }
-            DrawGraph(dataPoints2, pictureBox2);
+            string comboBox2Text = comboBox2.SelectedItem != null ? comboBox2.SelectedItem.ToString() : string.Empty;
+            DrawGraph(dataPoints2, pictureBox2, true, comboBox2Text);
         }
 
         public void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
@@ -283,7 +308,8 @@ namespace ElectCell_HMI
                 float y = (float)Data.result.result[i][comboBox3Index + 1];
                 dataPoints3.Add(new PointF(x, y));
             }
-            DrawGraph(dataPoints3, pictureBox3);
+            string comboBox3Text = comboBox3.SelectedItem != null ? comboBox3.SelectedItem.ToString() : string.Empty;
+            DrawGraph(dataPoints3, pictureBox3, true, comboBox3Text);
         }
 
         public void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
@@ -296,7 +322,8 @@ namespace ElectCell_HMI
                 float y = (float)Data.result.result[i][comboBox4Index + 1];
                 dataPoints4.Add(new PointF(x, y));
             }
-            DrawGraph(dataPoints4, pictureBox4);
+            string comboBox4Text = comboBox4.SelectedItem != null ? comboBox4.SelectedItem.ToString() : string.Empty;
+            DrawGraph(dataPoints4, pictureBox4, true, comboBox4Text);
         }
     }
 }
