@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Timers;
 using System.Threading.Tasks;
+using ElectCell_HMI.Forms;
 
 namespace ElectCell_HMI
 {
@@ -1412,6 +1413,36 @@ namespace ElectCell_HMI
         public void toolStripButton6_Click(object sender, EventArgs e)
         {
             退出ToolStripMenuItem_Click(sender, e);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            dianjiecao f = new dianjiecao();
+            f.ShowDialog();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            beng f = new beng();
+            f.ShowDialog();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            pipe f = new pipe();
+            f.ShowDialog();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            guzhang f = new guzhang();
+            f.ShowDialog();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            ceshi f = new ceshi();
+            f.ShowDialog();
         }
     }
 }

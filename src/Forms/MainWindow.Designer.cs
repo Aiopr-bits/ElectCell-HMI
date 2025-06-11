@@ -38,16 +38,21 @@
             this.查看曲线ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.treeView1 = new System.Windows.Forms.TreeView();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -62,7 +67,7 @@
             this.关于ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1211, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(1211, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -74,34 +79,34 @@
             this.另存ToolStripMenuItem,
             this.退出ToolStripMenuItem});
             this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
-            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
-            this.文件ToolStripMenuItem.Text = "文件";
+            this.文件ToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
+            this.文件ToolStripMenuItem.Text = "模型";
             // 
             // 打开ToolStripMenuItem
             // 
             this.打开ToolStripMenuItem.Name = "打开ToolStripMenuItem";
-            this.打开ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
-            this.打开ToolStripMenuItem.Text = "打开";
+            this.打开ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.打开ToolStripMenuItem.Text = "添加";
             this.打开ToolStripMenuItem.Click += new System.EventHandler(this.打开ToolStripMenuItem_Click);
             // 
             // 保存ToolStripMenuItem
             // 
             this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
-            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
-            this.保存ToolStripMenuItem.Text = "保存";
+            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.保存ToolStripMenuItem.Text = "删除";
             this.保存ToolStripMenuItem.Click += new System.EventHandler(this.保存ToolStripMenuItem_Click);
             // 
             // 另存ToolStripMenuItem
             // 
             this.另存ToolStripMenuItem.Name = "另存ToolStripMenuItem";
-            this.另存ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
-            this.另存ToolStripMenuItem.Text = "另存为";
+            this.另存ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.另存ToolStripMenuItem.Text = "重命名";
             this.另存ToolStripMenuItem.Click += new System.EventHandler(this.另存ToolStripMenuItem_Click);
             // 
             // 退出ToolStripMenuItem
             // 
             this.退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
-            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.退出ToolStripMenuItem.Text = "退出";
             this.退出ToolStripMenuItem.Click += new System.EventHandler(this.退出ToolStripMenuItem_Click);
             // 
@@ -111,33 +116,33 @@
             this.开始计算ToolStripMenuItem,
             this.停止计算ToolStripMenuItem});
             this.求解计算ToolStripMenuItem.Name = "求解计算ToolStripMenuItem";
-            this.求解计算ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.求解计算ToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.求解计算ToolStripMenuItem.Text = "仿真计算";
             // 
             // 开始计算ToolStripMenuItem
             // 
             this.开始计算ToolStripMenuItem.Name = "开始计算ToolStripMenuItem";
-            this.开始计算ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.开始计算ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.开始计算ToolStripMenuItem.Text = "开始计算";
             this.开始计算ToolStripMenuItem.Click += new System.EventHandler(this.开始计算ToolStripMenuItem_Click);
             // 
             // 停止计算ToolStripMenuItem
             // 
             this.停止计算ToolStripMenuItem.Name = "停止计算ToolStripMenuItem";
-            this.停止计算ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.停止计算ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.停止计算ToolStripMenuItem.Text = "停止计算";
             this.停止计算ToolStripMenuItem.Click += new System.EventHandler(this.停止计算ToolStripMenuItem_Click);
             // 
             // 查看曲线ToolStripMenuItem
             // 
             this.查看曲线ToolStripMenuItem.Name = "查看曲线ToolStripMenuItem";
-            this.查看曲线ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.查看曲线ToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.查看曲线ToolStripMenuItem.Text = "查看曲线";
             // 
             // 关于ToolStripMenuItem
             // 
             this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
-            this.关于ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.关于ToolStripMenuItem.Size = new System.Drawing.Size(43, 20);
             this.关于ToolStripMenuItem.Text = "关于";
             this.关于ToolStripMenuItem.Click += new System.EventHandler(this.关于ToolStripMenuItem_Click);
             // 
@@ -150,11 +155,72 @@
             this.toolStripButton4,
             this.toolStripButton5,
             this.toolStripButton6});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 25);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1211, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 684);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1211, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 220F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.treeView1, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 49);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1211, 635);
+            this.tableLayoutPanel1.TabIndex = 3;
+            // 
+            // treeView1
+            // 
+            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView1.Location = new System.Drawing.Point(3, 3);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(214, 629);
+            this.treeView1.TabIndex = 0;
+            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(150, 27);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(20, 19);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "part";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(176, 27);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(20, 19);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "part";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(202, 27);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(20, 19);
+            this.button3.TabIndex = 4;
+            this.button3.Text = "part";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // toolStripButton1
             // 
@@ -216,42 +282,36 @@
             this.toolStripButton6.Text = "退出";
             this.toolStripButton6.Click += new System.EventHandler(this.toolStripButton6_Click);
             // 
-            // statusStrip1
+            // button4
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 684);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1211, 22);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
+            this.button4.Location = new System.Drawing.Point(228, 27);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(20, 19);
+            this.button4.TabIndex = 4;
+            this.button4.Text = "part";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
-            // tableLayoutPanel1
+            // button5
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 220F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.treeView1, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 50);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1211, 634);
-            this.tableLayoutPanel1.TabIndex = 3;
-            // 
-            // treeView1
-            // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.Location = new System.Drawing.Point(3, 3);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(214, 628);
-            this.treeView1.TabIndex = 0;
-            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            this.button5.Location = new System.Drawing.Point(254, 27);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(20, 19);
+            this.button5.TabIndex = 4;
+            this.button5.Text = "part";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1211, 706);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
@@ -290,13 +350,18 @@
         public System.Windows.Forms.Timer timer1;
         public System.Windows.Forms.ToolStripMenuItem 开始计算ToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem 停止计算ToolStripMenuItem;
-        public System.ComponentModel.IContainer components;
         public System.Windows.Forms.ToolStripButton toolStripButton1;
         public System.Windows.Forms.ToolStripButton toolStripButton2;
         public System.Windows.Forms.ToolStripButton toolStripButton3;
         public System.Windows.Forms.ToolStripButton toolStripButton4;
         public System.Windows.Forms.ToolStripButton toolStripButton5;
         public System.Windows.Forms.ToolStripButton toolStripButton6;
+        private System.Windows.Forms.Button button1;
+        private System.ComponentModel.IContainer components;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
     }
 }
 

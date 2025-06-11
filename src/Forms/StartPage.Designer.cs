@@ -151,9 +151,9 @@
             this.label3.Location = new System.Drawing.Point(4, 550);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(429, 20);
+            this.label3.Size = new System.Drawing.Size(344, 20);
             this.label3.TabIndex = 9;
-            this.label3.Text = "Copyrights @ 2022.All rights Reserved By KeXin TianCheng";
+            this.label3.Text = "Copyrights @ 2022.All rights Reserved By NICE";
             // 
             // label2
             // 
