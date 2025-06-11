@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ElectCell_HMI.Forms
 {
-    public partial class dianjiecao : Form
+    public partial class pipe : UserControl
     {
-        public dianjiecao()
+        public pipe()
         {
             InitializeComponent();
         }

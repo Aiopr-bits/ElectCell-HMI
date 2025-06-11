@@ -49,34 +49,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\beng.cs">
-      <SubType>Form</SubType>
+    <Compile Include="UserControls\beng.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\beng.Designer.cs">
+    <Compile Include="UserControls\beng.Designer.cs">
       <DependentUpon>beng.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ceshi.cs">
-      <SubType>Form</SubType>
+    <Compile Include="UserControls\dianjiecao.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\ceshi.Designer.cs">
-      <DependentUpon>ceshi.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\dianjiecao.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\dianjiecao.Designer.cs">
+    <Compile Include="UserControls\dianjiecao.Designer.cs">
       <DependentUpon>dianjiecao.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\guzhang.cs">
-      <SubType>Form</SubType>
+    <Compile Include="UserControls\pipe.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Forms\guzhang.Designer.cs">
-      <DependentUpon>guzhang.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\pipe.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\pipe.Designer.cs">
+    <Compile Include="UserControls\pipe.Designer.cs">
       <DependentUpon>pipe.cs</DependentUpon>
     </Compile>
     <Compile Include="GlobalData.cs" />
@@ -94,11 +82,23 @@
     <Compile Include="Forms\StartPage.Designer.cs">
       <DependentUpon>StartPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\ceshi.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\ceshi.Designer.cs">
+      <DependentUpon>ceshi.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\CharacteristicCurvePage.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\CharacteristicCurvePage.Designer.cs">
       <DependentUpon>CharacteristicCurvePage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\guzhang.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\guzhang.Designer.cs">
+      <DependentUpon>guzhang.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\SystemTechnologyPage.cs">
       <SubType>UserControl</SubType>
@@ -166,23 +166,23 @@
     <Compile Include="UserControls\ControlParameterPage.Designer.cs">
       <DependentUpon>ControlParameterPage.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Forms\beng.resx">
+    <EmbeddedResource Include="UserControls\beng.resx">
       <DependentUpon>beng.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ceshi.resx">
-      <DependentUpon>ceshi.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\dianjiecao.resx">
+    <EmbeddedResource Include="UserControls\dianjiecao.resx">
       <DependentUpon>dianjiecao.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\guzhang.resx">
-      <DependentUpon>guzhang.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\pipe.resx">
+    <EmbeddedResource Include="UserControls\pipe.resx">
       <DependentUpon>pipe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\ceshi.resx">
+      <DependentUpon>ceshi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\CharacteristicCurvePage.resx">
       <DependentUpon>CharacteristicCurvePage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\guzhang.resx">
+      <DependentUpon>guzhang.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\SystemTechnologyPage.resx">
       <DependentUpon>SystemTechnologyPage.cs</DependentUpon>

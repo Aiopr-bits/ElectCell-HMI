@@ -21,9 +21,11 @@ namespace ElectCell_HMI
         public ComponentParameterPage componentParameter;       // 部件参数配置页面
         public VariableListPage variableList;                   // 变量清单页面
         public CharacteristicCurvePage CharacteristicCurvePage; // 特性曲线页面
+        public guzhang guzhang;                                 // 故障注入页面
+        public ceshi autoTest;                                  // 自动测试页面
         public SimulationResultPage simulationResult;           // 仿真结果页面
         public DataPlaybackPage dataPlayback;                   // 数据回放页面
-        public SystemTechnologyPage processDrawing;               // 系统工艺绘制页面
+        public SystemTechnologyPage processDrawing;             // 系统工艺绘制页面
 
         public Process proc;
         public bool isStoppedManually = false;
@@ -108,6 +110,7 @@ namespace ElectCell_HMI
 
             TreeNode variableListNode = new TreeNode("变量清单");
             TreeNode characteristicCurveNode = new TreeNode("特性曲线");
+            TreeNode ceshiNode = new TreeNode("故障注入");
             TreeNode autoTestNode = new TreeNode("自动测试");
 
             TreeNode dataMonitoringNode = new TreeNode("数据监控");
@@ -121,6 +124,7 @@ namespace ElectCell_HMI
             rootNode.Nodes.Add(simulationParamsNode);
             rootNode.Nodes.Add(variableListNode);
             rootNode.Nodes.Add(characteristicCurveNode);
+            rootNode.Nodes.Add(ceshiNode);
             rootNode.Nodes.Add(autoTestNode);
             rootNode.Nodes.Add(dataMonitoringNode);
             rootNode.Nodes.Add(simulationResultsNode);
@@ -173,6 +177,16 @@ namespace ElectCell_HMI
                     CharacteristicCurvePage.Show();
                     leftStatusLabel.Text = "特性曲线";
                     break;
+                case "故障注入":
+                    HideAllParameterPages();
+                    guzhang.Show();
+                    leftStatusLabel.Text = "故障注入";
+                    break;
+                case "自动测试":
+                    HideAllParameterPages();
+                    autoTest.Show();
+                    leftStatusLabel.Text = "自动测试";
+                    break;
                 case "系统工艺":
                     HideAllParameterPages();
                     processDrawing.Show();
@@ -201,6 +215,8 @@ namespace ElectCell_HMI
             componentParameter.Hide();
             variableList.Hide();
             CharacteristicCurvePage.Hide();
+            guzhang.Hide();
+            autoTest.Hide();
             processDrawing.Hide();
             simulationResult.Hide();
             dataPlayback.Hide();
@@ -248,6 +264,16 @@ namespace ElectCell_HMI
             CharacteristicCurvePage.Dock = DockStyle.Fill;
             tableLayoutPanel1.Controls.Add(CharacteristicCurvePage, 1, 0);
             CharacteristicCurvePage.Hide();
+
+            guzhang = new guzhang();
+            guzhang.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Controls.Add(guzhang, 1, 0);
+            guzhang.Hide();
+
+            autoTest = new ceshi();
+            autoTest.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Controls.Add(autoTest, 1, 0);
+            autoTest.Hide();
 
             processDrawing = new SystemTechnologyPage(this);
             processDrawing.Dock = DockStyle.Fill;
@@ -758,7 +784,7 @@ namespace ElectCell_HMI
             }
 
             treeView1.ExpandAll();
-            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[4].Nodes[0];
+            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[5].Nodes[0];
         }
 
         public void readResultFile(string path)
@@ -1277,7 +1303,7 @@ namespace ElectCell_HMI
 
         public async void 开始计算ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[4].Nodes[0];
+            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[5].Nodes[0];
 
             try
             {
@@ -1435,14 +1461,38 @@ namespace ElectCell_HMI
 
         private void button4_Click(object sender, EventArgs e)
         {
-            guzhang f = new guzhang();
-            f.ShowDialog();
+            // 创建一个新的 Form 并将 guzhang UserControl 添加到其中
+            Form form = new Form
+            {
+                Text = "故障",
+                Size = new Size(800, 600) // 设置窗口大小
+            };
+
+            guzhang userControl = new guzhang
+            {
+                Dock = DockStyle.Fill // 让 UserControl 填充整个窗口
+            };
+
+            form.Controls.Add(userControl);
+            form.ShowDialog(); // 显示窗口
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            ceshi f = new ceshi();
-            f.ShowDialog();
+            // 创建一个新的 Form 并将 ceshi UserControl 添加到其中
+            Form form = new Form
+            {
+                Text = "测试",
+                Size = new Size(800, 600) // 设置窗口大小
+            };
+
+            ceshi userControl = new ceshi
+            {
+                Dock = DockStyle.Fill // 让 UserControl 填充整个窗口
+            };
+
+            form.Controls.Add(userControl);
+            form.ShowDialog(); // 显示窗口
         }
     }
 }
