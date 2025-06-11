@@ -1440,59 +1440,5 @@ namespace ElectCell_HMI
         {
             退出ToolStripMenuItem_Click(sender, e);
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            dianjiecao f = new dianjiecao();
-            f.ShowDialog();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            beng f = new beng();
-            f.ShowDialog();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            pipe f = new pipe();
-            f.ShowDialog();
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            // 创建一个新的 Form 并将 guzhang UserControl 添加到其中
-            Form form = new Form
-            {
-                Text = "故障",
-                Size = new Size(800, 600) // 设置窗口大小
-            };
-
-            guzhang userControl = new guzhang
-            {
-                Dock = DockStyle.Fill // 让 UserControl 填充整个窗口
-            };
-
-            form.Controls.Add(userControl);
-            form.ShowDialog(); // 显示窗口
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            // 创建一个新的 Form 并将 ceshi UserControl 添加到其中
-            Form form = new Form
-            {
-                Text = "测试",
-                Size = new Size(800, 600) // 设置窗口大小
-            };
-
-            ceshi userControl = new ceshi
-            {
-                Dock = DockStyle.Fill // 让 UserControl 填充整个窗口
-            };
-
-            form.Controls.Add(userControl);
-            form.ShowDialog(); // 显示窗口
-        }
     }
 }
