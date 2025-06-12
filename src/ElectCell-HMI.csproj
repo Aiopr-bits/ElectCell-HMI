@@ -61,6 +61,18 @@
     <Compile Include="UserControls\dianjiecao.Designer.cs">
       <DependentUpon>dianjiecao.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\famen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\famen.Designer.cs">
+      <DependentUpon>famen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\fenliqi1.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\fenliqi1.Designer.cs">
+      <DependentUpon>fenliqi1.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\pipe.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -171,6 +183,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\dianjiecao.resx">
       <DependentUpon>dianjiecao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\famen.resx">
+      <DependentUpon>famen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\fenliqi1.resx">
+      <DependentUpon>fenliqi1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\pipe.resx">
       <DependentUpon>pipe.cs</DependentUpon>

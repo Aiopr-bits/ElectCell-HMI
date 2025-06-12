@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ElectCell_HMI.Forms;
+using ElectCell_HMI.UserControls;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,6 +22,9 @@ namespace ElectCell_HMI
             initTreeview();
             originalColumnWidth = tableLayoutPanel3.ColumnStyles[2].Width;
             treeView1.SelectedNode = treeView1.Nodes[0].Nodes[0].Nodes[0];
+
+            //隐藏tablelayoutPanel3以及其中的所有控件
+            tableLayoutPanel3.Visible = false;          
         }
 
         public void initTreeview()
@@ -165,6 +170,20 @@ namespace ElectCell_HMI
                     dataGridView3.DataSource = dt3;
                     dataGridView4.DataSource = dt4;
                     dataGridView5.DataSource = dt5;
+
+                    // 清除原来的电解槽控件，泵，分离器，阀门控件，平衡管线控件
+                    foreach (Control control in tableLayoutPanel2.Controls)
+                    {
+                        if (control is beng || control is fenliqi1 || control is dianjiecao || control is famen || control is pipe)
+                        {
+                            tableLayoutPanel2.Controls.Remove(control);
+                            control.Dispose();
+                        }
+                    }
+
+                    dianjiecao dianjiecao = new dianjiecao();
+                    tableLayoutPanel2.Controls.Add(dianjiecao, 0, 0);
+                    dianjiecao.Dock = DockStyle.Fill;
                     return;
                 }
                 else if (selectedNode == $"泵{i + 1}")
@@ -233,6 +252,21 @@ namespace ElectCell_HMI
                     dataGridView3.DataSource = dt3;
                     dataGridView4.DataSource = dt4;
                     dataGridView5.DataSource = dt5;
+
+                    // 清除原来的电解槽控件，泵，分离器，阀门控件，平衡管线控件
+                    foreach (Control control in tableLayoutPanel2.Controls)
+                    {
+                        if (control is beng || control is fenliqi1 || control is dianjiecao || control is famen || control is pipe)
+                        {
+                            tableLayoutPanel2.Controls.Remove(control);
+                            control.Dispose();
+                        }
+                    }
+
+                    beng beng = new beng();
+                    tableLayoutPanel2.Controls.Add(beng, 0, 0);
+                    beng.Dock = DockStyle.Fill;
+
                     return;
                 }
             }
@@ -302,6 +336,20 @@ namespace ElectCell_HMI
                 dataGridView3.DataSource = dt3;
                 dataGridView4.DataSource = dt4;
                 dataGridView5.DataSource = dt5;
+
+                // 清除原来的电解槽控件，泵，分离器，阀门控件，平衡管线控件
+                foreach (Control control in tableLayoutPanel2.Controls)
+                {
+                    if (control is beng || control is fenliqi1 || control is dianjiecao || control is famen || control is pipe)
+                    {
+                        tableLayoutPanel2.Controls.Remove(control);
+                        control.Dispose();
+                    }
+                }
+
+                fenliqi1 fenliqi1 = new fenliqi1();
+                tableLayoutPanel2.Controls.Add(fenliqi1, 0, 0);
+                fenliqi1.Dock = DockStyle.Fill;
                 return;
             }
             else if (selectedNode == "阳极分离器")
@@ -370,6 +418,21 @@ namespace ElectCell_HMI
                 dataGridView3.DataSource = dt3;
                 dataGridView4.DataSource = dt4;
                 dataGridView5.DataSource = dt5;
+
+                // 清除原来的电解槽控件，泵，分离器，阀门控件，平衡管线控件
+                foreach (Control control in tableLayoutPanel2.Controls)
+                {
+                    if (control is beng || control is fenliqi1 || control is dianjiecao || control is famen || control is pipe)
+                    {
+                        tableLayoutPanel2.Controls.Remove(control);
+                        control.Dispose();
+                    }
+                }
+
+                fenliqi1 fenliqi1 = new fenliqi1();
+                tableLayoutPanel2.Controls.Add(fenliqi1, 0, 0);
+                fenliqi1.Dock = DockStyle.Fill;
+
                 return;
             }
             else if (selectedNode == "阴极阀门")
@@ -438,6 +501,21 @@ namespace ElectCell_HMI
                 dataGridView3.DataSource = dt3;
                 dataGridView4.DataSource = dt4;
                 dataGridView5.DataSource = dt5;
+
+                // 清除原来的电解槽控件，泵，分离器，阀门控件，平衡管线控件
+                foreach (Control control in tableLayoutPanel2.Controls)
+                {
+                    if (control is beng || control is fenliqi1 || control is dianjiecao || control is famen || control is pipe)
+                    {
+                        tableLayoutPanel2.Controls.Remove(control);
+                        control.Dispose();
+                    }
+                }
+
+                famen famen = new famen();
+                tableLayoutPanel2.Controls.Add(famen, 0, 0);
+                famen.Dock = DockStyle.Fill;
+
                 return;
             }
             else if (selectedNode == "阳极阀门")
@@ -506,6 +584,20 @@ namespace ElectCell_HMI
                 dataGridView3.DataSource = dt3;
                 dataGridView4.DataSource = dt4;
                 dataGridView5.DataSource = dt5;
+
+                // 清除原来的电解槽控件，泵，分离器，阀门控件，平衡管线控件
+                foreach (Control control in tableLayoutPanel2.Controls)
+                {
+                    if (control is beng || control is fenliqi1 || control is dianjiecao || control is famen || control is pipe)
+                    {
+                        tableLayoutPanel2.Controls.Remove(control);
+                        control.Dispose();
+                    }
+                }
+
+                famen famen = new famen();
+                tableLayoutPanel2.Controls.Add(famen, 0, 0);
+                famen.Dock = DockStyle.Fill;
                 return;
             }
             else if (selectedNode == "平衡管线")
@@ -574,6 +666,21 @@ namespace ElectCell_HMI
                 dataGridView3.DataSource = dt3;
                 dataGridView4.DataSource = dt4;
                 dataGridView5.DataSource = dt5;
+
+                // 清除原来的电解槽控件，泵，分离器，阀门控件，平衡管线控件
+                foreach (Control control in tableLayoutPanel2.Controls)
+                {
+                    if (control is beng || control is fenliqi1 || control is dianjiecao || control is famen || control is pipe)
+                    {
+                        tableLayoutPanel2.Controls.Remove(control);
+                        control.Dispose();
+                    }
+                }
+
+                pipe pipe = new pipe();
+                tableLayoutPanel2.Controls.Add(pipe, 0, 0);
+                pipe.Dock = DockStyle.Fill;
+
                 return;
             }
         }

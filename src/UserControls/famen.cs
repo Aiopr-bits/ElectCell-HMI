@@ -8,14 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ElectCell_HMI.Forms
+namespace ElectCell_HMI.UserControls
 {
-    public partial class pipe : UserControl
+    public partial class famen : UserControl
     {
         private Timer delayTimer;
         private Dictionary<Control, PointF> controlRelativePositions = new Dictionary<Control, PointF>();
 
-        public pipe()
+        public famen()
         {
             InitializeComponent();
 

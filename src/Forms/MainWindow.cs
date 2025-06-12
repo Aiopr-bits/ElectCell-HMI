@@ -76,6 +76,29 @@ namespace ElectCell_HMI
             CharacteristicCurvePage.label3.Font = new Font(CharacteristicCurvePage.label2.Font.FontFamily, 9, FontStyle.Bold);
             CharacteristicCurvePage.label3.TextAlign = ContentAlignment.MiddleCenter;
             CharacteristicCurvePage.label3.BorderStyle = BorderStyle.None;
+
+            // 设置窗口启动时最大化
+            this.WindowState = FormWindowState.Maximized;
+
+            // 设置窗口按钮状态
+            this.MaximizeBox = false; // 禁用最大化按钮
+            this.MinimizeBox = true;  // 启用最小化按钮
+            this.ControlBox = true;   // 启用关闭按钮
+            this.Padding = new Padding(0, 0, 0, SystemInformation.CaptionHeight);
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_NCLBUTTONDOWN = 0xA1; // 标题栏鼠标按下消息
+            const int HTCAPTION = 0x2;         // 标题栏区域
+
+            if (m.Msg == WM_NCLBUTTONDOWN && m.WParam.ToInt32() == HTCAPTION && this.WindowState == FormWindowState.Maximized)
+            {
+                // 阻止拖动标题栏导致窗口变小
+                return;
+            }
+
+            base.WndProc(ref m);
         }
 
         public void InitializeStatusStrip()
@@ -220,7 +243,6 @@ namespace ElectCell_HMI
             processDrawing.Hide();
             simulationResult.Hide();
             dataPlayback.Hide();
-
         }
 
         public void InitializeControlPanel()
