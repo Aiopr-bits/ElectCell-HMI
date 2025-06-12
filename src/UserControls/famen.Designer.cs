@@ -53,7 +53,7 @@
             // comboBox15
             // 
             this.comboBox15.FormattingEnabled = true;
-            this.comboBox15.Location = new System.Drawing.Point(627, 297);
+            this.comboBox15.Location = new System.Drawing.Point(627, 304);
             this.comboBox15.Margin = new System.Windows.Forms.Padding(2);
             this.comboBox15.Name = "comboBox15";
             this.comboBox15.Size = new System.Drawing.Size(82, 20);
