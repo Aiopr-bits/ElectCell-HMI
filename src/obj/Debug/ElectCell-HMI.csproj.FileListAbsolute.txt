@@ -82,7 +82,6 @@ C:\Users\mailz\Documents\xwechat_files\wxid_1nkri9sb4rx422_cea3\msg\file\2025-06
 C:\Users\mailz\Documents\xwechat_files\wxid_1nkri9sb4rx422_cea3\msg\file\2025-06\ElectCell-HMI-20250611\ElectCell-HMI.exe
 C:\Users\mailz\Documents\xwechat_files\wxid_1nkri9sb4rx422_cea3\msg\file\2025-06\ElectCell-HMI-20250611\ElectCell-HMI.pdb
 C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell-HMI.csproj.AssemblyReference.cache
-C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell-HMI.exe.config
 C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.Forms.beng.resources
 C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.Forms.dianjiecao.resources
 C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.Forms.pipe.resources
@@ -112,3 +111,8 @@ C:\Users\mailz\Desktop\ElectCell-HMI\ElectCell-HMI.exe
 C:\Users\mailz\Desktop\ElectCell-HMI\ElectCell-HMI.pdb
 C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.UserControls.famen.resources
 C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.UserControls.fenliqi1.resources
+D:\work_202302\C#\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.Forms.huifang.resources
+D:\work_202302\C#\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.UserControls.famen.resources
+D:\work_202302\C#\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.UserControls.fenliqi1.resources
+C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell-HMI.exe.config
+C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.Forms.huifang.resources

@@ -160,9 +160,9 @@ namespace ElectCell_HMI
                 }
 
                 comboBox1.SelectedIndex = 0;
-                comboBox2.SelectedIndex = 24;
-                comboBox3.SelectedIndex = 32;
-                comboBox4.SelectedIndex = 40;
+                comboBox2.SelectedIndex = 1;
+                comboBox3.SelectedIndex = 2;
+                comboBox4.SelectedIndex = 3;
             }
         }
 

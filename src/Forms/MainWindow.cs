@@ -1462,5 +1462,11 @@ namespace ElectCell_HMI
         {
             退出ToolStripMenuItem_Click(sender, e);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            huifang f = new huifang();
+            f.ShowDialog();
+        }
     }
 }

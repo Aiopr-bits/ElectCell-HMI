@@ -49,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\huifang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\huifang.Designer.cs">
+      <DependentUpon>huifang.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\beng.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -178,6 +184,9 @@
     <Compile Include="UserControls\ControlParameterPage.Designer.cs">
       <DependentUpon>ControlParameterPage.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\huifang.resx">
+      <DependentUpon>huifang.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControls\beng.resx">
       <DependentUpon>beng.cs</DependentUpon>
     </EmbeddedResource>
