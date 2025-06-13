@@ -23,9 +23,10 @@ namespace ElectCell_HMI
         public CharacteristicCurvePage CharacteristicCurvePage; // 特性曲线页面
         public guzhang guzhang;                                 // 故障注入页面
         public ceshi autoTest;                                  // 自动测试页面
-        public SimulationResultPage simulationResult;           // 仿真结果页面
-        public DataPlaybackPage dataPlayback;                   // 数据回放页面
         public SystemTechnologyPage processDrawing;             // 系统工艺绘制页面
+        public SimulationResultPage simulationResult;           // 仿真结果页面
+        public DataPlaybackPage dataPlayback;                   // 历史数据列表页面
+        public huifang huifang;                                 // 历史曲线绘制页面
 
         public Process proc;
         public bool isStoppedManually = false;
@@ -141,7 +142,8 @@ namespace ElectCell_HMI
             dataMonitoringNode.Nodes.Add(new TreeNode("仿真结果"));
             dataMonitoringNode.Nodes.Add(new TreeNode("数据列表"));
 
-            TreeNode simulationResultsNode = new TreeNode("数据回放");
+            TreeNode simulationResultsNode = new TreeNode("历史数据列表");
+            TreeNode huifangNode = new TreeNode("历史曲线绘制");
 
             // 将子节点添加到根节点
             rootNode.Nodes.Add(simulationParamsNode);
@@ -151,6 +153,7 @@ namespace ElectCell_HMI
             rootNode.Nodes.Add(autoTestNode);
             rootNode.Nodes.Add(dataMonitoringNode);
             rootNode.Nodes.Add(simulationResultsNode);
+            rootNode.Nodes.Add(huifangNode);
 
             // 将根节点添加到TreeView
             treeView1.Nodes.Add(rootNode);
@@ -220,10 +223,15 @@ namespace ElectCell_HMI
                     simulationResult.Show();
                     leftStatusLabel.Text = "仿真结果";
                     break;
-                case "数据回放":
+                case "历史数据列表":
                     HideAllParameterPages();
                     dataPlayback.Show();
-                    leftStatusLabel.Text = "数据回放";
+                    leftStatusLabel.Text = "历史数据列表";
+                    break;
+                case "历史曲线绘制":
+                    HideAllParameterPages();
+                    huifang.Show();
+                    leftStatusLabel.Text = "历史曲线绘制";
                     break;
             }
         }
@@ -243,6 +251,7 @@ namespace ElectCell_HMI
             processDrawing.Hide();
             simulationResult.Hide();
             dataPlayback.Hide();
+            huifang.Hide();
         }
 
         public void InitializeControlPanel()
@@ -302,7 +311,6 @@ namespace ElectCell_HMI
             tableLayoutPanel1.Controls.Add(processDrawing, 1, 0);
             processDrawing.Hide();
 
-            processDrawing.Hide();
             simulationResult = new SimulationResultPage(this);
             simulationResult.Dock = DockStyle.Fill;
             tableLayoutPanel1.Controls.Add(simulationResult, 1, 0);
@@ -312,6 +320,11 @@ namespace ElectCell_HMI
             dataPlayback.Dock = DockStyle.Fill;
             tableLayoutPanel1.Controls.Add(dataPlayback, 1, 0);
             dataPlayback.Hide();
+
+            huifang = new huifang();
+            huifang.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Controls.Add(huifang, 1, 0);
+            huifang.Hide();
         }
 
         public void readParametersFile(string path)
@@ -754,7 +767,7 @@ namespace ElectCell_HMI
 
             string path_QH = path + "/QH.txt";
             using (StreamReader sr = new StreamReader(path_QH))
-            {           
+            {
                 nextLine = sr.ReadLine();
                 {
                     values = nextLine.Split('\t');
@@ -1461,12 +1474,6 @@ namespace ElectCell_HMI
         public void toolStripButton6_Click(object sender, EventArgs e)
         {
             退出ToolStripMenuItem_Click(sender, e);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            huifang f = new huifang();
-            f.ShowDialog();
         }
     }
 }
