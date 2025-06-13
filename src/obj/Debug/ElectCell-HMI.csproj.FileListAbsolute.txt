@@ -95,8 +95,6 @@ C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.DataPlaybackPag
 C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.TrendMonitorPage.resources
 C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.ComponentParameterPage.resources
 C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.ProcessParameterPage.resources
-C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.PSParameterPage.resources
-C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.FlowParameterPage.resources
 C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.GeometricParameterPage.resources
 C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.ControlParameterPage.resources
 C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.MainWindow.resources

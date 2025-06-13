@@ -15,8 +15,6 @@ namespace ElectCell_HMI
     {
         public ControlParameterPage controlParameter;           // 控制参数配置页面
         public GeometricParameterPage geometricParameter;       // 几何参数配置页面
-        public FlowParameterPage flowParameter;                 // flow参数配置页面
-        public PSParameterPage psParameter;                     // ps参数配置页面
         public ProcessParameterPage processParameter;           // 工艺参数配置页面
         public ComponentParameterPage componentParameter;       // 部件参数配置页面
         public VariableListPage variableList;                   // 变量清单页面
@@ -132,6 +130,7 @@ namespace ElectCell_HMI
             simulationParamsNode.Nodes.Add(new TreeNode("工艺参数配置"));
             simulationParamsNode.Nodes.Add(new TreeNode("部件参数配置"));
 
+            TreeNode dataListNode = new TreeNode("数据列表");
             TreeNode variableListNode = new TreeNode("变量清单");
             TreeNode characteristicCurveNode = new TreeNode("特性曲线");
             TreeNode ceshiNode = new TreeNode("故障注入");
@@ -140,20 +139,22 @@ namespace ElectCell_HMI
             TreeNode dataMonitoringNode = new TreeNode("数据监控");
             dataMonitoringNode.Nodes.Add(new TreeNode("系统工艺"));
             dataMonitoringNode.Nodes.Add(new TreeNode("仿真结果"));
-            dataMonitoringNode.Nodes.Add(new TreeNode("数据列表"));
 
-            TreeNode simulationResultsNode = new TreeNode("历史数据列表");
-            TreeNode huifangNode = new TreeNode("历史曲线绘制");
+            //数据回放
+            TreeNode dataPlaybackNode = new TreeNode("数据回放");
+            dataPlaybackNode.Nodes.Add(new TreeNode("历史数据列表"));
+            dataPlaybackNode.Nodes.Add(new TreeNode("历史曲线绘制"));
 
             // 将子节点添加到根节点
             rootNode.Nodes.Add(simulationParamsNode);
+            rootNode.Nodes.Add(dataListNode);
             rootNode.Nodes.Add(variableListNode);
             rootNode.Nodes.Add(characteristicCurveNode);
             rootNode.Nodes.Add(ceshiNode);
             rootNode.Nodes.Add(autoTestNode);
             rootNode.Nodes.Add(dataMonitoringNode);
-            rootNode.Nodes.Add(simulationResultsNode);
-            rootNode.Nodes.Add(huifangNode);
+            rootNode.Nodes.Add(dataPlaybackNode);
+
 
             // 将根节点添加到TreeView
             treeView1.Nodes.Add(rootNode);
@@ -172,16 +173,6 @@ namespace ElectCell_HMI
                     HideAllParameterPages();
                     geometricParameter.Show();
                     leftStatusLabel.Text = "几何参数配置";
-                    break;
-                case "flow参数配置":
-                    HideAllParameterPages();
-                    flowParameter.Show();
-                    leftStatusLabel.Text = "flow参数配置";
-                    break;
-                case "ps参数配置":
-                    HideAllParameterPages();
-                    psParameter.Show();
-                    leftStatusLabel.Text = "ps参数配置";
                     break;
                 case "工艺参数配置":
                     HideAllParameterPages();
@@ -240,8 +231,6 @@ namespace ElectCell_HMI
         {
             controlParameter.Hide();
             geometricParameter.Hide();
-            flowParameter.Hide();
-            psParameter.Hide();
             processParameter.Hide();
             componentParameter.Hide();
             variableList.Hide();
@@ -265,16 +254,6 @@ namespace ElectCell_HMI
             geometricParameter.Dock = DockStyle.Fill;
             tableLayoutPanel1.Controls.Add(geometricParameter, 1, 0);
             geometricParameter.Hide();
-
-            flowParameter = new FlowParameterPage();
-            flowParameter.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Controls.Add(flowParameter, 1, 0);
-            flowParameter.Hide();
-
-            psParameter = new PSParameterPage();
-            psParameter.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Controls.Add(psParameter, 1, 0);
-            psParameter.Hide();
 
             processParameter = new ProcessParameterPage();
             processParameter.Dock = DockStyle.Fill;
@@ -819,7 +798,7 @@ namespace ElectCell_HMI
             }
 
             treeView1.ExpandAll();
-            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[5].Nodes[0];
+            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[6].Nodes[0];
         }
 
         public void readResultFile(string path)
@@ -1338,7 +1317,7 @@ namespace ElectCell_HMI
 
         public async void 开始计算ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[5].Nodes[0];
+            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[6].Nodes[0];
 
             try
             {
