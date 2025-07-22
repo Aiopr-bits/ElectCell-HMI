@@ -794,7 +794,11 @@ namespace ElectCell_HMI
 
             using (StreamWriter sw = new StreamWriter("case_path.csv", false))
             {
-                sw.WriteLine(Path.GetDirectoryName(path_data_input));
+                Uri baseUri = new Uri(AppDomain.CurrentDomain.BaseDirectory);
+                Uri fileUri = new Uri(Path.GetDirectoryName(path_data_input));
+                string relativePath = baseUri.MakeRelativeUri(fileUri).ToString();
+
+                sw.WriteLine(relativePath);
             }
 
             treeView1.ExpandAll();
