@@ -33,10 +33,6 @@ namespace ElectCell_HMI.Forms
             dt2.Rows.Add("PS(1)%p", (100000).ToString(), (200000).ToString(), (5).ToString());
 
             dataGridView2.DataSource = dt2;
-
-            
-
-
         }
     }
 }
