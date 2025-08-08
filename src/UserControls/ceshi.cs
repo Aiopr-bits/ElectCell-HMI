@@ -21,23 +21,6 @@ namespace ElectCell_HMI.Forms
         {
             InitializeComponent();
 
-            //初始化datagridview，为存放数据做准备
-            DataTable dt2 = new DataTable();
-
-            //表格，列标题
-            dt2.Columns.Add("参数名", System.Type.GetType("System.String"));
-            dt2.Columns.Add("起始值", System.Type.GetType("System.String"));
-            dt2.Columns.Add("结束值", System.Type.GetType("System.String"));
-            dt2.Columns.Add("计算点数", System.Type.GetType("System.String"));
-
-            dt2.Rows.Add("PS(1)%n", (0.1).ToString(),(20).ToString(), (5).ToString());
-            dt2.Rows.Add("PS(1)%n_h2", (0.1).ToString(), (0.8).ToString(), (5).ToString());
-            dt2.Rows.Add("PS(2)%n", (0.1).ToString(), (20).ToString(), (5).ToString());
-            dt2.Rows.Add("PS(1)%n_o2", (0.1).ToString(), (0.8).ToString(), (5).ToString());
-            dt2.Rows.Add("PS(1)%p", (100000).ToString(), (200000).ToString(), (5).ToString());
-
-            dataGridView2.DataSource = dt2;
-
             allCombinations = new List<double[]>();
             string exePath = Process.GetCurrentProcess().MainModule.FileName;
             string directory = Path.GetDirectoryName(exePath);
@@ -141,7 +124,7 @@ namespace ElectCell_HMI.Forms
             }
             catch (Exception ex)
             {
-                // 错误处理
+                // 错误处理 
                 richTextBox1.AppendText($"处理文件时发生错误: {ex.Message}");
                 richTextBox1.ScrollToCaret();
             }

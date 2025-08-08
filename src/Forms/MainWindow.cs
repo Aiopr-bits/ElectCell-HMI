@@ -1170,11 +1170,6 @@ namespace ElectCell_HMI
         {
             foreach (Control control in parent.Controls)
             {
-                // 全局字体和颜色设置
-                control.Font = new Font("Arial", 10);
-                control.BackColor = Color.FromArgb(239, 239, 239);
-                control.ForeColor = Color.FromArgb(30, 30, 30);
-
                 if (control is DataGridView dataGridView) // 数据表格
                 {
                     dataGridView.BackgroundColor = Color.FromArgb(239, 239, 239);
@@ -1218,6 +1213,10 @@ namespace ElectCell_HMI
                 }
                 else if (control is TreeView treeView) // 树视图
                 {
+                    control.Font = new Font("Arial", 10);
+                    control.BackColor = Color.FromArgb(239, 239, 239);
+                    control.ForeColor = Color.FromArgb(30, 30, 30);
+
                     treeView.DrawMode = TreeViewDrawMode.OwnerDrawText;
                     treeView.ShowLines = false;
                     treeView.ShowRootLines = false;
@@ -1258,34 +1257,6 @@ namespace ElectCell_HMI
                     pictureBox.BackColor = Color.FromArgb(239, 239, 239);
                     pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     pictureBox.BorderStyle = BorderStyle.FixedSingle;
-                }
-                else if (control is MenuStrip menuStrip) // 菜单栏
-                {
-                    menuStrip.BackColor = Color.FromArgb(70, 130, 180);
-                    menuStrip.ForeColor = Color.White;
-                    menuStrip.Font = new Font(menuStrip.Font.FontFamily, 10);
-                    foreach (ToolStripMenuItem item in menuStrip.Items)
-                    {
-                        item.BackColor = Color.FromArgb(70, 130, 180);
-                        item.ForeColor = Color.White;
-                        item.Font = new Font(item.Font.FontFamily, 10);
-                        item.MouseEnter += (s, e) => item.BackColor = Color.FromArgb(30, 144, 255);
-                        item.MouseLeave += (s, e) => item.BackColor = Color.FromArgb(70, 130, 180);
-                    }
-                }
-                else if (control is ToolStrip toolStrip) // 工具栏
-                {
-                    toolStrip.BackColor = Color.FromArgb(70, 130, 180);
-                    toolStrip.ForeColor = Color.White;
-                    toolStrip.Font = new Font(toolStrip.Font.FontFamily, 10);
-                    foreach (ToolStripItem item in toolStrip.Items)
-                    {
-                        item.BackColor = Color.FromArgb(70, 130, 180);
-                        item.ForeColor = Color.White;
-                        item.Font = new Font(item.Font.FontFamily, 10);
-                        item.MouseEnter += (s, e) => item.BackColor = Color.FromArgb(30, 144, 255);
-                        item.MouseLeave += (s, e) => item.BackColor = Color.FromArgb(70, 130, 180);
-                    }
                 }
                 else if (control is StatusStrip statusStrip) // 状态栏
                 {
