@@ -223,6 +223,7 @@ namespace ElectCell_HMI
                     HideAllParameterPages();
                     huifang.Show();
                     leftStatusLabel.Text = "历史曲线绘制";
+                    huifang.UpdateGraphs();
                     break;
             }
         }
@@ -1429,5 +1430,7 @@ namespace ElectCell_HMI
         {
             退出ToolStripMenuItem_Click(sender, e);
         }
+
+
     }
 }
