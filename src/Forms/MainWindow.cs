@@ -1431,6 +1431,24 @@ namespace ElectCell_HMI
             退出ToolStripMenuItem_Click(sender, e);
         }
 
+        private void 打开案例ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            打开ToolStripMenuItem_Click(sender, e);
+        }
 
+        private void 保存ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            保存ToolStripMenuItem_Click(sender, e);
+        }
+
+        private void 另存ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            另存ToolStripMenuItem_Click(sender, e);
+        }
+
+        private void 退出ToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            退出ToolStripMenuItem_Click(sender, e);
+        }
     }
 }
