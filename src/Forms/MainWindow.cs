@@ -130,7 +130,6 @@ namespace ElectCell_HMI
             simulationParamsNode.Nodes.Add(new TreeNode("工艺参数配置"));
             simulationParamsNode.Nodes.Add(new TreeNode("部件参数配置"));
 
-            TreeNode dataListNode = new TreeNode("数据列表");
             TreeNode variableListNode = new TreeNode("变量清单");
             TreeNode characteristicCurveNode = new TreeNode("特性曲线");
             TreeNode ceshiNode = new TreeNode("故障注入");
@@ -147,7 +146,6 @@ namespace ElectCell_HMI
 
             // 将子节点添加到根节点
             rootNode.Nodes.Add(simulationParamsNode);
-            rootNode.Nodes.Add(dataListNode);
             rootNode.Nodes.Add(variableListNode);
             rootNode.Nodes.Add(characteristicCurveNode);
             rootNode.Nodes.Add(ceshiNode);
@@ -803,7 +801,7 @@ namespace ElectCell_HMI
             }
 
             treeView1.ExpandAll();
-            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[6].Nodes[0];
+            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[5].Nodes[0];
         }
 
         public void readResultFile(string path)
@@ -1293,7 +1291,7 @@ namespace ElectCell_HMI
 
         public async void 开始计算ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[6].Nodes[0];
+            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[5].Nodes[0];
 
             try
             {
