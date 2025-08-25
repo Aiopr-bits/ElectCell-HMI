@@ -15,7 +15,7 @@ namespace ElectCell_HMI
     public partial class ComponentParameterPage : UserControl
     {
         public float originalColumnWidth;
-        private bool _defaultSelectionApplied;
+        public bool _defaultSelectionApplied;
 
         public ComponentParameterPage()
         {
@@ -65,7 +65,7 @@ namespace ElectCell_HMI
             _defaultSelectionApplied = true;
         }
 
-        private TreeNode FindFirstLeafNode(TreeNodeCollection nodes)
+        public TreeNode FindFirstLeafNode(TreeNodeCollection nodes)
         {
             foreach (TreeNode node in nodes)
             {
@@ -79,7 +79,7 @@ namespace ElectCell_HMI
             return null;
         }
 
-        private TreeNode FindNodeByText(TreeNodeCollection nodes, string text)
+        public TreeNode FindNodeByText(TreeNodeCollection nodes, string text)
         {
             foreach (TreeNode node in nodes)
             {
@@ -135,7 +135,7 @@ namespace ElectCell_HMI
             treeView1.ExpandAll();
         }
 
-        private void PopulateAllFlowAndPs(DataTable dt4, DataTable dt5)
+        public void PopulateAllFlowAndPs(DataTable dt4, DataTable dt5)
         {
             // 填充所有flow
             for (int j = 0; j < Data.flowParameter.flow.Count; j++)
@@ -166,7 +166,7 @@ namespace ElectCell_HMI
             }
         }
 
-        private void HighlightFlowAndPsRows(ICollection<double> selectedFlows, ICollection<double> selectedPs)
+        public void HighlightFlowAndPsRows(ICollection<double> selectedFlows, ICollection<double> selectedPs)
         {
             if (selectedFlows == null) selectedFlows = new List<double>();
             if (selectedPs == null) selectedPs = new List<double>();

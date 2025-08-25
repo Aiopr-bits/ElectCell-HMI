@@ -14,8 +14,8 @@ namespace ElectCell_HMI.Forms
 {
     public partial class beng : UserControl
     {
-        private Timer delayTimer;
-        private Dictionary<Control, PointF> controlRelativePositions = new Dictionary<Control, PointF>();
+        public Timer delayTimer;
+        public Dictionary<Control, PointF> controlRelativePositions = new Dictionary<Control, PointF>();
 
         public beng()
         {
@@ -29,7 +29,7 @@ namespace ElectCell_HMI.Forms
             delayTimer.Start();
         }
 
-        private void DelayTimer_Tick(object sender, EventArgs e)
+        public void DelayTimer_Tick(object sender, EventArgs e)
         {
             delayTimer.Stop();
             delayTimer.Dispose();
@@ -37,7 +37,7 @@ namespace ElectCell_HMI.Forms
             Beng_Resize(this, EventArgs.Empty);
         }
 
-        private void Beng_Resize(object sender, EventArgs e)
+        public void Beng_Resize(object sender, EventArgs e)
         {
             if (pictureBox1.Image != null)
             {
@@ -65,7 +65,7 @@ namespace ElectCell_HMI.Forms
         }
 
         // 记录控件相对于图片的比例
-        private void RecordControlRelativePositions(Rectangle imageRect)
+        public void RecordControlRelativePositions(Rectangle imageRect)
         {
             foreach (Control control in this.Controls)
             {
@@ -77,7 +77,7 @@ namespace ElectCell_HMI.Forms
         }
 
         // 获取控件相对于图片的比例
-        private PointF GetRelativePosition(Control control, Rectangle imageRect)
+        public PointF GetRelativePosition(Control control, Rectangle imageRect)
         {
             float relativeX = (float)(control.Left - imageRect.Left) / imageRect.Width;
             float relativeY = (float)(control.Top - imageRect.Top) / imageRect.Height;
@@ -85,7 +85,7 @@ namespace ElectCell_HMI.Forms
         }
 
         // 根据记录的比例调整控件位置
-        private void UpdateControlPosition(Control control, Rectangle imageRect)
+        public void UpdateControlPosition(Control control, Rectangle imageRect)
         {
             if (controlRelativePositions.TryGetValue(control, out PointF relativePosition))
             {
@@ -95,7 +95,7 @@ namespace ElectCell_HMI.Forms
         }
 
         // 计算图片在 PictureBox 中的实际显示区域
-        private Rectangle GetImageRectangle(PictureBox pictureBox, Size imageSize)
+        public Rectangle GetImageRectangle(PictureBox pictureBox, Size imageSize)
         {
             Rectangle rect = new Rectangle();
 
@@ -137,7 +137,7 @@ namespace ElectCell_HMI.Forms
             return rect;
         }
 
-        private void label3_Click(object sender, EventArgs e)
+        public void label3_Click(object sender, EventArgs e)
         {
 
         }

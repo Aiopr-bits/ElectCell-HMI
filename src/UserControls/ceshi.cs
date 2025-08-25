@@ -38,7 +38,7 @@ namespace ElectCell_HMI.Forms
             }
         }
 
-        private void LoadAutoTestConfig(string filePath)
+        public void LoadAutoTestConfig(string filePath)
         {
             if (!File.Exists(filePath))
             {
@@ -67,7 +67,7 @@ namespace ElectCell_HMI.Forms
             }
         }
 
-        private void InitializeAutoTestDataGridView()
+        public void InitializeAutoTestDataGridView()
         {
             // 清空现有列和行
             dataGridView2.DataSource = null;
@@ -104,7 +104,7 @@ namespace ElectCell_HMI.Forms
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void button1_Click(object sender, EventArgs e)
         {
             // 定义你的INI文件路径
             string filePath = "AutoTestConfig.ini";
@@ -334,7 +334,7 @@ namespace ElectCell_HMI.Forms
             return allCombinations;
         }
 
-        private static void FindCombinationsRecursive(int depth, List<double> currentCombination, List<double[]> sequences, List<double[]> allCombinations)
+        public static void FindCombinationsRecursive(int depth, List<double> currentCombination, List<double[]> sequences, List<double[]> allCombinations)
         {
             // **基准情形 (Base Case)**:
             // 如果深度达到了数列列表的大小，说明我们已经从每个数组中都选择了一个元素。
@@ -364,7 +364,7 @@ namespace ElectCell_HMI.Forms
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        public void button2_Click(object sender, EventArgs e)
         {
             if (this.allCombinations.Count == 0)
             {
@@ -375,7 +375,7 @@ namespace ElectCell_HMI.Forms
             richTextBox1.Clear();
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        public void timer1_Tick(object sender, EventArgs e)
         {
             int numCase = this.allCombinations.Count;
             if (this.isRuningAsync)
@@ -401,7 +401,7 @@ namespace ElectCell_HMI.Forms
             }
         }
 
-        private async void RunExeAsync(string fnExe)
+        public async void RunExeAsync(string fnExe)
         {
             this.isRuningAsync = true;
             string commandToRun = fnExe;
@@ -511,7 +511,7 @@ namespace ElectCell_HMI.Forms
             }
         }
 
-        private void GetTimeStamp(string input, out int itime, out double time_t)
+        public void GetTimeStamp(string input, out int itime, out double time_t)
         {
             // 提取 itime 的值（整数）
             Match itimeMatch = Regex.Match(input, @"itime\s*=\s*(\d+)");
@@ -540,7 +540,7 @@ namespace ElectCell_HMI.Forms
             else { time_t = -1; }
         }
 
-        private void UpdateInfo(string info_line)
+        public void UpdateInfo(string info_line)
         {
             int lineCount = richTextBox1.Lines.Length;
             if (lineCount > 0)
@@ -557,7 +557,7 @@ namespace ElectCell_HMI.Forms
             }
         }
 
-        private bool CreateFlagFile()
+        public bool CreateFlagFile()
         {
             string filePath = @"debug.flg";
             try

@@ -94,7 +94,7 @@ namespace ElectCell_HMI.Forms
             UpdateGraphs();
         }
 
-        private void DataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        public void DataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == dataGridView1.Columns["图表"].Index && e.RowIndex >= 0)
             {
@@ -106,7 +106,7 @@ namespace ElectCell_HMI.Forms
             }
         }
 
-        private void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        public void DataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == dataGridView1.Columns["图表"].Index && e.RowIndex >= 0)
             {

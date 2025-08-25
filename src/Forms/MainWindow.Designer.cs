@@ -195,13 +195,13 @@
         public System.Windows.Forms.Timer timer1;
         public System.Windows.Forms.ToolStripMenuItem 开始计算ToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem 停止计算ToolStripMenuItem;
-        private System.ComponentModel.IContainer components;
-        private System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem 打开案例ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem 保存ToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem 另存ToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem 退出ToolStripMenuItem;
+        public System.ComponentModel.IContainer components;
+        public System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem1;
+        public System.Windows.Forms.ToolStripMenuItem 打开案例ToolStripMenuItem;
+        public System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        public System.Windows.Forms.ToolStripMenuItem 保存ToolStripMenuItem1;
+        public System.Windows.Forms.ToolStripMenuItem 另存ToolStripMenuItem1;
+        public System.Windows.Forms.ToolStripMenuItem 退出ToolStripMenuItem;
     }
 }
 

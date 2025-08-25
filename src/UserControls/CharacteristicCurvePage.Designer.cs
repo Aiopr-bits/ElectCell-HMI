@@ -224,9 +224,9 @@
         public System.Windows.Forms.PictureBox pictureBox1;
         public System.Windows.Forms.DataGridView dataGridView2;
         public System.Windows.Forms.DataGridView dataGridView1;
-        private System.ComponentModel.IContainer components;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem 添加一行数据ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 删除一行数据ToolStripMenuItem;
+        public System.ComponentModel.IContainer components;
+        public System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        public System.Windows.Forms.ToolStripMenuItem 添加一行数据ToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem 删除一行数据ToolStripMenuItem;
     }
 }

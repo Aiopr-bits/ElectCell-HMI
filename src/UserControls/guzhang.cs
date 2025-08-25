@@ -43,7 +43,7 @@ namespace ElectCell_HMI.Forms
             dataGridView2.AllowUserToDeleteRows = false;
         }
 
-        private void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        public void DataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
@@ -60,7 +60,7 @@ namespace ElectCell_HMI.Forms
             }
         }
 
-        private void TextBox1_TextChanged(object sender, EventArgs e)
+        public void TextBox1_TextChanged(object sender, EventArgs e)
         {
             if (dataGridView1.CurrentRow != null)
             {
@@ -68,7 +68,7 @@ namespace ElectCell_HMI.Forms
             }
         }
 
-        private void TextBox2_TextChanged(object sender, EventArgs e)
+        public void TextBox2_TextChanged(object sender, EventArgs e)
         {
             if (dataGridView1.CurrentRow != null)
             {
@@ -76,7 +76,7 @@ namespace ElectCell_HMI.Forms
             }
         }
 
-        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
+        public void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (dataGridView1.CurrentRow != null)
             {
@@ -85,7 +85,7 @@ namespace ElectCell_HMI.Forms
         }
 
         //初始化dataGridView1数据
-        private void InitializeDataGridView1()
+        public void InitializeDataGridView1()
         {
             DataTable dt1 = new DataTable();
             dt1.Columns.Add("信号名", System.Type.GetType("System.String"));
@@ -184,7 +184,7 @@ namespace ElectCell_HMI.Forms
             }
         }
 
-        private void InitializeDataGridView2()
+        public void InitializeDataGridView2()
         {
             DataTable dt2 = new DataTable();
             dt2.Columns.Add("参数名", System.Type.GetType("System.String"));
@@ -365,7 +365,7 @@ namespace ElectCell_HMI.Forms
             }
         }
 
-        private void AddAsFaultTestItem_Click(object sender, EventArgs e)
+        public void AddAsFaultTestItem_Click(object sender, EventArgs e)
         {
             if (dataGridView2.CurrentRow != null) 
             {
@@ -395,7 +395,7 @@ namespace ElectCell_HMI.Forms
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void button1_Click(object sender, EventArgs e)
         {
             DataTable dt1 = dataGridView1.DataSource as DataTable;
             if (dt1 == null)
@@ -511,7 +511,7 @@ namespace ElectCell_HMI.Forms
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        public void button2_Click(object sender, EventArgs e)
         {
             // 检查是否有选中行
             if (dataGridView1.CurrentRow != null)
@@ -534,7 +534,7 @@ namespace ElectCell_HMI.Forms
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        public void button3_Click(object sender, EventArgs e)
         {
             //移除dataGridView1的所有行
             DataTable dt1 = dataGridView1.DataSource as DataTable;
@@ -545,7 +545,7 @@ namespace ElectCell_HMI.Forms
         }
 
 
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        public void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             //checkBox2选中的时候，tableLayoutPanel3隐藏，否则显示
             if (checkBox2.Checked)

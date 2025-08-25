@@ -5,7 +5,7 @@
         /// <summary> 
         /// 必需的设计器变量。
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        public System.ComponentModel.IContainer components = null;
 
         /// <summary> 
         /// 清理所有正在使用的资源。
@@ -26,7 +26,7 @@
         /// 设计器支持所需的方法 - 不要修改
         /// 使用代码编辑器修改此方法的内容。
         /// </summary>
-        private void InitializeComponent()
+        public void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(famen));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -128,12 +128,12 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ComboBox comboBox15;
-        private System.Windows.Forms.ComboBox comboBox11;
-        private System.Windows.Forms.ComboBox comboBox10;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
+        public System.Windows.Forms.PictureBox pictureBox1;
+        public System.Windows.Forms.ComboBox comboBox15;
+        public System.Windows.Forms.ComboBox comboBox11;
+        public System.Windows.Forms.ComboBox comboBox10;
+        public System.Windows.Forms.Label label15;
+        public System.Windows.Forms.Label label11;
+        public System.Windows.Forms.Label label10;
     }
 }
