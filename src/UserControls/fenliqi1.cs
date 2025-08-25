@@ -134,5 +134,38 @@ namespace ElectCell_HMI.UserControls
 
             return rect;
         }
+
+        public void InitCombox(int[] flowNumPool, int[] psNumPool, int[] flowDefaultNum, int[] psDefaultNum)
+        {
+            comboBox10.Items.Clear();
+            comboBox16.Items.Clear();
+            comboBox13.Items.Clear();
+            comboBox11.Items.Clear();
+            comboBox12.Items.Clear();
+            comboBox15.Items.Clear();
+            comboBox16.Items.Clear();
+
+            foreach (var item in flowNumPool)
+            {
+                comboBox10.Items.Add(item);
+                comboBox16.Items.Add(item);
+                comboBox13.Items.Add(item);
+                comboBox11.Items.Add(item);
+                comboBox12.Items.Add(item);
+            }
+            comboBox10.SelectedItem = flowDefaultNum[0];
+            comboBox16.SelectedItem = flowDefaultNum[1];
+            comboBox13.SelectedItem = flowDefaultNum[2];
+            comboBox11.SelectedItem = flowDefaultNum[3];
+            comboBox12.SelectedItem = flowDefaultNum[4];
+
+            foreach (var item in psNumPool)
+            {
+                comboBox15.Items.Add(item);
+                comboBox14.Items.Add(item);
+            }
+            comboBox15.SelectedItem = psDefaultNum[0];
+            comboBox14.SelectedItem = psDefaultNum[1];
+        }
     }
 }

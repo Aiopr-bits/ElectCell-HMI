@@ -282,6 +282,15 @@ namespace ElectCell_HMI
                     dianjiecao dianjiecao = new dianjiecao();
                     tableLayoutPanel2.Controls.Add(dianjiecao, 0, 0);
                     dianjiecao.Dock = DockStyle.Fill;
+
+                    // 初始化界面上的combox
+                    int[] flowNumPool = Data.flowParameter.flow.Select(f => (int)f[0]).ToArray();
+                    int[] psNumPool = Data.psParameter.ps.Select(p => (int)p[0]).ToArray();
+                    int[] flowDefaultNum = Data.componentParameter.electrolyticCell[i].flow.Select(f => (int)f).ToArray();
+                    int[] psDefaultNum = Data.componentParameter.electrolyticCell[i].ps.Select(p => (int)p).ToArray();
+                    float current = (float)Data.componentParameter.electrolyticCell[i].current;
+                    dianjiecao.InitCombox(flowNumPool, psNumPool, flowDefaultNum, psDefaultNum, current);
+
                     return;
                 }
                 else if (selectedNode == $"泵{i + 1}")
@@ -327,6 +336,14 @@ namespace ElectCell_HMI
                     beng beng = new beng();
                     tableLayoutPanel2.Controls.Add(beng, 0, 0);
                     beng.Dock = DockStyle.Fill;
+
+                    // 初始化界面上的combox
+                    int[] flowNumPool = Data.flowParameter.flow.Select(f => (int)f[0]).ToArray();
+                    int[] psNumPool = Data.psParameter.ps.Select(p => (int)p[0]).ToArray();
+                    int[] flowDefaultNum = Data.componentParameter.pump[i].flow.Select(f => (int)f).ToArray();
+                    int[] psDefaultNum = Data.componentParameter.pump[i].ps.Select(p => (int)p).ToArray();
+
+                    beng.InitCombox(flowNumPool, psNumPool, flowDefaultNum, psDefaultNum);
 
                     return;
                 }
@@ -374,6 +391,15 @@ namespace ElectCell_HMI
                 fenliqi1 fenliqi1 = new fenliqi1();
                 tableLayoutPanel2.Controls.Add(fenliqi1, 0, 0);
                 fenliqi1.Dock = DockStyle.Fill;
+
+                // 初始化界面上的combox
+                int[] flowNumPool = Data.flowParameter.flow.Select(f => (int)f[0]).ToArray();
+                int[] psNumPool = Data.psParameter.ps.Select(p => (int)p[0]).ToArray();
+                int[] flowDefaultNum = Data.componentParameter.cathodeSeparator.flow.Select(f => (int)f).ToArray();
+                int[] psDefaultNum = Data.componentParameter.cathodeSeparator.ps.Select(p => (int)p).ToArray();
+
+                fenliqi1.InitCombox(flowNumPool, psNumPool, flowDefaultNum, psDefaultNum);
+
                 return;
             }
             else if (selectedNode == "阳极分离器")
@@ -419,6 +445,14 @@ namespace ElectCell_HMI
                 fenliqi1 fenliqi1 = new fenliqi1();
                 tableLayoutPanel2.Controls.Add(fenliqi1, 0, 0);
                 fenliqi1.Dock = DockStyle.Fill;
+
+                // 初始化界面上的combox
+                int[] flowNumPool = Data.flowParameter.flow.Select(f => (int)f[0]).ToArray();
+                int[] psNumPool = Data.psParameter.ps.Select(p => (int)p[0]).ToArray();
+                int[] flowDefaultNum = Data.componentParameter.anodeSeparator.flow.Select(f => (int)f).ToArray();
+                int[] psDefaultNum = Data.componentParameter.anodeSeparator.ps.Select(p => (int)p).ToArray();
+
+                fenliqi1.InitCombox(flowNumPool, psNumPool, flowDefaultNum, psDefaultNum);
 
                 return;
             }
@@ -466,6 +500,14 @@ namespace ElectCell_HMI
                 tableLayoutPanel2.Controls.Add(famen, 0, 0);
                 famen.Dock = DockStyle.Fill;
 
+                // 初始化界面上的combox
+                int[] flowNumPool = Data.flowParameter.flow.Select(f => (int)f[0]).ToArray();
+                int[] psNumPool = Data.psParameter.ps.Select(p => (int)p[0]).ToArray();
+                int[] flowDefaultNum = Data.componentParameter.cathodeValve.flow.Select(f => (int)f).ToArray();
+                int[] psDefaultNum = Data.componentParameter.cathodeValve.ps.Select(p => (int)p).ToArray();
+
+                famen.InitCombox(flowNumPool, psNumPool, flowDefaultNum, psDefaultNum);
+
                 return;
             }
             else if (selectedNode == "阳极阀门")
@@ -511,6 +553,15 @@ namespace ElectCell_HMI
                 famen famen = new famen();
                 tableLayoutPanel2.Controls.Add(famen, 0, 0);
                 famen.Dock = DockStyle.Fill;
+
+                // 初始化界面上的combox
+                int[] flowNumPool = Data.flowParameter.flow.Select(f => (int)f[0]).ToArray();
+                int[] psNumPool = Data.psParameter.ps.Select(p => (int)p[0]).ToArray();
+                int[] flowDefaultNum = Data.componentParameter.anodeValve.flow.Select(f => (int)f).ToArray();
+                int[] psDefaultNum = Data.componentParameter.anodeValve.ps.Select(p => (int)p).ToArray();
+
+                famen.InitCombox(flowNumPool, psNumPool, flowDefaultNum, psDefaultNum);
+
                 return;
             }
             else if (selectedNode == "平衡管线")
@@ -556,6 +607,14 @@ namespace ElectCell_HMI
                 pipe pipe = new pipe();
                 tableLayoutPanel2.Controls.Add(pipe, 0, 0);
                 pipe.Dock = DockStyle.Fill;
+
+                // 初始化界面上的combox
+                int[] flowNumPool = Data.flowParameter.flow.Select(f => (int)f[0]).ToArray();
+                int[] psNumPool = Data.psParameter.ps.Select(p => (int)p[0]).ToArray();
+                int[] flowDefaultNum = Data.componentParameter.balancePipe.flow.Select(f => (int)f).ToArray();
+                int[] psDefaultNum = Data.componentParameter.balancePipe.ps.Select(p => (int)p).ToArray();
+
+                pipe.InitCombox(flowNumPool, psNumPool, flowDefaultNum, psDefaultNum);
 
                 return;
             }

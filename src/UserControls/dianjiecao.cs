@@ -134,5 +134,46 @@ namespace ElectCell_HMI.Forms
 
             return rect;
         }
+
+        public void InitCombox(int[] flowNumPool, int[] psNumPool, int[] flowDefaultNum, int[] psDefaultNum, float current)
+        {
+            comboBox1.Items.Clear();
+            comboBox2.Items.Clear();
+            comboBox3.Items.Clear();
+            comboBox4.Items.Clear();
+            comboBox5.Items.Clear();
+            comboBox6.Items.Clear();
+            comboBox7.Items.Clear();
+            comboBox8.Items.Clear();
+            comboBox9.Items.Clear();
+
+            foreach (var item in flowNumPool)
+            {
+                comboBox1.Items.Add(item);
+                comboBox2.Items.Add(item);
+                comboBox3.Items.Add(item);
+                comboBox4.Items.Add(item);
+                comboBox5.Items.Add(item);
+                comboBox6.Items.Add(item);
+            }
+            comboBox1.SelectedItem = flowDefaultNum[0];
+            comboBox2.SelectedItem = flowDefaultNum[1];
+            comboBox3.SelectedItem = flowDefaultNum[2];
+            comboBox4.SelectedItem = flowDefaultNum[3];
+            comboBox5.SelectedItem = flowDefaultNum[4];
+            comboBox6.SelectedItem = flowDefaultNum[5];
+
+            foreach (var item in psNumPool)
+            {
+                comboBox7.Items.Add(item);
+                comboBox8.Items.Add(item);
+            }
+            comboBox7.SelectedItem = psDefaultNum[0];
+            comboBox8.SelectedItem = psDefaultNum[1];
+
+            comboBox9.Items.Add(current.ToString());
+            comboBox9.SelectedItem = current.ToString();
+        }
+
     }
 }
