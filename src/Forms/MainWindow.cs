@@ -1169,6 +1169,12 @@ namespace ElectCell_HMI
         {
             foreach (Control control in parent.Controls)
             {
+                // 全局字体和颜色设置
+                control.Font = new Font("Arial", 10);
+                control.BackColor = Color.FromArgb(239, 239, 239);
+                control.ForeColor = Color.FromArgb(30, 30, 30);
+
+
                 if (control is DataGridView dataGridView) // 数据表格
                 {
                     dataGridView.BackgroundColor = Color.FromArgb(239, 239, 239);
