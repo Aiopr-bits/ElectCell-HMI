@@ -15,16 +15,82 @@ namespace ElectCell_HMI
     public partial class ComponentParameterPage : UserControl
     {
         public float originalColumnWidth;
+        private bool _defaultSelectionApplied;
 
         public ComponentParameterPage()
         {
             InitializeComponent();
             initTreeview();
             originalColumnWidth = tableLayoutPanel3.ColumnStyles[2].Width;
-            treeView1.SelectedNode = treeView1.Nodes[0].Nodes[0].Nodes[0];
+            // 启动后选择在 OnLoad 中进行
 
             //隐藏tablelayoutPanel3以及其中的所有控件
             tableLayoutPanel3.Visible = false;          
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            if (DesignMode) return;
+            if (_defaultSelectionApplied) return;
+
+            // 确保树已初始化
+            if (treeView1.Nodes.Count == 0)
+            {
+                initTreeview();
+            }
+
+            // 优先选择第一个电解槽节点（电解槽1）
+            TreeNode target = FindNodeByText(treeView1.Nodes, "电解槽1");
+            if (target == null)
+            {
+                // 尝试选择“电解槽”的第一个子节点
+                TreeNode dz = FindNodeByText(treeView1.Nodes, "电解槽");
+                if (dz != null && dz.Nodes.Count > 0)
+                {
+                    target = dz.Nodes[0];
+                }
+            }
+            // 如果仍未找到，则选择第一个叶子节点兜底
+            if (target == null)
+            {
+                target = FindFirstLeafNode(treeView1.Nodes);
+            }
+
+            if (target != null)
+            {
+                treeView1.SelectedNode = target;
+            }
+
+            _defaultSelectionApplied = true;
+        }
+
+        private TreeNode FindFirstLeafNode(TreeNodeCollection nodes)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (node.Nodes == null || node.Nodes.Count == 0)
+                {
+                    return node;
+                }
+                var inner = FindFirstLeafNode(node.Nodes);
+                if (inner != null) return inner;
+            }
+            return null;
+        }
+
+        private TreeNode FindNodeByText(TreeNodeCollection nodes, string text)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (string.Equals(node.Text, text, StringComparison.Ordinal))
+                {
+                    return node;
+                }
+                var inner = FindNodeByText(node.Nodes, text);
+                if (inner != null) return inner;
+            }
+            return null;
         }
 
         public void initTreeview()
@@ -67,6 +133,77 @@ namespace ElectCell_HMI
 
             treeView1.Nodes.Add(rootNode);
             treeView1.ExpandAll();
+        }
+
+        private void PopulateAllFlowAndPs(DataTable dt4, DataTable dt5)
+        {
+            // 填充所有flow
+            for (int j = 0; j < Data.flowParameter.flow.Count; j++)
+            {
+                DataRow dr = dt4.NewRow();
+                dr["流股编号"] = Data.flowParameter.flow[j][0];
+                dr["氢气占比"] = Data.flowParameter.flow[j][1];
+                dr["氧气占比"] = Data.flowParameter.flow[j][2];
+                dr["水占比"] = Data.flowParameter.flow[j][3];
+                dr["直径（m）"] = Data.flowParameter.flow[j][4];
+                dr["长度（m）"] = Data.flowParameter.flow[j][5];
+                dt4.Rows.Add(dr);
+            }
+
+            // 填充所有ps
+            for (int j = 0; j < Data.psParameter.ps.Count; j++)
+            {
+                DataRow dr = dt5.NewRow();
+                dr["过程系统编号"] = Data.psParameter.ps[j][0];
+                dr["总物质量"] = Data.psParameter.ps[j][1];
+                dr["摩尔体积（m³/mol）"] = Data.psParameter.ps[j][2];
+                dr["压力"] = Data.psParameter.ps[j][3];
+                dr["液体高度（m）"] = Data.psParameter.ps[j][4];
+                dr["气体高度（m）"] = Data.psParameter.ps[j][5];
+                dr["氢气占比"] = Data.psParameter.ps[j][6];
+                dr["氧气占比"] = Data.psParameter.ps[j][7];
+                dt5.Rows.Add(dr);
+            }
+        }
+
+        private void HighlightFlowAndPsRows(ICollection<double> selectedFlows, ICollection<double> selectedPs)
+        {
+            if (selectedFlows == null) selectedFlows = new List<double>();
+            if (selectedPs == null) selectedPs = new List<double>();
+
+            Color flowDefault = dataGridView4.DefaultCellStyle.BackColor;
+            Color psDefault = dataGridView5.DefaultCellStyle.BackColor;
+            Color highlight = Color.LightGoldenrodYellow;
+
+            // 高亮flow
+            foreach (DataGridViewRow row in dataGridView4.Rows)
+            {
+                row.DefaultCellStyle.BackColor = flowDefault;
+                var val = row.Cells["流股编号"].Value;
+                if (val == null || val == DBNull.Value) continue;
+                double id;
+                try { id = Convert.ToDouble(val); }
+                catch { continue; }
+                if (selectedFlows.Contains(id))
+                {
+                    row.DefaultCellStyle.BackColor = highlight;
+                }
+            }
+
+            // 高亮ps
+            foreach (DataGridViewRow row in dataGridView5.Rows)
+            {
+                row.DefaultCellStyle.BackColor = psDefault;
+                var val = row.Cells["过程系统编号"].Value;
+                if (val == null || val == DBNull.Value) continue;
+                double id;
+                try { id = Convert.ToDouble(val); }
+                catch { continue; }
+                if (selectedPs.Contains(id))
+                {
+                    row.DefaultCellStyle.BackColor = highlight;
+                }
+            }
         }
 
         public void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -117,59 +254,20 @@ namespace ElectCell_HMI
 
                     dt3.Rows.Add(Data.componentParameter.electrolyticCell[i].current);
 
-                    //数据表flow
-                    for (int j = 0; j < Data.flowParameter.flow.Count; j++)
-                    {
-                        if (Data.componentParameter.electrolyticCell[i].flow.Contains(Data.flowParameter.flow[j][0]))
-                        {
-                            DataRow dr = dt4.NewRow();
-                            dr["流股编号"] = Data.flowParameter.flow[j][0];
-                            dr["氢气占比"] = Data.flowParameter.flow[j][1];
-                            dr["氧气占比"] = Data.flowParameter.flow[j][2];
-                            dr["水占比"] = Data.flowParameter.flow[j][3];
-                            dr["直径（m）"] = Data.flowParameter.flow[j][4];
-                            dr["长度（m）"] = Data.flowParameter.flow[j][5];
-                            dt4.Rows.Add(dr);
-                        }
-                    }
-
-                    //数据表ps
-                    for (int j = 0; j < Data.psParameter.ps.Count; j++)
-                    {
-                        if (Data.componentParameter.electrolyticCell[i].ps.Contains(Data.psParameter.ps[j][0]))
-                        {
-                            DataRow dr = dt5.NewRow();
-                            dr["过程系统编号"] = Data.psParameter.ps[j][0];
-                            dr["总物质量"] = Data.psParameter.ps[j][1];
-                            dr["摩尔体积（m³/mol）"] = Data.psParameter.ps[j][2];
-                            dr["压力"] = Data.psParameter.ps[j][3];
-                            dr["液体高度（m）"] = Data.psParameter.ps[j][4];
-                            dr["气体高度（m）"] = Data.psParameter.ps[j][5];
-                            dr["氢气占比"] = Data.psParameter.ps[j][6];
-                            dr["氧气占比"] = Data.psParameter.ps[j][7];
-                            dt5.Rows.Add(dr);
-                        }
-                    }
-
-                    for (int j = 0; j < 50; j++)
-                    {
-                        DataRow dr1 = dt1.NewRow();
-                        DataRow dr2 = dt2.NewRow();
-                        DataRow dr3 = dt3.NewRow();
-                        DataRow dr4 = dt4.NewRow();
-                        DataRow dr5 = dt5.NewRow();
-                        dt1.Rows.Add(dr1);
-                        dt2.Rows.Add(dr2);
-                        dt3.Rows.Add(dr3);
-                        dt4.Rows.Add(dr4);
-                        dt5.Rows.Add(dr5);
-                    }
+                    // 数据表flow/ps 显示所有
+                    PopulateAllFlowAndPs(dt4, dt5);
 
                     dataGridView1.DataSource = dt1;
                     dataGridView2.DataSource = dt2;
                     dataGridView3.DataSource = dt3;
                     dataGridView4.DataSource = dt4;
                     dataGridView5.DataSource = dt5;
+
+                    // 高亮所选部件对应的flow/ps
+                    var selectedFlowsSet = new HashSet<double>(Data.componentParameter.electrolyticCell[i].flow.Select(x => Convert.ToDouble(x)));
+                    var selectedPsSet = new HashSet<double>(Data.componentParameter.electrolyticCell[i].ps.Select(x => Convert.ToDouble(x)));
+                    HighlightFlowAndPsRows(selectedFlowsSet, selectedPsSet);
+                    BeginInvoke(new Action(() => HighlightFlowAndPsRows(selectedFlowsSet, selectedPsSet)));
 
                     // 清除原来的电解槽控件，泵，分离器，阀门控件，平衡管线控件
                     foreach (Control control in tableLayoutPanel2.Controls)
@@ -201,57 +299,20 @@ namespace ElectCell_HMI
                         dt2.Rows.Add(Data.componentParameter.pump[i].ps[j]);
                     }
 
-                    //数据表flow
-                    for (int j = 0; j < Data.flowParameter.flow.Count; j++)
-                    {
-                        if (Data.componentParameter.pump[i].flow.Contains(Data.flowParameter.flow[j][0]))
-                        {
-                            DataRow dr = dt4.NewRow();
-                            dr["流股编号"] = Data.flowParameter.flow[j][0];
-                            dr["氢气占比"] = Data.flowParameter.flow[j][1];
-                            dr["氧气占比"] = Data.flowParameter.flow[j][2];
-                            dr["水占比"] = Data.flowParameter.flow[j][3];
-                            dr["直径（m）"] = Data.flowParameter.flow[j][4];
-                            dr["长度（m）"] = Data.flowParameter.flow[j][5];
-                            dt4.Rows.Add(dr);
-                        }
-                    }
-
-                    //数据表ps
-                    for (int j = 0; j < Data.psParameter.ps.Count; j++)
-                    {
-                        if (Data.componentParameter.pump[i].ps.Contains(Data.psParameter.ps[j][0]))
-                        {
-                            DataRow dr = dt5.NewRow();
-                            dr["过程系统编号"] = Data.psParameter.ps[j][0];
-                            dr["总物质量"] = Data.psParameter.ps[j][1];
-                            dr["摩尔体积（m³/mol）"] = Data.psParameter.ps[j][2];
-                            dr["压力"] = Data.psParameter.ps[j][3];
-                            dr["液体高度（m）"] = Data.psParameter.ps[j][4];
-                            dr["气体高度（m）"] = Data.psParameter.ps[j][5];
-                            dr["氢气占比"] = Data.psParameter.ps[j][6];
-                            dr["氧气占比"] = Data.psParameter.ps[j][7];
-                            dt5.Rows.Add(dr);
-                        }
-                    }
-
-                    for (int j = 0; j < 50; j++)
-                    {
-                        DataRow dr1 = dt1.NewRow();
-                        DataRow dr2 = dt2.NewRow();
-                        DataRow dr4 = dt4.NewRow();
-                        DataRow dr5 = dt5.NewRow();
-                        dt1.Rows.Add(dr1);
-                        dt2.Rows.Add(dr2);
-                        dt4.Rows.Add(dr4);
-                        dt5.Rows.Add(dr5);
-                    }
+                    // 数据表flow/ps 显示所有
+                    PopulateAllFlowAndPs(dt4, dt5);
 
                     dataGridView1.DataSource = dt1;
                     dataGridView2.DataSource = dt2;
                     dataGridView3.DataSource = dt3;
                     dataGridView4.DataSource = dt4;
                     dataGridView5.DataSource = dt5;
+
+                    // 高亮所选部件对应的flow/ps
+                    var selectedFlowsSet = new HashSet<double>(Data.componentParameter.pump[i].flow.Select(x => Convert.ToDouble(x)));
+                    var selectedPsSet = new HashSet<double>(Data.componentParameter.pump[i].ps.Select(x => Convert.ToDouble(x)));
+                    HighlightFlowAndPsRows(selectedFlowsSet, selectedPsSet);
+                    BeginInvoke(new Action(() => HighlightFlowAndPsRows(selectedFlowsSet, selectedPsSet)));
 
                     // 清除原来的电解槽控件，泵，分离器，阀门控件，平衡管线控件
                     foreach (Control control in tableLayoutPanel2.Controls)
@@ -285,57 +346,20 @@ namespace ElectCell_HMI
                     dt2.Rows.Add(Data.componentParameter.cathodeSeparator.ps[j]);
                 }
 
-                //数据表flow
-                for (int j = 0; j < Data.flowParameter.flow.Count; j++)
-                {
-                    if (Data.componentParameter.cathodeSeparator.flow.Contains(Data.flowParameter.flow[j][0]))
-                    {
-                        DataRow dr = dt4.NewRow();
-                        dr["流股编号"] = Data.flowParameter.flow[j][0];
-                        dr["氢气占比"] = Data.flowParameter.flow[j][1];
-                        dr["氧气占比"] = Data.flowParameter.flow[j][2];
-                        dr["水占比"] = Data.flowParameter.flow[j][3];
-                        dr["直径（m）"] = Data.flowParameter.flow[j][4];
-                        dr["长度（m）"] = Data.flowParameter.flow[j][5];
-                        dt4.Rows.Add(dr);
-                    }
-                }
-
-                //数据表ps
-                for (int j = 0; j < Data.psParameter.ps.Count; j++)
-                {
-                    if (Data.componentParameter.cathodeSeparator.ps.Contains(Data.psParameter.ps[j][0]))
-                    {
-                        DataRow dr = dt5.NewRow();
-                        dr["过程系统编号"] = Data.psParameter.ps[j][0];
-                        dr["总物质量"] = Data.psParameter.ps[j][1];
-                        dr["摩尔体积（m³/mol）"] = Data.psParameter.ps[j][2];
-                        dr["压力"] = Data.psParameter.ps[j][3];
-                        dr["液体高度（m）"] = Data.psParameter.ps[j][4];
-                        dr["气体高度（m）"] = Data.psParameter.ps[j][5];
-                        dr["氢气占比"] = Data.psParameter.ps[j][6];
-                        dr["氧气占比"] = Data.psParameter.ps[j][7];
-                        dt5.Rows.Add(dr);
-                    }
-                }
-
-                for (int j = 0; j < 50; j++)
-                {
-                    DataRow dr1 = dt1.NewRow();
-                    DataRow dr2 = dt2.NewRow();
-                    DataRow dr4 = dt4.NewRow();
-                    DataRow dr5 = dt5.NewRow();
-                    dt1.Rows.Add(dr1);
-                    dt2.Rows.Add(dr2);
-                    dt4.Rows.Add(dr4);
-                    dt5.Rows.Add(dr5);
-                }
+                // 数据表flow/ps 显示所有
+                PopulateAllFlowAndPs(dt4, dt5);
 
                 dataGridView1.DataSource = dt1;
                 dataGridView2.DataSource = dt2;
                 dataGridView3.DataSource = dt3;
                 dataGridView4.DataSource = dt4;
                 dataGridView5.DataSource = dt5;
+
+                // 高亮所选部件对应的flow/ps
+                var selectedFlowsSet_cs = new HashSet<double>(Data.componentParameter.cathodeSeparator.flow.Select(x => Convert.ToDouble(x)));
+                var selectedPsSet_cs = new HashSet<double>(Data.componentParameter.cathodeSeparator.ps.Select(x => Convert.ToDouble(x)));
+                HighlightFlowAndPsRows(selectedFlowsSet_cs, selectedPsSet_cs);
+                BeginInvoke(new Action(() => HighlightFlowAndPsRows(selectedFlowsSet_cs, selectedPsSet_cs)));
 
                 // 清除原来的电解槽控件，泵，分离器，阀门控件，平衡管线控件
                 foreach (Control control in tableLayoutPanel2.Controls)
@@ -367,57 +391,20 @@ namespace ElectCell_HMI
                     dt2.Rows.Add(Data.componentParameter.anodeSeparator.ps[j]);
                 }
 
-                //数据表flow
-                for (int j = 0; j < Data.flowParameter.flow.Count; j++)
-                {
-                    if (Data.componentParameter.anodeSeparator.flow.Contains(Data.flowParameter.flow[j][0]))
-                    {
-                        DataRow dr = dt4.NewRow();
-                        dr["流股编号"] = Data.flowParameter.flow[j][0];
-                        dr["氢气占比"] = Data.flowParameter.flow[j][1];
-                        dr["氧气占比"] = Data.flowParameter.flow[j][2];
-                        dr["水占比"] = Data.flowParameter.flow[j][3];
-                        dr["直径（m）"] = Data.flowParameter.flow[j][4];
-                        dr["长度（m）"] = Data.flowParameter.flow[j][5];
-                        dt4.Rows.Add(dr);
-                    }
-                }
-
-                //数据表ps
-                for (int j = 0; j < Data.psParameter.ps.Count; j++)
-                {
-                    if (Data.componentParameter.anodeSeparator.ps.Contains(Data.psParameter.ps[j][0]))
-                    {
-                        DataRow dr = dt5.NewRow();
-                        dr["过程系统编号"] = Data.psParameter.ps[j][0];
-                        dr["总物质量"] = Data.psParameter.ps[j][1];
-                        dr["摩尔体积（m³/mol）"] = Data.psParameter.ps[j][2];
-                        dr["压力"] = Data.psParameter.ps[j][3];
-                        dr["液体高度（m）"] = Data.psParameter.ps[j][4];
-                        dr["气体高度（m）"] = Data.psParameter.ps[j][5];
-                        dr["氢气占比"] = Data.psParameter.ps[j][6];
-                        dr["氧气占比"] = Data.psParameter.ps[j][7];
-                        dt5.Rows.Add(dr);
-                    }
-                }
-
-                for (int j = 0; j < 50; j++)
-                {
-                    DataRow dr1 = dt1.NewRow();
-                    DataRow dr2 = dt2.NewRow();
-                    DataRow dr4 = dt4.NewRow();
-                    DataRow dr5 = dt5.NewRow();
-                    dt1.Rows.Add(dr1);
-                    dt2.Rows.Add(dr2);
-                    dt4.Rows.Add(dr4);
-                    dt5.Rows.Add(dr5);
-                }
+                // 数据表flow/ps 显示所有
+                PopulateAllFlowAndPs(dt4, dt5);
 
                 dataGridView1.DataSource = dt1;
                 dataGridView2.DataSource = dt2;
                 dataGridView3.DataSource = dt3;
                 dataGridView4.DataSource = dt4;
                 dataGridView5.DataSource = dt5;
+
+                // 高亮所选部件对应的flow/ps
+                var selectedFlowsSet_as = new HashSet<double>(Data.componentParameter.anodeSeparator.flow.Select(x => Convert.ToDouble(x)));
+                var selectedPsSet_as = new HashSet<double>(Data.componentParameter.anodeSeparator.ps.Select(x => Convert.ToDouble(x)));
+                HighlightFlowAndPsRows(selectedFlowsSet_as, selectedPsSet_as);
+                BeginInvoke(new Action(() => HighlightFlowAndPsRows(selectedFlowsSet_as, selectedPsSet_as)));
 
                 // 清除原来的电解槽控件，泵，分离器，阀门控件，平衡管线控件
                 foreach (Control control in tableLayoutPanel2.Controls)
@@ -450,57 +437,20 @@ namespace ElectCell_HMI
                     dt2.Rows.Add(Data.componentParameter.cathodeValve.ps[j]);
                 }
 
-                //数据表flow
-                for (int j = 0; j < Data.flowParameter.flow.Count; j++)
-                {
-                    if (Data.componentParameter.cathodeValve.flow.Contains(Data.flowParameter.flow[j][0]))
-                    {
-                        DataRow dr = dt4.NewRow();
-                        dr["流股编号"] = Data.flowParameter.flow[j][0];
-                        dr["氢气占比"] = Data.flowParameter.flow[j][1];
-                        dr["氧气占比"] = Data.flowParameter.flow[j][2];
-                        dr["水占比"] = Data.flowParameter.flow[j][3];
-                        dr["直径（m）"] = Data.flowParameter.flow[j][4];
-                        dr["长度（m）"] = Data.flowParameter.flow[j][5];
-                        dt4.Rows.Add(dr);
-                    }
-                }
-
-                //数据表ps
-                for (int j = 0; j < Data.psParameter.ps.Count; j++)
-                {
-                    if (Data.componentParameter.cathodeValve.ps.Contains(Data.psParameter.ps[j][0]))
-                    {
-                        DataRow dr = dt5.NewRow();
-                        dr["过程系统编号"] = Data.psParameter.ps[j][0];
-                        dr["总物质量"] = Data.psParameter.ps[j][1];
-                        dr["摩尔体积（m³/mol）"] = Data.psParameter.ps[j][2];
-                        dr["压力"] = Data.psParameter.ps[j][3];
-                        dr["液体高度（m）"] = Data.psParameter.ps[j][4];
-                        dr["气体高度（m）"] = Data.psParameter.ps[j][5];
-                        dr["氢气占比"] = Data.psParameter.ps[j][6];
-                        dr["氧气占比"] = Data.psParameter.ps[j][7];
-                        dt5.Rows.Add(dr);
-                    }
-                }
-
-                for (int j = 0; j < 50; j++)
-                {
-                    DataRow dr1 = dt1.NewRow();
-                    DataRow dr2 = dt2.NewRow();
-                    DataRow dr4 = dt4.NewRow();
-                    DataRow dr5 = dt5.NewRow();
-                    dt1.Rows.Add(dr1);
-                    dt2.Rows.Add(dr2);
-                    dt4.Rows.Add(dr4);
-                    dt5.Rows.Add(dr5);
-                }
+                // 数据表flow/ps 显示所有
+                PopulateAllFlowAndPs(dt4, dt5);
 
                 dataGridView1.DataSource = dt1;
                 dataGridView2.DataSource = dt2;
                 dataGridView3.DataSource = dt3;
                 dataGridView4.DataSource = dt4;
                 dataGridView5.DataSource = dt5;
+
+                // 高亮所选部件对应的flow/ps
+                var selectedFlowsSet_cv = new HashSet<double>(Data.componentParameter.cathodeValve.flow.Select(x => Convert.ToDouble(x)));
+                var selectedPsSet_cv = new HashSet<double>(Data.componentParameter.cathodeValve.ps.Select(x => Convert.ToDouble(x)));
+                HighlightFlowAndPsRows(selectedFlowsSet_cv, selectedPsSet_cv);
+                BeginInvoke(new Action(() => HighlightFlowAndPsRows(selectedFlowsSet_cv, selectedPsSet_cv)));
 
                 // 清除原来的电解槽控件，泵，分离器，阀门控件，平衡管线控件
                 foreach (Control control in tableLayoutPanel2.Controls)
@@ -533,57 +483,20 @@ namespace ElectCell_HMI
                     dt2.Rows.Add(Data.componentParameter.anodeValve.ps[j]);
                 }
 
-                //数据表flow
-                for (int j = 0; j < Data.flowParameter.flow.Count; j++)
-                {
-                    if (Data.componentParameter.anodeValve.flow.Contains(Data.flowParameter.flow[j][0]))
-                    {
-                        DataRow dr = dt4.NewRow();
-                        dr["流股编号"] = Data.flowParameter.flow[j][0];
-                        dr["氢气占比"] = Data.flowParameter.flow[j][1];
-                        dr["氧气占比"] = Data.flowParameter.flow[j][2];
-                        dr["水占比"] = Data.flowParameter.flow[j][3];
-                        dr["直径（m）"] = Data.flowParameter.flow[j][4];
-                        dr["长度（m）"] = Data.flowParameter.flow[j][5];
-                        dt4.Rows.Add(dr);
-                    }
-                }
-
-                //数据表ps
-                for (int j = 0; j < Data.psParameter.ps.Count; j++)
-                {
-                    if (Data.componentParameter.anodeValve.ps.Contains(Data.psParameter.ps[j][0]))
-                    {
-                        DataRow dr = dt5.NewRow();
-                        dr["过程系统编号"] = Data.psParameter.ps[j][0];
-                        dr["总物质量"] = Data.psParameter.ps[j][1];
-                        dr["摩尔体积（m³/mol）"] = Data.psParameter.ps[j][2];
-                        dr["压力"] = Data.psParameter.ps[j][3];
-                        dr["液体高度（m）"] = Data.psParameter.ps[j][4];
-                        dr["气体高度（m）"] = Data.psParameter.ps[j][5];
-                        dr["氢气占比"] = Data.psParameter.ps[j][6];
-                        dr["氧气占比"] = Data.psParameter.ps[j][7];
-                        dt5.Rows.Add(dr);
-                    }
-                }
-
-                for (int j = 0; j < 50; j++)
-                {
-                    DataRow dr1 = dt1.NewRow();
-                    DataRow dr2 = dt2.NewRow();
-                    DataRow dr4 = dt4.NewRow();
-                    DataRow dr5 = dt5.NewRow();
-                    dt1.Rows.Add(dr1);
-                    dt2.Rows.Add(dr2);
-                    dt4.Rows.Add(dr4);
-                    dt5.Rows.Add(dr5);
-                }
+                // 数据表flow/ps 显示所有
+                PopulateAllFlowAndPs(dt4, dt5);
 
                 dataGridView1.DataSource = dt1;
                 dataGridView2.DataSource = dt2;
                 dataGridView3.DataSource = dt3;
                 dataGridView4.DataSource = dt4;
                 dataGridView5.DataSource = dt5;
+
+                // 高亮所选部件对应的flow/ps
+                var selectedFlowsSet_av = new HashSet<double>(Data.componentParameter.anodeValve.flow.Select(x => Convert.ToDouble(x)));
+                var selectedPsSet_av = new HashSet<double>(Data.componentParameter.anodeValve.ps.Select(x => Convert.ToDouble(x)));
+                HighlightFlowAndPsRows(selectedFlowsSet_av, selectedPsSet_av);
+                BeginInvoke(new Action(() => HighlightFlowAndPsRows(selectedFlowsSet_av, selectedPsSet_av)));
 
                 // 清除原来的电解槽控件，泵，分离器，阀门控件，平衡管线控件
                 foreach (Control control in tableLayoutPanel2.Controls)
@@ -615,57 +528,20 @@ namespace ElectCell_HMI
                     dt2.Rows.Add(Data.componentParameter.balancePipe.ps[j]);
                 }
 
-                //数据表flow
-                for (int j = 0; j < Data.flowParameter.flow.Count; j++)
-                {
-                    if (Data.componentParameter.balancePipe.flow.Contains(Data.flowParameter.flow[j][0]))
-                    {
-                        DataRow dr = dt4.NewRow();
-                        dr["流股编号"] = Data.flowParameter.flow[j][0];
-                        dr["氢气占比"] = Data.flowParameter.flow[j][1];
-                        dr["氧气占比"] = Data.flowParameter.flow[j][2];
-                        dr["水占比"] = Data.flowParameter.flow[j][3];
-                        dr["直径（m）"] = Data.flowParameter.flow[j][4];
-                        dr["长度（m）"] = Data.flowParameter.flow[j][5];
-                        dt4.Rows.Add(dr);
-                    }
-                }
-
-                //数据表ps
-                for (int j = 0; j < Data.psParameter.ps.Count; j++)
-                {
-                    if (Data.componentParameter.balancePipe.ps.Contains(Data.psParameter.ps[j][0]))
-                    {
-                        DataRow dr = dt5.NewRow();
-                        dr["过程系统编号"] = Data.psParameter.ps[j][0];
-                        dr["总物质量"] = Data.psParameter.ps[j][1];
-                        dr["摩尔体积（m³/mol）"] = Data.psParameter.ps[j][2];
-                        dr["压力"] = Data.psParameter.ps[j][3];
-                        dr["液体高度（m）"] = Data.psParameter.ps[j][4];
-                        dr["气体高度（m）"] = Data.psParameter.ps[j][5];
-                        dr["氢气占比"] = Data.psParameter.ps[j][6];
-                        dr["氧气占比"] = Data.psParameter.ps[j][7];
-                        dt5.Rows.Add(dr);
-                    }
-                }
-
-                for (int j = 0; j < 50; j++)
-                {
-                    DataRow dr1 = dt1.NewRow();
-                    DataRow dr2 = dt2.NewRow();
-                    DataRow dr4 = dt4.NewRow();
-                    DataRow dr5 = dt5.NewRow();
-                    dt1.Rows.Add(dr1);
-                    dt2.Rows.Add(dr2);
-                    dt4.Rows.Add(dr4);
-                    dt5.Rows.Add(dr5);
-                }
+                // 数据表flow/ps 显示所有
+                PopulateAllFlowAndPs(dt4, dt5);
 
                 dataGridView1.DataSource = dt1;
                 dataGridView2.DataSource = dt2;
                 dataGridView3.DataSource = dt3;
                 dataGridView4.DataSource = dt4;
                 dataGridView5.DataSource = dt5;
+
+                // 高亮所选部件对应的flow/ps
+                var selectedFlowsSet_bp = new HashSet<double>(Data.componentParameter.balancePipe.flow.Select(x => Convert.ToDouble(x)));
+                var selectedPsSet_bp = new HashSet<double>(Data.componentParameter.balancePipe.ps.Select(x => Convert.ToDouble(x)));
+                HighlightFlowAndPsRows(selectedFlowsSet_bp, selectedPsSet_bp);
+                BeginInvoke(new Action(() => HighlightFlowAndPsRows(selectedFlowsSet_bp, selectedPsSet_bp)));
 
                 // 清除原来的电解槽控件，泵，分离器，阀门控件，平衡管线控件
                 foreach (Control control in tableLayoutPanel2.Controls)
