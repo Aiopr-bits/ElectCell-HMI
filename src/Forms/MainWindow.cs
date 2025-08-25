@@ -1263,6 +1263,20 @@ namespace ElectCell_HMI
                     pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     pictureBox.BorderStyle = BorderStyle.FixedSingle;
                 }
+                else if (control is MenuStrip menuStrip) // 菜单栏
+                {
+                    menuStrip.BackColor = Color.FromArgb(70, 130, 180);
+                    menuStrip.ForeColor = Color.White;
+                    menuStrip.Font = new Font(menuStrip.Font.FontFamily, 10);
+                    foreach (ToolStripMenuItem item in menuStrip.Items)
+                    {
+                        item.BackColor = Color.FromArgb(70, 130, 180);
+                        item.ForeColor = Color.White;
+                        item.Font = new Font(item.Font.FontFamily, 10);
+                        item.MouseEnter += (s, e) => item.BackColor = Color.FromArgb(30, 144, 255);
+                        item.MouseLeave += (s, e) => item.BackColor = Color.FromArgb(70, 130, 180);
+                    }
+                }
                 else if (control is StatusStrip statusStrip) // 状态栏
                 {
                     statusStrip.BackColor = Color.FromArgb(70, 130, 180);
