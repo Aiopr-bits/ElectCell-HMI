@@ -21,6 +21,7 @@ namespace ElectCell_HMI
         public void dataGridView1LoadData()
         {
             DataTable dt = new DataTable();
+            dt.Columns.Add("序号", typeof(int));
             dt.Columns.Add("部件名称", typeof(string));
             dt.Columns.Add("流股/过程系统", typeof(string));
             dt.Columns.Add("变量名", typeof(string));
@@ -235,7 +236,11 @@ namespace ElectCell_HMI
                 }
             }
 
-
+            // 添加序号列
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                dt.Rows[i]["序号"] = i + 1;
+            }
 
             dataGridView1.DataSource = dt;
         }
