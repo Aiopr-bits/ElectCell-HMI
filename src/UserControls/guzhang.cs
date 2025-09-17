@@ -32,7 +32,7 @@ namespace ElectCell_HMI.Forms
             dataGridView1.ReadOnly = true;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
-            DataGridView1_CellClick(Handle, new DataGridViewCellEventArgs(0, 0));
+            //DataGridView1_CellClick(Handle, new DataGridViewCellEventArgs(0, 0));
 
             // 初始化 dataGridView2
             InitializeDataGridView2();
