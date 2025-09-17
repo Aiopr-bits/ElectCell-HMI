@@ -36,11 +36,13 @@ namespace ElectCell_HMI
             int time = (int)Data.result.result[Data.result.result.Count - 1][0];
 
             DataTable dt = new DataTable();
+            dt.Columns.Add("序号", typeof(int));
             dt.Columns.Add("变量名", typeof(string));
             dt.Columns.Add("变量值", typeof(string));
             dt.Columns.Add("单位", typeof(string));
             dt.Columns.Add("含义", typeof(string));
 
+            int rowIndex = 1;
             for (int i = 0; i < Data.result.result.Count; i++)
             {
                 if (Data.result.result[i][0] == time)
@@ -95,6 +97,7 @@ namespace ElectCell_HMI
                     for (int j = 1; j < Data.result.result[i].Count; j++)
                     {
                         DataRow dr = dt.NewRow();
+                        dr["序号"] = rowIndex++;
                         string variableName = Data.result.header[j];
                         variableName = variableName.Trim();
                         dr["变量名"] = variableName;
