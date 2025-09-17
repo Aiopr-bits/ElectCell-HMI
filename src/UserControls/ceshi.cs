@@ -51,7 +51,7 @@ namespace ElectCell_HMI.Forms
 
             // 读取文件内容
             string[] lines = File.ReadAllLines(filePath);
-
+            int rowIndex = 1;
             foreach (string line in lines)
             {
                 if (string.IsNullOrWhiteSpace(line))
@@ -61,9 +61,11 @@ namespace ElectCell_HMI.Forms
 
                 // 以逗号分隔
                 string[] parts = line.Split(',');
-
+                // 插入序号到第一列
+                var rowData = new List<object> { rowIndex++ };
+                rowData.AddRange(parts);
                 // 将整行数据添加到DataGridView中
-                dataGridView2.Rows.Add(parts);
+                dataGridView2.Rows.Add(rowData.ToArray());
             }
         }
 
@@ -77,8 +79,8 @@ namespace ElectCell_HMI.Forms
             // 禁用行表头
             dataGridView2.RowHeadersVisible = false;
 
-            // 根据AutoTestConfig.ini的格式添加列
-            // 从文件内容看，每行有多个字段，我们添加足够的列来显示所有数据
+            // 添加序号列
+            dataGridView2.Columns.Add("col0", "序号");
             dataGridView2.Columns.Add("col1", "类型");
             dataGridView2.Columns.Add("col2", "编号");
             dataGridView2.Columns.Add("col3", "成分");
