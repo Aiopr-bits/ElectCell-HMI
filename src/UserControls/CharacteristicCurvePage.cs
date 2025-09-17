@@ -42,6 +42,12 @@ namespace ElectCell_HMI
                 dr["扬程 (m)"] = Data.pumpCharacteristic.characteristicQH[i][1];
                 dt1.Rows.Add(dr);
             }
+
+            dt1.Columns.Add("序号", typeof(int)).SetOrdinal(0);
+            for (int i = 0; i < dt1.Rows.Count; i++)
+            {
+                dt1.Rows[i]["序号"] = i + 1;
+            }
             dataGridView1.DataSource = dt1;
 
             DataTable dt2 = new DataTable();
@@ -54,6 +60,12 @@ namespace ElectCell_HMI
                 dr["流量 (m^3/h)"] = Data.pumpCharacteristic.characteristicQP[i][0];
                 dr["压力 (Pa)"] = Data.pumpCharacteristic.characteristicQP[i][1];
                 dt2.Rows.Add(dr);
+            }
+
+            dt2.Columns.Add("序号", typeof(int)).SetOrdinal(0);
+            for (int i = 0; i < dt2.Rows.Count; i++)
+            {
+                dt2.Rows[i]["序号"] = i + 1;
             }
             dataGridView2.DataSource = dt2;
         }
