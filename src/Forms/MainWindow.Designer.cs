@@ -76,26 +76,26 @@
             // 打开案例ToolStripMenuItem
             // 
             this.打开案例ToolStripMenuItem.Name = "打开案例ToolStripMenuItem";
-            this.打开案例ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.打开案例ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.打开案例ToolStripMenuItem.Text = "打开案例";
             this.打开案例ToolStripMenuItem.Click += new System.EventHandler(this.打开案例ToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(145, 6);
             // 
             // 保存ToolStripMenuItem1
             // 
             this.保存ToolStripMenuItem1.Name = "保存ToolStripMenuItem1";
-            this.保存ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.保存ToolStripMenuItem1.Size = new System.Drawing.Size(148, 22);
             this.保存ToolStripMenuItem1.Text = "保存配置参数";
             this.保存ToolStripMenuItem1.Click += new System.EventHandler(this.保存ToolStripMenuItem1_Click);
             // 
             // 另存ToolStripMenuItem1
             // 
             this.另存ToolStripMenuItem1.Name = "另存ToolStripMenuItem1";
-            this.另存ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.另存ToolStripMenuItem1.Size = new System.Drawing.Size(148, 22);
             this.另存ToolStripMenuItem1.Text = "另存配置参数";
             this.另存ToolStripMenuItem1.Click += new System.EventHandler(this.另存ToolStripMenuItem1_Click);
             // 
@@ -111,14 +111,14 @@
             // 开始计算ToolStripMenuItem
             // 
             this.开始计算ToolStripMenuItem.Name = "开始计算ToolStripMenuItem";
-            this.开始计算ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.开始计算ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.开始计算ToolStripMenuItem.Text = "开始计算";
             this.开始计算ToolStripMenuItem.Click += new System.EventHandler(this.开始计算ToolStripMenuItem_Click);
             // 
             // 停止计算ToolStripMenuItem
             // 
             this.停止计算ToolStripMenuItem.Name = "停止计算ToolStripMenuItem";
-            this.停止计算ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.停止计算ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.停止计算ToolStripMenuItem.Text = "停止计算";
             this.停止计算ToolStripMenuItem.Click += new System.EventHandler(this.停止计算ToolStripMenuItem_Click);
             // 
@@ -138,6 +138,7 @@
             this.加载仿真结果ToolStripMenuItem1.Name = "加载仿真结果ToolStripMenuItem1";
             this.加载仿真结果ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.加载仿真结果ToolStripMenuItem1.Text = "加载仿真结果";
+            this.加载仿真结果ToolStripMenuItem1.Click += new System.EventHandler(this.加载仿真结果ToolStripMenuItem1_Click);
             // 
             // toolStripSeparator3
             // 

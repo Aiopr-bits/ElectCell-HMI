@@ -1362,7 +1362,16 @@ namespace ElectCell_HMI
                     isStoppedManually = false; // 重置标志
 
                     readResultFile(path);
-                    dataPlayback.comboBox1LoadData();
+
+                    // 保证线程安全地刷新dataPlayback
+                    if (dataPlayback.InvokeRequired)
+                    {
+                        dataPlayback.Invoke(new Action(() => dataPlayback.comboBox1LoadData()));
+                    }
+                    else
+                    {
+                        dataPlayback.comboBox1LoadData();
+                    }
                 };
 
                 isStoppedManually = false; // 重置标志
@@ -1375,7 +1384,6 @@ namespace ElectCell_HMI
                 Console.WriteLine(ex.StackTrace.ToString());
             }
         }
-
 
         public async void 停止计算ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1406,6 +1414,19 @@ namespace ElectCell_HMI
                         string targetPath = Path.Combine(targetDir, timeFileName);
                         File.Copy(path_result, targetPath, true);
                     }
+
+                    readResultFile(path);
+
+                    // 保证线程安全地刷新dataPlayback
+                    if (dataPlayback.InvokeRequired)
+                    {
+                        dataPlayback.Invoke(new Action(() => dataPlayback.comboBox1LoadData()));
+                    }
+                    else
+                    {
+                        dataPlayback.comboBox1LoadData();
+                    }
+
                     MessageBox.Show(this, "计算已停止！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 });
             }
@@ -1583,6 +1604,44 @@ namespace ElectCell_HMI
             };
 
             exportedResults.ShowDialog();
+        }
+
+        private void 加载仿真结果ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "CSV文件|*.csv",
+                Title = "选择仿真结果文件"
+            };
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string selectedFile = openFileDialog.FileName;
+                string targetDir = Path.Combine(path, "output.data");
+                string targetFile = Path.Combine(targetDir, "result.csv");
+
+                // 确保目标文件夹存在
+                if (!Directory.Exists(targetDir))
+                {
+                    Directory.CreateDirectory(targetDir);
+                }
+
+                // 复制并覆盖目标文件
+                File.Copy(selectedFile, targetFile, true);
+
+                // 加载新结果
+                readResultFile(path);
+
+                // 保证线程安全地刷新dataPlayback
+                if (dataPlayback.InvokeRequired)
+                {
+                    dataPlayback.Invoke(new Action(() => dataPlayback.comboBox1LoadData()));
+                }
+                else
+                {
+                    dataPlayback.comboBox1LoadData();
+                }
+            }
         }
     }
 }
