@@ -1342,6 +1342,20 @@ namespace ElectCell_HMI
                     {
                         this.Invoke((MethodInvoker)delegate
                         {
+                            string path_result = Path.Combine(
+                                Path.GetDirectoryName(path_data_input),
+                                "output.data",
+                                "result.csv"
+                            );
+
+                            if (File.Exists(path_result))
+                            {
+                                string targetDir = Path.GetDirectoryName(path_result);
+                                string timeFileName = DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".csv";
+                                string targetPath = Path.Combine(targetDir, timeFileName);
+                                File.Copy(path_result, targetPath, true);
+                            }
+
                             MessageBox.Show(this, "计算完成！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         });
                     }
@@ -1379,6 +1393,19 @@ namespace ElectCell_HMI
                 timer1.Stop();
                 this.Invoke((MethodInvoker)delegate
                 {
+                    string path_result = Path.Combine(
+                        Path.GetDirectoryName(path_data_input),
+                        "output.data",
+                        "result.csv"
+                    );
+
+                    if (File.Exists(path_result))
+                    {
+                        string targetDir = Path.GetDirectoryName(path_result);
+                        string timeFileName = DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".csv";
+                        string targetPath = Path.Combine(targetDir, timeFileName);
+                        File.Copy(path_result, targetPath, true);
+                    }
                     MessageBox.Show(this, "计算已停止！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 });
             }
