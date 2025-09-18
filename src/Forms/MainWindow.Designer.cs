@@ -40,6 +40,8 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.保存仿真结果ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -63,7 +65,9 @@
             this.打开案例ToolStripMenuItem,
             this.toolStripSeparator1,
             this.保存ToolStripMenuItem1,
-            this.另存ToolStripMenuItem1});
+            this.另存ToolStripMenuItem1,
+            this.toolStripSeparator2,
+            this.保存仿真结果ToolStripMenuItem});
             this.文件ToolStripMenuItem1.Name = "文件ToolStripMenuItem1";
             this.文件ToolStripMenuItem1.Size = new System.Drawing.Size(44, 21);
             this.文件ToolStripMenuItem1.Text = "文件";
@@ -84,14 +88,14 @@
             // 
             this.保存ToolStripMenuItem1.Name = "保存ToolStripMenuItem1";
             this.保存ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.保存ToolStripMenuItem1.Text = "保存";
+            this.保存ToolStripMenuItem1.Text = "保存配置参数";
             this.保存ToolStripMenuItem1.Click += new System.EventHandler(this.保存ToolStripMenuItem1_Click);
             // 
             // 另存ToolStripMenuItem1
             // 
             this.另存ToolStripMenuItem1.Name = "另存ToolStripMenuItem1";
             this.另存ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.另存ToolStripMenuItem1.Text = "另存";
+            this.另存ToolStripMenuItem1.Text = "另存配置参数";
             this.另存ToolStripMenuItem1.Click += new System.EventHandler(this.另存ToolStripMenuItem1_Click);
             // 
             // 求解计算ToolStripMenuItem
@@ -106,14 +110,14 @@
             // 开始计算ToolStripMenuItem
             // 
             this.开始计算ToolStripMenuItem.Name = "开始计算ToolStripMenuItem";
-            this.开始计算ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.开始计算ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.开始计算ToolStripMenuItem.Text = "开始计算";
             this.开始计算ToolStripMenuItem.Click += new System.EventHandler(this.开始计算ToolStripMenuItem_Click);
             // 
             // 停止计算ToolStripMenuItem
             // 
             this.停止计算ToolStripMenuItem.Name = "停止计算ToolStripMenuItem";
-            this.停止计算ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.停止计算ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.停止计算ToolStripMenuItem.Text = "停止计算";
             this.停止计算ToolStripMenuItem.Click += new System.EventHandler(this.停止计算ToolStripMenuItem_Click);
             // 
@@ -162,6 +166,18 @@
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            // 
+            // 保存仿真结果ToolStripMenuItem
+            // 
+            this.保存仿真结果ToolStripMenuItem.Name = "保存仿真结果ToolStripMenuItem";
+            this.保存仿真结果ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.保存仿真结果ToolStripMenuItem.Text = "保存仿真结果";
+            this.保存仿真结果ToolStripMenuItem.Click += new System.EventHandler(this.保存仿真结果ToolStripMenuItem_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -195,13 +211,15 @@
         public System.Windows.Forms.Timer timer1;
         public System.Windows.Forms.ToolStripMenuItem 开始计算ToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem 停止计算ToolStripMenuItem;
-        public System.ComponentModel.IContainer components;
         public System.Windows.Forms.ToolStripMenuItem 文件ToolStripMenuItem1;
         public System.Windows.Forms.ToolStripMenuItem 打开案例ToolStripMenuItem;
         public System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         public System.Windows.Forms.ToolStripMenuItem 保存ToolStripMenuItem1;
         public System.Windows.Forms.ToolStripMenuItem 另存ToolStripMenuItem1;
         public System.Windows.Forms.ToolStripMenuItem 退出ToolStripMenuItem;
+        public System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem 保存仿真结果ToolStripMenuItem;
+        private System.ComponentModel.IContainer components;
     }
 }
 

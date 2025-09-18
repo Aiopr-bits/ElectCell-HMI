@@ -1,13 +1,15 @@
-﻿using System;
+﻿using ElectCell_HMI.Forms;
+using ElectCell_HMI.UserControls;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Windows.Forms;
-using System.Diagnostics;
+using System.Linq;
 using System.Threading;
-using System.Timers;
 using System.Threading.Tasks;
-using ElectCell_HMI.Forms;
+using System.Timers;
+using System.Windows.Forms;
 
 namespace ElectCell_HMI
 {
@@ -30,6 +32,7 @@ namespace ElectCell_HMI
         public bool isStoppedManually = false;
         ToolStripStatusLabel leftStatusLabel;
         ToolStripStatusLabel rightStatusLabel;
+        string path_data_input;
 
         public event EventHandler TimerTicked; // 定义事件
 
@@ -307,7 +310,7 @@ namespace ElectCell_HMI
 
         public void readParametersFile(string path)
         {
-            string path_data_input = path + "/data_input.csv";
+            path_data_input = path + "/data_input.csv";
             string nextLine;
             string[] values;
 
@@ -1467,6 +1470,85 @@ namespace ElectCell_HMI
         public void 退出ToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             退出ToolStripMenuItem_Click(sender, e);
+        }
+
+        private void 保存仿真结果ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string path_result = Path.Combine(
+                Path.GetDirectoryName(path_data_input),
+                "output.data",
+                "result.csv"
+            );
+
+            if (!File.Exists(path_result) || new FileInfo(path_result).Length == 0)
+            {
+                MessageBox.Show("仿真数据缺失", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string[] lines = File.ReadAllLines(path_result);
+            if (lines.Length < 2)
+            {
+                MessageBox.Show("仿真数据缺失", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            string[] headers = lines[0].Split(',')
+                .Select(h => h.Trim())
+                .Where(h => !string.IsNullOrEmpty(h))
+                .ToArray();
+
+            ExportedResults exportedResults = new ExportedResults();
+            exportedResults.Text = "选择要导出的变量";
+            exportedResults.checkedListBox1.Items.Clear();
+            for (int i = 0; i < headers.Length; i++)
+            {
+                exportedResults.checkedListBox1.Items.Add(headers[i], true);
+            }
+            exportedResults.checkedListBox1.ItemCheck += (s, ev) => {
+                if (ev.Index == 0)
+                    ev.NewValue = CheckState.Checked;
+            };
+
+            exportedResults.button1.Click += (s, args) =>
+            {
+                List<int> selectedIndices = new List<int>();
+                for (int i = 0; i < exportedResults.checkedListBox1.Items.Count; i++)
+                {
+                    if (exportedResults.checkedListBox1.GetItemChecked(i))
+                        selectedIndices.Add(i);
+                }
+                if (!selectedIndices.Contains(0))
+                    selectedIndices.Insert(0, 0);
+
+                if (selectedIndices.Count == 0)
+                {
+                    MessageBox.Show("请至少选择一个变量", "提示");
+                    return;
+                }
+
+                SaveFileDialog saveDialog = new SaveFileDialog
+                {
+                    Filter = "CSV文件|*.csv",
+                    Title = "保存仿真结果"
+                };
+                if (saveDialog.ShowDialog() == DialogResult.OK)
+                {
+                    using (StreamWriter sw = new StreamWriter(saveDialog.FileName, false))
+                    {
+                        sw.WriteLine(string.Join(",", selectedIndices.Select(idx => headers[idx])));
+                        for (int i = 1; i < lines.Length; i++)
+                        {
+                            string[] values = lines[i].Split(',');
+                            var selectedValues = selectedIndices.Select(idx => idx < values.Length ? values[idx] : "").ToArray();
+                            sw.WriteLine(string.Join(",", selectedValues));
+                        }
+                    }
+                    MessageBox.Show("导出成功！");
+                    exportedResults.Close();
+                }
+            };
+
+            exportedResults.ShowDialog();
         }
     }
 }
