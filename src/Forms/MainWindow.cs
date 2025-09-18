@@ -1117,7 +1117,7 @@ namespace ElectCell_HMI
 
         public void 关于ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("软件版本：V1.1", "关于");
+            MessageBox.Show("软件版本：V1.5", "关于");
         }
 
         public void TreeView_DrawNode(object sender, DrawTreeNodeEventArgs e)
@@ -1499,10 +1499,15 @@ namespace ElectCell_HMI
             退出ToolStripMenuItem_Click(sender, e);
         }
 
-        private void 保存仿真结果ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void 加载仿真结果ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string path_result = Path.Combine(
-                Path.GetDirectoryName(path_data_input),
+            Path.GetDirectoryName(path_data_input),
                 "output.data",
                 "result.csv"
             );
@@ -1531,7 +1536,8 @@ namespace ElectCell_HMI
             {
                 exportedResults.checkedListBox1.Items.Add(headers[i], true);
             }
-            exportedResults.checkedListBox1.ItemCheck += (s, ev) => {
+            exportedResults.checkedListBox1.ItemCheck += (s, ev) =>
+            {
                 if (ev.Index == 0)
                     ev.NewValue = CheckState.Checked;
             };
