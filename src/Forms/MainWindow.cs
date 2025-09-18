@@ -1529,7 +1529,8 @@ namespace ElectCell_HMI
                 SaveFileDialog saveDialog = new SaveFileDialog
                 {
                     Filter = "CSV文件|*.csv",
-                    Title = "保存仿真结果"
+                    Title = "保存仿真结果",
+                    FileName = DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".csv"
                 };
                 if (saveDialog.ShowDialog() == DialogResult.OK)
                 {
