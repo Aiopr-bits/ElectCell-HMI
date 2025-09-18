@@ -12,10 +12,29 @@ namespace ElectCell_HMI
 {
     public partial class ProcessParameterPage : UserControl
     {
+        // 分类参数名
+        private Dictionary<string, List<string>> parameterCategories = new Dictionary<string, List<string>>
+        {
+            { "电解槽参数", new List<string> { "n_cell", "a_cell", "A_mem", "thickness_mem", "porosity_mem", "tortuosity_mem", "T_K", "T_k0", "T_elin0" } },
+            { "分离器参数", new List<string> { "P_cathode_sep_out", "P_anode_sep_out", "T_btout", "T_btout0", "T_btout_ano0", "T_btout_cat0" } },
+            { "阀门参数", new List<string> { "cv1", "cv2" } },
+            { "电化学参数", new List<string> { "eta_F", "eta", "F", "k_x_h2", "k_x_o2", "tao_b", "k", "FC_flash" } },
+            { "物性参数", new List<string> { "M_h2", "M_o2", "M_n2", "M_koh", "M_h2o", "rho_h2o", "rho_h2", "rho_o2", "rho_sln_koh", "mu", "g", "R" } },
+            { "导电参数", new List<string> { "sigma_e_1", "sigma_h2_r1", "sigma_h2o_r1", "sigma_e_2", "sigma_h2o_r2", "sigma_o2_r2" } },
+            { "扩散参数", new List<string> { "D_h2", "D_o2" } },
+            { "其他参数", new List<string> { "wt_KOHsln", "eps_h2_Darcy", "eps_o2_Darcy", "Re7_0", "P_env", "T_cw_in", "T_cw_out0", "T_ambi", "T_pipeout0" } }
+        };
+
+        private Dictionary<string, DataGridView> categoryDataGrids = new Dictionary<string, DataGridView>();
+
         public ProcessParameterPage()
         {
             InitializeComponent();
             dataGridView1LoadData();
+            InitTreeView();
+            InitCategoryDataGrids();
+            treeView1.AfterSelect += treeView1_AfterSelect;
+            treeView1.NodeMouseClick += treeView1_NodeMouseClick;
         }
 
         public void dataGridView1LoadData()
@@ -278,6 +297,108 @@ namespace ElectCell_HMI
             }
         }
 
+        private void InitTreeView()
+        {
+            treeView1.Nodes.Clear();
+            TreeNode root = new TreeNode("工艺参数");
+            foreach (var category in parameterCategories.Keys)
+            {
+                root.Nodes.Add(new TreeNode(category));
+            }
+            treeView1.Nodes.Add(root);
+            treeView1.SelectedNode = root;
+            root.Expand();
+        }
 
+        private void InitCategoryDataGrids()
+        {
+            categoryDataGrids.Clear();
+            int dgvRow = tableLayoutPanel1.GetRow(dataGridView1);
+            int dgvCol = tableLayoutPanel1.GetColumn(dataGridView1);
+            foreach (var category in parameterCategories)
+            {
+                DataTable dt = new DataTable();
+                dt.Columns.Add("序号", typeof(int));
+                dt.Columns.Add("变量名", typeof(string));
+                dt.Columns.Add("变量值", typeof(double));
+                dt.Columns.Add("单位", typeof(string));
+                dt.Columns.Add("含义", typeof(string));
+                int index = 1;
+                foreach (var param in category.Value)
+                {
+                    var row = FindParameterRow(param);
+                    if (row != null)
+                    {
+                        // 用自己的编号
+                        dt.Rows.Add(new object[] {
+                            index++, // 序号
+                            row[1],  // 变量名
+                            row[2],  // 变量值
+                            row[3],  // 单位
+                            row[4]   // 含义
+                        });
+                    }
+                }
+                DataGridView dgv = new DataGridView();
+                dgv.DataSource = dt;
+                dgv.Dock = dataGridView1.Dock;
+                dgv.Size = dataGridView1.Size;
+                dgv.Location = dataGridView1.Location;
+                dgv.Visible = false;
+                categoryDataGrids[category.Key] = dgv;
+                tableLayoutPanel1.Controls.Add(dgv, dgvCol, dgvRow);
+            }
+        }
+
+        private object[] FindParameterRow(string paramName)
+        {
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.Cells["变量名"].Value != null && row.Cells["变量名"].Value.ToString() == paramName)
+                {
+                    return new object[] {
+                        row.Cells["序号"].Value,
+                        row.Cells["变量名"].Value,
+                        row.Cells["变量值"].Value,
+                        row.Cells["单位"].Value,
+                        row.Cells["含义"].Value
+                    };
+                }
+            }
+            return null;
+        }
+
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            foreach (var dgv in categoryDataGrids.Values)
+            {
+                dgv.Visible = false;
+            }
+            if (e.Node.Parent == null) // 根节点
+            {
+                dataGridView1.Visible = true;
+                dataGridView1.BringToFront();
+            }
+            else if (categoryDataGrids.ContainsKey(e.Node.Text))
+            {
+                dataGridView1.Visible = false;
+                var dgv = categoryDataGrids[e.Node.Text];
+                dgv.Visible = true;
+                dgv.BringToFront();
+            }
+        }
+
+        private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Node.Parent == null)
+            {
+                dataGridView1.Visible = true;
+                dataGridView1.BringToFront();
+                foreach (var dgv in categoryDataGrids.Values)
+                {
+                    dgv.Visible = false;
+                }
+            }
+        }
     }
 }
