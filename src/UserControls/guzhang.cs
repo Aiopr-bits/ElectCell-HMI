@@ -88,14 +88,13 @@ namespace ElectCell_HMI.Forms
         public void InitializeDataGridView1()
         {
             DataTable dt1 = new DataTable();
-            dt1.Columns.Add("序号", System.Type.GetType("System.Int32"));
             dt1.Columns.Add("信号名", System.Type.GetType("System.String"));
             dt1.Columns.Add("设置值", System.Type.GetType("System.String"));
             dt1.Columns.Add("使能开启", System.Type.GetType("System.String"));
             dataGridView1.DataSource = dt1;
 
             //解析injection.csv文件
-            string filePath = "injection.csv"; 
+            string filePath = "injection.csv";
             if (!File.Exists(filePath))
             {
                 MessageBox.Show($"文件 {filePath} 不存在。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -108,10 +107,10 @@ namespace ElectCell_HMI.Forms
                 {
                     string line;
                     int lineNumber = 0;
-                    int rowIndex = 1;
+
                     while ((line = sr.ReadLine()) != null)
                     {
-                        if(lineNumber == 0)
+                        if (lineNumber == 0)
                         {
                             string[] firstLineValues = line.Split(',');
                             if (int.TryParse(firstLineValues[0].Trim(), out int firstValue))
@@ -140,8 +139,7 @@ namespace ElectCell_HMI.Forms
                         if (values[2].Trim() != "")
                         {
                             DataRow newRow = dt1.NewRow();
-                            newRow["序号"] = rowIndex++;
-                            if(values[0].Trim() == "flow")
+                            if (values[0].Trim() == "flow")
                             {
                                 newRow["信号名"] = "Flow(" + values[1].Trim() + ")%x_h2";
                             }
@@ -158,10 +156,9 @@ namespace ElectCell_HMI.Forms
                             dt1.Rows.Add(newRow);
                         }
 
-                        if(values[3].Trim() != "")
+                        if (values[3].Trim() != "")
                         {
                             DataRow newRow = dt1.NewRow();
-                            newRow["序号"] = rowIndex++;
                             if (values[0].Trim() == "flow")
                             {
                                 newRow["信号名"] = "Flow(" + values[1].Trim() + ")%x_o2";
@@ -190,7 +187,6 @@ namespace ElectCell_HMI.Forms
         public void InitializeDataGridView2()
         {
             DataTable dt2 = new DataTable();
-            dt2.Columns.Add("序号", System.Type.GetType("System.Int32"));
             dt2.Columns.Add("参数名", System.Type.GetType("System.String"));
             dt2.Columns.Add("描述", System.Type.GetType("System.String"));
             dataGridView2.DataSource = dt2;
@@ -198,11 +194,10 @@ namespace ElectCell_HMI.Forms
             // 创建右键菜单
             ContextMenuStrip contextMenu = new ContextMenuStrip();
             ToolStripMenuItem addAsFaultTestItem = new ToolStripMenuItem("添加为故障注入测试");
-            addAsFaultTestItem.Click += AddAsFaultTestItem_Click; 
+            addAsFaultTestItem.Click += AddAsFaultTestItem_Click;
             contextMenu.Items.Add(addAsFaultTestItem);
             dataGridView2.ContextMenuStrip = contextMenu;
 
-            int rowIndex = 1;
             //电解槽
             for (int i = 0; i < Data.componentParameter.nElectrolyticCell; i++)
             {
@@ -211,16 +206,8 @@ namespace ElectCell_HMI.Forms
                 {
                     if (Data.componentParameter.electrolyticCell[i].flow.Contains(Data.flowParameter.flow[j][0]))
                     {
-                        DataRow row1 = dt2.NewRow();
-                        row1["序号"] = rowIndex++;
-                        row1["参数名"] = "Flow(" + Data.flowParameter.flow[j][0] + ")%x_h2";
-                        row1["描述"] = "氢气在混合物中所占的物质的量分数";
-                        dt2.Rows.Add(row1);
-                        DataRow row2 = dt2.NewRow();
-                        row2["序号"] = rowIndex++;
-                        row2["参数名"] = "Flow(" + Data.flowParameter.flow[j][0] + ")%x_o2";
-                        row2["描述"] = "氧气在混合物中所占的物质的量分数";
-                        dt2.Rows.Add(row2);
+                        dt2.Rows.Add("Flow(" + Data.flowParameter.flow[j][0] + ")%x_h2", "氢气在混合物中所占的物质的量分数");
+                        dt2.Rows.Add("Flow(" + Data.flowParameter.flow[j][0] + ")%x_o2", "氧气在混合物中所占的物质的量分数");
                     }
                 }
             }
@@ -233,107 +220,64 @@ namespace ElectCell_HMI.Forms
                 {
                     if (Data.componentParameter.pump[i].flow.Contains(Data.flowParameter.flow[j][0]))
                     {
-                        DataRow row1 = dt2.NewRow();
-                        row1["序号"] = rowIndex++;
-                        row1["参数名"] = "Flow(" + Data.flowParameter.flow[j][0] + ")%x_h2";
-                        row1["描述"] = "氢气在混合物中所占的物质的量分数";
-                        dt2.Rows.Add(row1);
-                        DataRow row2 = dt2.NewRow();
-                        row2["序号"] = rowIndex++;
-                        row2["参数名"] = "Flow(" + Data.flowParameter.flow[j][0] + ")%x_o2";
-                        row2["描述"] = "氧气在混合物中所占的物质的量分数";
-                        dt2.Rows.Add(row2);
+                        dt2.Rows.Add("Flow(" + Data.flowParameter.flow[j][0] + ")%x_h2", "氢气在混合物中所占的物质的量分数");
+                        dt2.Rows.Add("Flow(" + Data.flowParameter.flow[j][0] + ")%x_o2", "氧气在混合物中所占的物质的量分数");
                     }
                 }
             }
 
             //阴极分离器
+            //flow
             for (int j = 0; j < Data.flowParameter.flow.Count; j++)
             {
                 if (Data.componentParameter.cathodeSeparator.flow.Contains(Data.flowParameter.flow[j][0]))
                 {
-                    DataRow row1 = dt2.NewRow();
-                    row1["序号"] = rowIndex++;
-                    row1["参数名"] = "Flow(" + Data.flowParameter.flow[j][0] + ")%x_h2";
-                    row1["描述"] = "氢气在混合物中所占的物质的量分数";
-                    dt2.Rows.Add(row1);
-                    DataRow row2 = dt2.NewRow();
-                    row2["序号"] = rowIndex++;
-                    row2["参数名"] = "Flow(" + Data.flowParameter.flow[j][0] + ")%x_o2";
-                    row2["描述"] = "氧气在混合物中所占的物质的量分数";
-                    dt2.Rows.Add(row2);
+                    dt2.Rows.Add("Flow(" + Data.flowParameter.flow[j][0] + ")%x_h2", "氢气在混合物中所占的物质的量分数");
+                    dt2.Rows.Add("Flow(" + Data.flowParameter.flow[j][0] + ")%x_o2", "氧气在混合物中所占的物质的量分数");
                 }
             }
 
             //阳极分离器
+            //flow
             for (int j = 0; j < Data.flowParameter.flow.Count; j++)
             {
                 if (Data.componentParameter.anodeSeparator.flow.Contains(Data.flowParameter.flow[j][0]))
                 {
-                    DataRow row1 = dt2.NewRow();
-                    row1["序号"] = rowIndex++;
-                    row1["参数名"] = "Flow(" + Data.flowParameter.flow[j][0] + ")%x_h2";
-                    row1["描述"] = "氢气在混合物中所占的物质的量分数";
-                    dt2.Rows.Add(row1);
-                    DataRow row2 = dt2.NewRow();
-                    row2["序号"] = rowIndex++;
-                    row2["参数名"] = "Flow(" + Data.flowParameter.flow[j][0] + ")%x_o2";
-                    row2["描述"] = "氧气在混合物中所占的物质的量分数";
-                    dt2.Rows.Add(row2);
+                    dt2.Rows.Add("Flow(" + Data.flowParameter.flow[j][0] + ")%x_h2", "氢气在混合物中所占的物质的量分数");
+                    dt2.Rows.Add("Flow(" + Data.flowParameter.flow[j][0] + ")%x_o2", "氧气在混合物中所占的物质的量分数");
                 }
             }
 
             //阴极阀门
+            //flow
             for (int j = 0; j < Data.flowParameter.flow.Count; j++)
             {
                 if (Data.componentParameter.cathodeValve.flow.Contains(Data.flowParameter.flow[j][0]))
                 {
-                    DataRow row1 = dt2.NewRow();
-                    row1["序号"] = rowIndex++;
-                    row1["参数名"] = "Flow(" + Data.flowParameter.flow[j][0] + ")%x_h2";
-                    row1["描述"] = "氢气在混合物中所占的物质的量分数";
-                    dt2.Rows.Add(row1);
-                    DataRow row2 = dt2.NewRow();
-                    row2["序号"] = rowIndex++;
-                    row2["参数名"] = "Flow(" + Data.flowParameter.flow[j][0] + ")%x_o2";
-                    row2["描述"] = "氧气在混合物中所占的物质的量分数";
-                    dt2.Rows.Add(row2);
+                    dt2.Rows.Add("Flow(" + Data.flowParameter.flow[j][0] + ")%x_h2", "氢气在混合物中所占的物质的量分数");
+                    dt2.Rows.Add("Flow(" + Data.flowParameter.flow[j][0] + ")%x_o2", "氧气在混合物中所占的物质的量分数");
                 }
             }
 
             //阳极阀门
+            //flow
             for (int j = 0; j < Data.flowParameter.flow.Count; j++)
             {
                 if (Data.componentParameter.anodeValve.flow.Contains(Data.flowParameter.flow[j][0]))
                 {
-                    DataRow row1 = dt2.NewRow();
-                    row1["序号"] = rowIndex++;
-                    row1["参数名"] = "Flow(" + Data.flowParameter.flow[j][0] + ")%x_h2";
-                    row1["描述"] = "氢气在混合物中所占的物质的量分数";
-                    dt2.Rows.Add(row1);
-                    DataRow row2 = dt2.NewRow();
-                    row2["序号"] = rowIndex++;
-                    row2["参数名"] = "Flow(" + Data.flowParameter.flow[j][0] + ")%x_o2";
-                    row2["描述"] = "氧气在混合物中所占的物质的量分数";
-                    dt2.Rows.Add(row2);
+                    dt2.Rows.Add("Flow(" + Data.flowParameter.flow[j][0] + ")%x_h2", "氢气在混合物中所占的物质的量分数");
+                    dt2.Rows.Add("Flow(" + Data.flowParameter.flow[j][0] + ")%x_o2", "氧气在混合物中所占的物质的量分数");
                 }
             }
 
             //平衡管线
+            //flow
             for (int j = 0; j < Data.flowParameter.flow.Count; j++)
             {
                 if (Data.componentParameter.balancePipe.flow.Contains(Data.flowParameter.flow[j][0]))
                 {
-                    DataRow row1 = dt2.NewRow();
-                    row1["序号"] = rowIndex++;
-                    row1["参数名"] = "Flow(" + Data.flowParameter.flow[j][0] + ")%x_h2";
-                    row1["描述"] = "氢气在混合物中所占的物质的量分数";
-                    dt2.Rows.Add(row1);
-                    DataRow row2 = dt2.NewRow();
-                    row2["序号"] = rowIndex++;
-                    row2["参数名"] = "Flow(" + Data.flowParameter.flow[j][0] + ")%x_o2";
-                    row2["描述"] = "氧气在混合物中所占的物质的量分数";
-                    dt2.Rows.Add(row2);
+                    dt2.Rows.Add("Flow(" + Data.flowParameter.flow[j][0] + ")%x_h2", "氢气在混合物中所占的物质的量分数");
+                    dt2.Rows.Add("Flow(" + Data.flowParameter.flow[j][0] + ")%x_o2", "氧气在混合物中所占的物质的量分数");
                 }
             }
 
@@ -345,16 +289,8 @@ namespace ElectCell_HMI.Forms
                 {
                     if (Data.componentParameter.electrolyticCell[i].ps.Contains(Data.psParameter.ps[j][0]))
                     {
-                        DataRow row1 = dt2.NewRow();
-                        row1["序号"] = rowIndex++;
-                        row1["参数名"] = "PS(" + Data.psParameter.ps[j][0] + ")%n_h2";
-                        row1["描述"] = "氢气在混合物中所占的物质的量分数";
-                        dt2.Rows.Add(row1);
-                        DataRow row2 = dt2.NewRow();
-                        row2["序号"] = rowIndex++;
-                        row2["参数名"] = "PS(" + Data.psParameter.ps[j][0] + ")%n_o2";
-                        row2["描述"] = "氧气在混合物中所占的物质的量分数";
-                        dt2.Rows.Add(row2);
+                        dt2.Rows.Add("PS(" + Data.psParameter.ps[j][0] + ")%n_h2", "氢气在混合物中所占的物质的量分数");
+                        dt2.Rows.Add("PS(" + Data.psParameter.ps[j][0] + ")%n_o2", "氧气在混合物中所占的物质的量分数");
                     }
                 }
             }
@@ -367,16 +303,8 @@ namespace ElectCell_HMI.Forms
                 {
                     if (Data.componentParameter.pump[i].ps.Contains(Data.psParameter.ps[j][0]))
                     {
-                        DataRow row1 = dt2.NewRow();
-                        row1["序号"] = rowIndex++;
-                        row1["参数名"] = "PS(" + Data.psParameter.ps[j][0] + ")%n_h2";
-                        row1["描述"] = "氢气在混合物中所占的物质的量分数";
-                        dt2.Rows.Add(row1);
-                        DataRow row2 = dt2.NewRow();
-                        row2["序号"] = rowIndex++;
-                        row2["参数名"] = "PS(" + Data.psParameter.ps[j][0] + ")%n_o2";
-                        row2["描述"] = "氧气在混合物中所占的物质的量分数";
-                        dt2.Rows.Add(row2);
+                        dt2.Rows.Add("PS(" + Data.psParameter.ps[j][0] + ")%n_h2", "氢气在混合物中所占的物质的量分数");
+                        dt2.Rows.Add("PS(" + Data.psParameter.ps[j][0] + ")%n_o2", "氧气在混合物中所占的物质的量分数");
                     }
                 }
             }
@@ -387,16 +315,8 @@ namespace ElectCell_HMI.Forms
             {
                 if (Data.componentParameter.cathodeSeparator.ps.Contains(Data.psParameter.ps[j][0]))
                 {
-                    DataRow row1 = dt2.NewRow();
-                    row1["序号"] = rowIndex++;
-                    row1["参数名"] = "PS(" + Data.psParameter.ps[j][0] + ")%n_h2";
-                    row1["描述"] = "氢气在混合物中所占的物质的量分数";
-                    dt2.Rows.Add(row1);
-                    DataRow row2 = dt2.NewRow();
-                    row2["序号"] = rowIndex++;
-                    row2["参数名"] = "PS(" + Data.psParameter.ps[j][0] + ")%n_o2";
-                    row2["描述"] = "氧气在混合物中所占的物质的量分数";
-                    dt2.Rows.Add(row2);
+                    dt2.Rows.Add("PS(" + Data.psParameter.ps[j][0] + ")%n_h2", "氢气在混合物中所占的物质的量分数");
+                    dt2.Rows.Add("PS(" + Data.psParameter.ps[j][0] + ")%n_o2", "氧气在混合物中所占的物质的量分数");
                 }
             }
 
@@ -406,16 +326,8 @@ namespace ElectCell_HMI.Forms
             {
                 if (Data.componentParameter.anodeSeparator.ps.Contains(Data.psParameter.ps[j][0]))
                 {
-                    DataRow row1 = dt2.NewRow();
-                    row1["序号"] = rowIndex++;
-                    row1["参数名"] = "PS(" + Data.psParameter.ps[j][0] + ")%n_h2";
-                    row1["描述"] = "氢气在混合物中所占的物质的量分数";
-                    dt2.Rows.Add(row1);
-                    DataRow row2 = dt2.NewRow();
-                    row2["序号"] = rowIndex++;
-                    row2["参数名"] = "PS(" + Data.psParameter.ps[j][0] + ")%n_o2";
-                    row2["描述"] = "氧气在混合物中所占的物质的量分数";
-                    dt2.Rows.Add(row2);
+                    dt2.Rows.Add("PS(" + Data.psParameter.ps[j][0] + ")%n_h2", "氢气在混合物中所占的物质的量分数");
+                    dt2.Rows.Add("PS(" + Data.psParameter.ps[j][0] + ")%n_o2", "氧气在混合物中所占的物质的量分数");
                 }
             }
 
@@ -425,16 +337,8 @@ namespace ElectCell_HMI.Forms
             {
                 if (Data.componentParameter.cathodeValve.ps.Contains(Data.psParameter.ps[j][0]))
                 {
-                    DataRow row1 = dt2.NewRow();
-                    row1["序号"] = rowIndex++;
-                    row1["参数名"] = "PS(" + Data.psParameter.ps[j][0] + ")%n_h2";
-                    row1["描述"] = "氢气在混合物中所占的物质的量分数";
-                    dt2.Rows.Add(row1);
-                    DataRow row2 = dt2.NewRow();
-                    row2["序号"] = rowIndex++;
-                    row2["参数名"] = "PS(" + Data.psParameter.ps[j][0] + ")%n_o2";
-                    row2["描述"] = "氧气在混合物中所占的物质的量分数";
-                    dt2.Rows.Add(row2);
+                    dt2.Rows.Add("PS(" + Data.psParameter.ps[j][0] + ")%n_h2", "氢气在混合物中所占的物质的量分数");
+                    dt2.Rows.Add("PS(" + Data.psParameter.ps[j][0] + ")%n_o2", "氧气在混合物中所占的物质的量分数");
                 }
             }
 
@@ -444,16 +348,8 @@ namespace ElectCell_HMI.Forms
             {
                 if (Data.componentParameter.anodeValve.ps.Contains(Data.psParameter.ps[j][0]))
                 {
-                    DataRow row1 = dt2.NewRow();
-                    row1["序号"] = rowIndex++;
-                    row1["参数名"] = "PS(" + Data.psParameter.ps[j][0] + ")%n_h2";
-                    row1["描述"] = "氢气在混合物中所占的物质的量分数";
-                    dt2.Rows.Add(row1);
-                    DataRow row2 = dt2.NewRow();
-                    row2["序号"] = rowIndex++;
-                    row2["参数名"] = "PS(" + Data.psParameter.ps[j][0] + ")%n_o2";
-                    row2["描述"] = "氧气在混合物中所占的物质的量分数";
-                    dt2.Rows.Add(row2);
+                    dt2.Rows.Add("PS(" + Data.psParameter.ps[j][0] + ")%n_h2", "氢气在混合物中所占的物质的量分数");
+                    dt2.Rows.Add("PS(" + Data.psParameter.ps[j][0] + ")%n_o2", "氧气在混合物中所占的物质的量分数");
                 }
             }
 
@@ -463,23 +359,15 @@ namespace ElectCell_HMI.Forms
             {
                 if (Data.componentParameter.balancePipe.ps.Contains(Data.psParameter.ps[j][0]))
                 {
-                    DataRow row1 = dt2.NewRow();
-                    row1["序号"] = rowIndex++;
-                    row1["参数名"] = "PS(" + Data.psParameter.ps[j][0] + ")%n_h2";
-                    row1["描述"] = "氢气在混合物中所占的物质的量分数";
-                    dt2.Rows.Add(row1);
-                    DataRow row2 = dt2.NewRow();
-                    row2["序号"] = rowIndex++;
-                    row2["参数名"] = "PS(" + Data.psParameter.ps[j][0] + ")%n_o2";
-                    row2["描述"] = "氧气在混合物中所占的物质的量分数";
-                    dt2.Rows.Add(row2);
+                    dt2.Rows.Add("PS(" + Data.psParameter.ps[j][0] + ")%n_h2", "氢气在混合物中所占的物质的量分数");
+                    dt2.Rows.Add("PS(" + Data.psParameter.ps[j][0] + ")%n_o2", "氧气在混合物中所占的物质的量分数");
                 }
             }
         }
 
         public void AddAsFaultTestItem_Click(object sender, EventArgs e)
         {
-            if (dataGridView2.CurrentRow != null) 
+            if (dataGridView2.CurrentRow != null)
             {
                 string parameterName = dataGridView2.CurrentRow.Cells[0].Value.ToString();
 
@@ -516,10 +404,10 @@ namespace ElectCell_HMI.Forms
                 return;
             }
 
-            string filePath = "injection.csv"; 
+            string filePath = "injection.csv";
             try
             {
-                using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8)) 
+                using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8))
                 {
                     if (checkBox2.Checked)
                     {
@@ -535,7 +423,7 @@ namespace ElectCell_HMI.Forms
                     // 遍历 DataTable 的行，写入内容
                     foreach (DataRow row in dt1.Rows)
                     {
-                        if (row["使能开启"].ToString() == "True") 
+                        if (row["使能开启"].ToString() == "True")
                         {
                             string signalName = row["信号名"].ToString();
                             string value = row["设置值"].ToString();
