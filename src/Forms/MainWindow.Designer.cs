@@ -149,7 +149,7 @@
             // 
             this.bToolStripMenuItem.Name = "bToolStripMenuItem";
             this.bToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.bToolStripMenuItem.Text = "保存仿真结果";
+            this.bToolStripMenuItem.Text = "导出仿真结果";
             this.bToolStripMenuItem.Click += new System.EventHandler(this.bToolStripMenuItem_Click);
             // 
             // 关于ToolStripMenuItem
