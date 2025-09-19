@@ -151,6 +151,7 @@ namespace ElectCell_HMI.Forms
                 if (totalCombinations == 0)
                 {
                     richTextBox1.AppendText("没有可生成的组合。\r\n");
+                    MessageBox.Show("测试方案生成完毕！\n没有可生成的组合。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -165,11 +166,15 @@ namespace ElectCell_HMI.Forms
                         richTextBox1.AppendText($"组合 {j++}: [ {string.Join(", ", combo)} ]\r\n");
                         //richTextBox1.ScrollToCaret();
                     }
+                    
+                    // 测试方案生成完毕后弹出提示框
+                    MessageBox.Show($"测试方案生成完毕！\n总共生成了 {allCombinations.Count:N0} 个测试组合。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Exception ex)
             {
                 richTextBox1.AppendText($"处理文件时发生错误: {ex.Message}\r\n");
+                MessageBox.Show($"测试方案生成失败！\n错误信息: {ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
