@@ -37,7 +37,7 @@ namespace ElectCell_HMI.Forms
             // 初始化 dataGridView2
             InitializeDataGridView2();
             dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView2.MultiSelect = false;
+            dataGridView2.MultiSelect = true; 
             dataGridView2.ReadOnly = true;
             dataGridView2.AllowUserToAddRows = false;
             dataGridView2.AllowUserToDeleteRows = false;
@@ -367,32 +367,72 @@ namespace ElectCell_HMI.Forms
 
         public void AddAsFaultTestItem_Click(object sender, EventArgs e)
         {
-            if (dataGridView2.CurrentRow != null)
+            DataTable dt1 = dataGridView1.DataSource as DataTable;
+            if (dt1 == null)
             {
-                string parameterName = dataGridView2.CurrentRow.Cells[0].Value.ToString();
+                MessageBox.Show("dataGridView1 的数据源未正确初始化。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-                DataTable dt1 = dataGridView1.DataSource as DataTable;
-                if (dt1 == null)
-                {
-                    MessageBox.Show("dataGridView1 的数据源未正确初始化。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+            // 获取所有选中的行
+            DataGridViewSelectedRowCollection selectedRows = dataGridView2.SelectedRows;
+            if (selectedRows.Count == 0)
+            {
+                MessageBox.Show("请先选择要添加的行。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
-                // 检查是否已经存在
-                bool exists = dt1.AsEnumerable().Any(row => row.Field<string>("信号名") == parameterName);
-                if (!exists)
+            List<string> addedItems = new List<string>();
+            List<string> existingItems = new List<string>();
+
+            // 遍历所有选中的行
+            foreach (DataGridViewRow selectedRow in selectedRows)
+            {
+                if (selectedRow.Cells[0].Value != null)
                 {
-                    DataRow newRow = dt1.NewRow();
-                    newRow["信号名"] = parameterName;
-                    newRow["设置值"] = "0";
-                    newRow["使能开启"] = "True";
-                    dt1.Rows.Add(newRow);
-                }
-                else
-                {
-                    MessageBox.Show(parameterName + " 已经被添加进了故障测试。", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    string parameterName = selectedRow.Cells[0].Value.ToString();
+
+                    // 检查是否已经存在
+                    bool exists = dt1.AsEnumerable().Any(row => row.Field<string>("信号名") == parameterName);
+                    if (!exists)
+                    {
+                        DataRow newRow = dt1.NewRow();
+                        newRow["信号名"] = parameterName;
+                        newRow["设置值"] = "0";
+                        newRow["使能开启"] = "True";
+                        dt1.Rows.Add(newRow);
+                        addedItems.Add(parameterName);
+                    }
+                    else
+                    {
+                        existingItems.Add(parameterName);
+                    }
                 }
             }
+
+            // 显示结果信息
+            StringBuilder message = new StringBuilder();
+            if (addedItems.Count > 0)
+            {
+                message.AppendLine($"成功添加了 {addedItems.Count} 个项目到故障测试：");
+                foreach (string item in addedItems)
+                {
+                    message.AppendLine($"  - {item}");
+                }
+            }
+            
+            if (existingItems.Count > 0)
+            {
+                if (message.Length > 0) message.AppendLine();
+                message.AppendLine($"以下 {existingItems.Count} 个项目已经存在：");
+                foreach (string item in existingItems)
+                {
+                    message.AppendLine($"  - {item}");
+                }
+            }
+
+            MessageBox.Show(message.ToString(), "添加结果", MessageBoxButtons.OK, 
+                addedItems.Count > 0 ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
         }
 
         public void button1_Click(object sender, EventArgs e)
