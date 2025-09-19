@@ -447,7 +447,7 @@ namespace ElectCell_HMI.Forms
             string filePath = "injection.csv";
             try
             {
-                using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8))
+                using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.ASCII))
                 {
                     if (checkBox2.Checked)
                     {
@@ -484,7 +484,7 @@ namespace ElectCell_HMI.Forms
                 List<string> mergedLines = new List<string>();
                 Dictionary<string, (string h2, string o2)> mergeMap = new Dictionary<string, (string h2, string o2)>();
 
-                using (StreamReader sr = new StreamReader(filePath, Encoding.UTF8))
+                using (StreamReader sr = new StreamReader(filePath, Encoding.ASCII))
                 {
                     string line;
                     int lineNumber = 0;
@@ -524,7 +524,7 @@ namespace ElectCell_HMI.Forms
                 }
 
                 // 将合并后的内容写回文件
-                using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.UTF8))
+                using (StreamWriter sw = new StreamWriter(filePath, false, Encoding.ASCII))
                 {
                     foreach (string line in mergedLines.Take(2)) // 写入前两行
                     {
