@@ -18,6 +18,7 @@ namespace ElectCell_HMI.Forms
         public string fnExe;
         public int numCaseFinished;
         public Process currentProcess; 
+        public string currentTestFolder; // 添加当前测试文件夹路径变量
         public ceshi()
         {
             InitializeComponent();
@@ -27,6 +28,7 @@ namespace ElectCell_HMI.Forms
             string directory = Path.GetDirectoryName(exePath);
             this.fnExe = directory + @"\aeSLN.exe";
             this.currentProcess = null; 
+            this.currentTestFolder = null; // 初始化测试文件夹路径
 
             // 读取AutoTestConfig.ini文件并显示到dataGridViewAutoTest
             string autoTestConfigPath = @"AutoTestConfig.ini";
@@ -381,8 +383,42 @@ namespace ElectCell_HMI.Forms
                 MessageBox.Show("先确认测试方案");
                 return;
             }
+            
+            // 在开始测试时创建测试文件夹
+            CreateTestFolder();
+            
+            this.numCaseFinished = 0; // 重置测试计数
             timer1.Enabled = true;
             richTextBox1.Clear();
+        }
+
+        private void CreateTestFolder()
+        {
+            try
+            {
+                string historyPath = GetHistoryPath();
+                if (string.IsNullOrEmpty(historyPath))
+                {
+                    richTextBox1.AppendText("[警告] 无法获取历史路径，跳过创建测试文件夹\r\n");
+                    this.currentTestFolder = null;
+                    return;
+                }
+
+                // 创建autoTestResult+当前系统时间目录
+                string currentTime = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                this.currentTestFolder = Path.Combine(historyPath, "output.data", $"autoTestResult{currentTime}");
+                
+                if (!Directory.Exists(this.currentTestFolder))
+                {
+                    Directory.CreateDirectory(this.currentTestFolder);
+                    richTextBox1.AppendText($"已创建测试结果文件夹: autoTestResult{currentTime}\r\n");
+                }
+            }
+            catch (Exception ex)
+            {
+                richTextBox1.AppendText($"[错误] 创建测试文件夹时发生错误: {ex.Message}\r\n");
+                this.currentTestFolder = null;
+            }
         }
 
         public void timer1_Tick(object sender, EventArgs e)
@@ -399,15 +435,195 @@ namespace ElectCell_HMI.Forms
                     this.numCaseFinished++;
                     richTextBox1.AppendText("开始执行测试样本" + this.numCaseFinished.ToString() + "...\r\n");
                     System.IO.File.Delete(@"debug.flg");
+
                     RunExeAsync(fnExe);
                 }
                 else
                 {
                     timer1.Enabled = false;
                     int tmp_ = this.numCaseFinished;
+                    
+                    // 生成汇总文件
+                    GenerateSummaryFile();
+                    
                     this.numCaseFinished = 0;
                     MessageBox.Show("自动测试完成,共" + tmp_.ToString() + "个案例");
                 }
+            }
+        }
+
+        private void GenerateSummaryFile()
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(this.currentTestFolder))
+                {
+                    richTextBox1.AppendText("[警告] 测试文件夹未创建，跳过生成汇总文件\r\n");
+                    return;
+                }
+
+                // 获取当前测试文件夹中的所有autoTest_*.csv文件
+                string[] testFiles = Directory.GetFiles(this.currentTestFolder, "autoTest_*.csv");
+                if (testFiles.Length == 0)
+                {
+                    richTextBox1.AppendText("[警告] 没有找到测试结果文件，跳过生成汇总文件\r\n");
+                    return;
+                }
+
+                string summaryFilePath = Path.Combine(this.currentTestFolder, "autoTest.csv");
+                
+                using (StreamWriter writer = new StreamWriter(summaryFilePath))
+                {
+                    string headerWritten = null;
+                    
+                    // 按文件名中的数字排序
+                    Array.Sort(testFiles, (x, y) => {
+                        int numX = ExtractNumberFromFileName(Path.GetFileName(x));
+                        int numY = ExtractNumberFromFileName(Path.GetFileName(y));
+                        return numX.CompareTo(numY);
+                    });
+
+                    foreach (string testFile in testFiles)
+                    {
+                        string[] lines = File.ReadAllLines(testFile);
+                        if (lines.Length < 2) continue; // 至少需要有表头和一行数据
+
+                        // 如果还没写入表头，添加Num列并写入表头
+                        if (headerWritten == null)
+                        {
+                            headerWritten = "Num," + lines[0];
+                            writer.WriteLine(headerWritten);
+                        }
+
+                        // 获取最后一行数据（最新时间的结果）
+                        string lastLine = lines[lines.Length - 1];
+                        if (!string.IsNullOrWhiteSpace(lastLine))
+                        {
+                            int testNum = ExtractNumberFromFileName(Path.GetFileName(testFile));
+                            writer.WriteLine($"{testNum},{lastLine}");
+                        }
+                    }
+                }
+
+                richTextBox1.AppendText($"已生成汇总文件: autoTest.csv (包含 {testFiles.Length} 个测试结果)\r\n");
+            }
+            catch (Exception ex)
+            {
+                richTextBox1.AppendText($"[错误] 生成汇总文件时发生错误: {ex.Message}\r\n");
+            }
+        }
+
+        private int ExtractNumberFromFileName(string fileName)
+        {
+            // 从文件名 "autoTest_X.csv" 中提取数字 X
+            try
+            {
+                string nameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
+                string numberPart = nameWithoutExtension.Substring("autoTest_".Length);
+                return int.Parse(numberPart);
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        //停止测试
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (timer1.Enabled)
+                {
+                    timer1.Enabled = false;
+                    richTextBox1.AppendText("\r\n测试已被用户手动停止！\r\n");
+                }
+
+                if (currentProcess != null && !currentProcess.HasExited)
+                {
+                    currentProcess.Kill();
+                    richTextBox1.AppendText("正在终止当前运行的仿真进程...\r\n");
+                }
+
+                this.isRuningAsync = false;
+                this.currentProcess = null;
+                
+                if (this.numCaseFinished > 0)
+                {
+                    richTextBox1.AppendText($"测试已停止！已完成 {this.numCaseFinished} 个测试案例。\r\n");
+                    
+                    // 生成已完成测试的汇总文件
+                    GenerateSummaryFile();
+                }
+                
+                this.numCaseFinished = 0;
+                
+                richTextBox1.ScrollToCaret();
+                
+                MessageBox.Show("自动测试已停止！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                richTextBox1.AppendText($"[错误] 停止测试时发生错误: {ex.Message}\r\n");
+                richTextBox1.ScrollToCaret();
+            }
+        }
+
+        private string GetHistoryPath()
+        {
+            try
+            {
+                string allowedRootDirectory = System.Environment.CurrentDirectory;
+                string historyPathFile = System.IO.Path.Combine(allowedRootDirectory, "case_path.csv");
+                
+                if (File.Exists(historyPathFile))
+                {
+                    string relativePath = File.ReadAllText(historyPathFile).Trim();
+                    string absolutePath = Path.GetFullPath(Path.Combine(allowedRootDirectory, relativePath));
+                    return absolutePath;
+                }
+            }
+            catch (Exception ex)
+            {
+                richTextBox1.AppendText($"[错误] 获取历史路径时发生错误: {ex.Message}\r\n");
+            }
+            return null;
+        }
+
+        private void SaveTestResult()
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(this.currentTestFolder))
+                {
+                    richTextBox1.AppendText("[警告] 测试文件夹未创建，跳过保存测试结果\r\n");
+                    return;
+                }
+
+                string historyPath = GetHistoryPath();
+                if (string.IsNullOrEmpty(historyPath))
+                {
+                    richTextBox1.AppendText("[警告] 无法获取历史路径，跳过保存测试结果\r\n");
+                    return;
+                }
+
+                string resultSourcePath = Path.Combine(historyPath, "output.data", "result.csv");
+                if (!File.Exists(resultSourcePath))
+                {
+                    richTextBox1.AppendText($"[警告] 结果文件不存在: {resultSourcePath}\r\n");
+                    return;
+                }
+
+                // 复制并重命名文件到预先创建的测试文件夹
+                string targetFileName = $"autoTest_{this.numCaseFinished}.csv";
+                string targetPath = Path.Combine(this.currentTestFolder, targetFileName);
+                
+                File.Copy(resultSourcePath, targetPath, true);
+                richTextBox1.AppendText($"测试结果已保存: {targetFileName}\r\n");
+            }
+            catch (Exception ex)
+            {
+                richTextBox1.AppendText($"[错误] 保存测试结果时发生错误: {ex.Message}\r\n");
             }
         }
 
@@ -492,16 +708,17 @@ namespace ElectCell_HMI.Forms
                     if (exitCode == 0)
                     {
                         richTextBox1.AppendText($"\r\n仿真程序 执行完成！退出代码 {exitCode}\r\n");
-                        // reNewButtons();
+                        // 保存测试结果
+                        SaveTestResult();
                         this.isRuningAsync = false;
                         this.currentProcess = null; 
                         richTextBox1.ScrollToCaret(); // 自动滚动到最新内容
-                        // MessageBox.Show("aeSLN.exe 执行完成");
                     }
                     else
                     {
                         richTextBox1.AppendText($"\r\n仿真程序 执行完成，但可能有错误。退出代码 {exitCode}\r\n");
-                        //MessageBox.Show($"仿真程序 执行完成，但可能有错误。退出代码 {exitCode}");
+                        // 即使有错误也保存结果
+                        SaveTestResult();
                         this.isRuningAsync = false;
                         this.currentProcess = null; 
                         richTextBox1.ScrollToCaret(); // 自动滚动到最新内容
@@ -585,7 +802,7 @@ namespace ElectCell_HMI.Forms
                 // 会自动调用其 Dispose() 方法，从而关闭文件流。
                 using (FileStream fs = File.Create(filePath))
                 {
-                    // 文件已创建，我们不需要向其中写入任何内容，
+                    // 文件已创建，我们不需要向其中写入任何内容
                     // using 语句结束时它会自动关闭，成为一个0字节的文件。
                 }
 
@@ -605,44 +822,6 @@ namespace ElectCell_HMI.Forms
                 return false;
             }
             return true;
-        }
-
-        //停止测试
-        private void button3_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (timer1.Enabled)
-                {
-                    timer1.Enabled = false;
-                    richTextBox1.AppendText("\r\n测试已被用户手动停止！\r\n");
-                }
-
-                if (currentProcess != null && !currentProcess.HasExited)
-                {
-                    currentProcess.Kill();
-                    richTextBox1.AppendText("正在终止当前运行的仿真进程...\r\n");
-                }
-
-                this.isRuningAsync = false;
-                this.currentProcess = null;
-                
-                if (this.numCaseFinished > 0)
-                {
-                    richTextBox1.AppendText($"测试已停止！已完成 {this.numCaseFinished} 个测试案例。\r\n");
-                }
-                
-                this.numCaseFinished = 0;
-                
-                richTextBox1.ScrollToCaret();
-                
-                MessageBox.Show("自动测试已停止！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            catch (Exception ex)
-            {
-                richTextBox1.AppendText($"[错误] 停止测试时发生错误: {ex.Message}\r\n");
-                richTextBox1.ScrollToCaret();
-            }
         }
     }
 }

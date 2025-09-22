@@ -1041,7 +1041,7 @@ namespace ElectCell_HMI
 
         public void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string allowedRootDirectory = System.Environment.CurrentDirectory; // 允许选择的根目录为当前目录
+            string allowedRootDirectory = System.Environment.CurrentDirectory; 
             string historyPathFile = System.IO.Path.Combine(allowedRootDirectory, "case_path.csv");
 
             if (File.Exists(historyPathFile))
