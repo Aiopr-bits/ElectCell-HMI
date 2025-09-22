@@ -112,7 +112,6 @@ C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.UserControls.fe
 D:\work_202302\C#\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.Forms.huifang.resources
 D:\work_202302\C#\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.UserControls.famen.resources
 D:\work_202302\C#\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.UserControls.fenliqi1.resources
-C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell-HMI.exe.config
 C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.Forms.huifang.resources
 C:\Users\mailz\Desktop\1\ElectCell-HMI\src\obj\Debug\ElectCell-HMI.csproj.AssemblyReference.cache
 C:\Users\mailz\Desktop\1\ElectCell-HMI\src\obj\Debug\ElectCell-HMI.exe.config
