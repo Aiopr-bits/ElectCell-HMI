@@ -17,14 +17,16 @@ namespace ElectCell_HMI.Forms
         public List<double[]> allCombinations;
         public string fnExe;
         public int numCaseFinished;
+        public Process currentProcess; 
         public ceshi()
         {
             InitializeComponent();
 
-            allCombinations = new List<double[]>();
+            allCombinations = new List<double[]>(); 
             string exePath = Process.GetCurrentProcess().MainModule.FileName;
             string directory = Path.GetDirectoryName(exePath);
             this.fnExe = directory + @"\aeSLN.exe";
+            this.currentProcess = null; 
 
             // 读取AutoTestConfig.ini文件并显示到dataGridViewAutoTest
             string autoTestConfigPath = @"AutoTestConfig.ini";
@@ -371,6 +373,7 @@ namespace ElectCell_HMI.Forms
             }
         }
 
+        //自动测试
         public void button2_Click(object sender, EventArgs e)
         {
             if (this.allCombinations.Count == 0)
@@ -427,6 +430,7 @@ namespace ElectCell_HMI.Forms
             {
                 Process process = new Process();
                 process.StartInfo = startInfo;
+                this.currentProcess = process; 
 
                 // 订阅输出数据接收事件
                 process.OutputDataReceived += (s, args) =>
@@ -490,6 +494,7 @@ namespace ElectCell_HMI.Forms
                         richTextBox1.AppendText($"\r\n仿真程序 执行完成！退出代码 {exitCode}\r\n");
                         // reNewButtons();
                         this.isRuningAsync = false;
+                        this.currentProcess = null; 
                         richTextBox1.ScrollToCaret(); // 自动滚动到最新内容
                         // MessageBox.Show("aeSLN.exe 执行完成");
                     }
@@ -497,6 +502,8 @@ namespace ElectCell_HMI.Forms
                     {
                         richTextBox1.AppendText($"\r\n仿真程序 执行完成，但可能有错误。退出代码 {exitCode}\r\n");
                         //MessageBox.Show($"仿真程序 执行完成，但可能有错误。退出代码 {exitCode}");
+                        this.isRuningAsync = false;
+                        this.currentProcess = null; 
                         richTextBox1.ScrollToCaret(); // 自动滚动到最新内容
                     }
                 }));
@@ -508,12 +515,16 @@ namespace ElectCell_HMI.Forms
             {
                 string errorMsg = $"启动失败: 找不到'{commandToRun}'。请确保文件存在且路径正确。错误信息 {ex.Message}";
                 richTextBox1.AppendText($"[错误] {errorMsg}\r\n");
+                this.isRuningAsync = false;
+                this.currentProcess = null;
                 //MessageBox.Show(errorMsg);
             }
             catch (Exception ex)
             {
                 string errorMsg = $"启动时发生未知错误 {ex.Message}";
                 richTextBox1.AppendText($"[错误] {errorMsg}\r\n");
+                this.isRuningAsync = false;
+                this.currentProcess = null;
                 //MessageBox.Show(errorMsg);
             }
         }
@@ -596,6 +607,42 @@ namespace ElectCell_HMI.Forms
             return true;
         }
 
+        //停止测试
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (timer1.Enabled)
+                {
+                    timer1.Enabled = false;
+                    richTextBox1.AppendText("\r\n测试已被用户手动停止！\r\n");
+                }
 
+                if (currentProcess != null && !currentProcess.HasExited)
+                {
+                    currentProcess.Kill();
+                    richTextBox1.AppendText("正在终止当前运行的仿真进程...\r\n");
+                }
+
+                this.isRuningAsync = false;
+                this.currentProcess = null;
+                
+                if (this.numCaseFinished > 0)
+                {
+                    richTextBox1.AppendText($"测试已停止！已完成 {this.numCaseFinished} 个测试案例。\r\n");
+                }
+                
+                this.numCaseFinished = 0;
+                
+                richTextBox1.ScrollToCaret();
+                
+                MessageBox.Show("自动测试已停止！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                richTextBox1.AppendText($"[错误] 停止测试时发生错误: {ex.Message}\r\n");
+                richTextBox1.ScrollToCaret();
+            }
+        }
     }
 }
