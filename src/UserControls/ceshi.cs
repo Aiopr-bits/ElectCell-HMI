@@ -104,6 +104,8 @@ namespace ElectCell_HMI.Forms
         {
             string filePath = "AutoTestConfig.ini";
 
+            SaveDataGridViewToConfig(filePath);
+
             try
             {
                 List<ConfigEntry> configEntries = ReadIniFile(filePath);
@@ -159,6 +161,33 @@ namespace ElectCell_HMI.Forms
             {
                 richTextBox1.AppendText($"处理文件时发生错误: {ex.Message}\r\n");
                 MessageBox.Show($"测试方案生成失败！\n错误信息: {ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SaveDataGridViewToConfig(string filePath)
+        {
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(filePath))
+                {
+                    foreach (DataGridViewRow row in dataGridView2.Rows)
+                    {
+                        if (!row.IsNewRow)
+                        {
+                            List<string> rowData = new List<string>();
+                            for (int i = 1; i < row.Cells.Count; i++)
+                            {
+                                rowData.Add(row.Cells[i].Value?.ToString() ?? string.Empty);
+                            }
+                            writer.WriteLine(string.Join(",", rowData));
+                        }
+                    }
+                }
+                richTextBox1.AppendText("数据已成功保存到AutoTestConfig.ini\r\n");
+            }
+            catch (Exception ex)
+            {
+                richTextBox1.AppendText($"保存数据到AutoTestConfig.ini时发生错误: {ex.Message}\r\n");
             }
         }
 
