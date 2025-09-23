@@ -39,6 +39,13 @@ namespace ElectCell_HMI.Forms
             {
                 MessageBox.Show("读取AutoTestConfig.ini文件时出错: " + ex.Message);
             }
+
+            dataGridView2.CellValueChanged += DataGridView2_CellValueChanged;
+        }
+
+        private void DataGridView2_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            SaveDataGridViewToConfig("AutoTestConfig.ini");
         }
 
         public void LoadAutoTestConfig(string filePath)
@@ -103,8 +110,6 @@ namespace ElectCell_HMI.Forms
         public void button1_Click(object sender, EventArgs e)
         {
             string filePath = "AutoTestConfig.ini";
-
-            SaveDataGridViewToConfig(filePath);
 
             try
             {

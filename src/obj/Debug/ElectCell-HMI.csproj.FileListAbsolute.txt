@@ -204,4 +204,3 @@ C:\Users\mailz\Desktop\ElectCell-HMI3\src\obj\Debug\ElectCell-HMI.pdb
 C:\Users\mailz\Desktop\ElectCell-HMI3\ElectCell-HMI.exe
 C:\Users\mailz\Desktop\ElectCell-HMI3\ElectCell-HMI.pdb
 C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell_HMI.Forms.ExportedResults.resources
-C:\Users\mailz\Desktop\ElectCell-HMI\src\obj\Debug\ElectCell-HMI.exe.config
