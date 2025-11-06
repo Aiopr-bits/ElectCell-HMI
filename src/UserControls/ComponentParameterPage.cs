@@ -719,8 +719,6 @@ namespace ElectCell_HMI
             //    Data.psParameter.ps.Add(new List<double> { psNumber, substanceAmount, molarVolume, pressure, liquidHeight, gasHeight, hydrogen, oxygen });
             //}
         }
-
-
     }
 }
 

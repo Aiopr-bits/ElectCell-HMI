@@ -49,7 +49,7 @@ namespace ElectCell_HMI.Forms
         }
 
         public void LoadAutoTestConfig(string filePath)
-        {
+        { 
             if (!File.Exists(filePath))
             {
                 MessageBox.Show($"文件 {filePath} 不存在！");
