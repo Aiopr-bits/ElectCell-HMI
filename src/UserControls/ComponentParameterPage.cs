@@ -16,6 +16,7 @@ namespace ElectCell_HMI
     public partial class ComponentParameterPage : UserControl
     {
         public bool _defaultSelectionApplied;
+        private string _lastSelectedNodeText = null;
 
         public ComponentParameterPage()
         {
@@ -201,7 +202,7 @@ namespace ElectCell_HMI
             }
         }
 
-        public void UpdateDataFromUI()
+        public void UpdateDataFromUI(string selectedNode)
         {
             // 回写 dataGridView4 到 Data.flowParameter.flow
             Data.flowParameter.flow.Clear();
@@ -254,13 +255,133 @@ namespace ElectCell_HMI
                 };
                 Data.psParameter.ps.Add(list);
             }
+
+            // 回写界面上的combox到Data.componentParameter
+            for (int i =0; i < Data.componentParameter.nElectrolyticCell; i++)
+            {
+                if (selectedNode == $"电解槽{i +1}")
+                {
+                    // 找到dianjiecao控件
+                    var ctrl = tableLayoutPanel2.Controls.OfType<dianjiecao>().FirstOrDefault();
+                    if (ctrl != null)
+                    {
+                        var cell = Data.componentParameter.electrolyticCell[i];
+                        cell.flow.Clear();
+                        cell.ps.Clear();
+                        //6个流股编号
+                        cell.flow.Add(Convert.ToInt32(ctrl.comboBox1.SelectedItem));
+                        cell.flow.Add(Convert.ToInt32(ctrl.comboBox2.SelectedItem));
+                        cell.flow.Add(Convert.ToInt32(ctrl.comboBox3.SelectedItem));
+                        cell.flow.Add(Convert.ToInt32(ctrl.comboBox4.SelectedItem));
+                        cell.flow.Add(Convert.ToInt32(ctrl.comboBox5.SelectedItem));
+                        cell.flow.Add(Convert.ToInt32(ctrl.comboBox6.SelectedItem));
+                        //2个ps编号
+                        cell.ps.Add(Convert.ToInt32(ctrl.comboBox7.SelectedItem));
+                        cell.ps.Add(Convert.ToInt32(ctrl.comboBox8.SelectedItem));
+                        // 电流
+                        float current =0;
+                        float.TryParse(ctrl.comboBox9.SelectedItem?.ToString(), out current);
+                        cell.current = current;
+                        Data.componentParameter.electrolyticCell[i] = cell;
+                    }
+                }
+                else if (selectedNode == $"泵{i +1}")
+                {
+                    var ctrl = tableLayoutPanel2.Controls.OfType<beng>().FirstOrDefault();
+                    if (ctrl != null)
+                    {
+                        var pump = Data.componentParameter.pump[i];
+                        pump.flow.Clear();
+                        pump.ps.Clear();
+                        pump.flow.Add(Convert.ToInt32(ctrl.comboBox1.SelectedItem));
+                        pump.flow.Add(Convert.ToInt32(ctrl.comboBox3.SelectedItem));
+                        pump.ps.Add(Convert.ToInt32(ctrl.comboBox7.SelectedItem));
+                        Data.componentParameter.pump[i] = pump;
+                    }
+                }
+            }
+            if (selectedNode == "阴极分离器")
+            {
+                var ctrl = tableLayoutPanel2.Controls.OfType<fenliqi1>().FirstOrDefault();
+                if (ctrl != null)
+                {
+                    var sep = Data.componentParameter.cathodeSeparator;
+                    sep.flow.Clear();
+                    sep.ps.Clear();
+                    sep.flow.Add(Convert.ToInt32(ctrl.comboBox10.SelectedItem));
+                    sep.flow.Add(Convert.ToInt32(ctrl.comboBox16.SelectedItem));
+                    sep.flow.Add(Convert.ToInt32(ctrl.comboBox13.SelectedItem));
+                    sep.flow.Add(Convert.ToInt32(ctrl.comboBox11.SelectedItem));
+                    sep.flow.Add(Convert.ToInt32(ctrl.comboBox12.SelectedItem));
+                    sep.ps.Add(Convert.ToInt32(ctrl.comboBox15.SelectedItem));
+                    sep.ps.Add(Convert.ToInt32(ctrl.comboBox14.SelectedItem));
+                    Data.componentParameter.cathodeSeparator = sep;
+                }
+            }
+            else if (selectedNode == "阳极分离器")
+            {
+                var ctrl = tableLayoutPanel2.Controls.OfType<fenliqi1>().FirstOrDefault();
+                if (ctrl != null)
+                {
+                    var sep = Data.componentParameter.anodeSeparator;
+                    sep.flow.Clear();
+                    sep.ps.Clear();
+                    sep.flow.Add(Convert.ToInt32(ctrl.comboBox10.SelectedItem));
+                    sep.flow.Add(Convert.ToInt32(ctrl.comboBox16.SelectedItem));
+                    sep.flow.Add(Convert.ToInt32(ctrl.comboBox13.SelectedItem));
+                    sep.flow.Add(Convert.ToInt32(ctrl.comboBox11.SelectedItem));
+                    sep.flow.Add(Convert.ToInt32(ctrl.comboBox12.SelectedItem));
+                    sep.ps.Add(Convert.ToInt32(ctrl.comboBox15.SelectedItem));
+                    sep.ps.Add(Convert.ToInt32(ctrl.comboBox14.SelectedItem));
+                    Data.componentParameter.anodeSeparator = sep;
+                }
+            }
+            else if (selectedNode == "阴极阀门")
+            {
+                var ctrl = tableLayoutPanel2.Controls.OfType<famen>().FirstOrDefault();
+                if (ctrl != null)
+                {
+                    var valve = Data.componentParameter.cathodeValve;
+                    valve.flow.Clear();
+                    valve.ps.Clear();
+                    valve.flow.Add(Convert.ToInt32(ctrl.comboBox10.SelectedItem));
+                    valve.flow.Add(Convert.ToInt32(ctrl.comboBox11.SelectedItem));
+                    valve.ps.Add(Convert.ToInt32(ctrl.comboBox15.SelectedItem));
+                    Data.componentParameter.cathodeValve = valve;
+                }
+            }
+            else if (selectedNode == "阳极阀门")
+            {
+                var ctrl = tableLayoutPanel2.Controls.OfType<famen>().FirstOrDefault();
+                if (ctrl != null)
+                {
+                    var valve = Data.componentParameter.anodeValve;
+                    valve.flow.Clear();
+                    valve.ps.Clear();
+                    valve.flow.Add(Convert.ToInt32(ctrl.comboBox10.SelectedItem));
+                    valve.flow.Add(Convert.ToInt32(ctrl.comboBox11.SelectedItem));
+                    valve.ps.Add(Convert.ToInt32(ctrl.comboBox15.SelectedItem));
+                    Data.componentParameter.anodeValve = valve;
+                }
+            }
+            else if (selectedNode == "平衡管线")
+            {
+                var ctrl = tableLayoutPanel2.Controls.OfType<pipe>().FirstOrDefault();
+                if (ctrl != null)
+                {
+                    var pipeObj = Data.componentParameter.balancePipe;
+                    pipeObj.flow.Clear();
+                    pipeObj.ps.Clear();
+                    pipeObj.flow.Add(Convert.ToInt32(ctrl.comboBox1.SelectedItem));
+                    pipeObj.flow.Add(Convert.ToInt32(ctrl.comboBox3.SelectedItem));
+                    pipeObj.ps.Add(Convert.ToInt32(ctrl.comboBox7.SelectedItem));
+                    Data.componentParameter.balancePipe = pipeObj;
+                }
+            }
         }
 
-        public void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        public void UpdateUIFromData(string selectedNode)
         {
-           // UpdateDataFromUI();
-
-            string selectedNode = e.Node.Text;
             DataTable dt4 = new DataTable();
             DataTable dt5 = new DataTable();
 
@@ -701,6 +822,19 @@ namespace ElectCell_HMI
                 pipe.comboBox7.SelectedItem = psDefaultNum[0].ToString();
                 return;
             }
+        }
+
+        public void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node.Text == "部件" || e.Node.Text == "电解槽" || e.Node.Text == "泵" || e.Node.Text == "分离器" || e.Node.Text == "阀门")
+                return;
+
+            if (_lastSelectedNodeText != null)
+            {
+                UpdateDataFromUI(_lastSelectedNodeText);
+            }
+            UpdateUIFromData(e.Node.Text);
+            _lastSelectedNodeText = e.Node.Text;
         }
 
         public void SaveData()
