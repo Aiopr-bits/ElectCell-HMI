@@ -14,18 +14,13 @@ namespace ElectCell_HMI
 {
     public partial class ComponentParameterPage : UserControl
     {
-        public float originalColumnWidth;
         public bool _defaultSelectionApplied;
 
         public ComponentParameterPage()
         {
             InitializeComponent();
             initTreeview();
-            originalColumnWidth = tableLayoutPanel3.ColumnStyles[2].Width;
             // 启动后选择在 OnLoad 中进行
-
-            //隐藏tablelayoutPanel3以及其中的所有控件
-            tableLayoutPanel3.Visible = false;          
         }
 
         protected override void OnLoad(EventArgs e)
@@ -209,14 +204,8 @@ namespace ElectCell_HMI
         public void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             string selectedNode = e.Node.Text;
-            DataTable dt1 = new DataTable();
-            DataTable dt2 = new DataTable();
-            DataTable dt3 = new DataTable();
             DataTable dt4 = new DataTable();
             DataTable dt5 = new DataTable();
-            dt1.Columns.Add("流股", typeof(double));
-            dt2.Columns.Add("过程系统", typeof(double));
-            dt3.Columns.Add("电流（A）", typeof(double));
 
             dt4.Columns.Add("流股编号", typeof(int));
             dt4.Columns.Add("氢气占比", typeof(double));
@@ -238,28 +227,9 @@ namespace ElectCell_HMI
             {
                 if (selectedNode == $"电解槽{i + 1}")
                 {
-                    //参数表
-                    dataGridView3.Visible = true;
-                    tableLayoutPanel3.ColumnStyles[2].Width = originalColumnWidth;
-
-                    for (int j = 0; j < Data.componentParameter.electrolyticCell[i].flow.Count; j++)
-                    {
-                        dt1.Rows.Add(Data.componentParameter.electrolyticCell[i].flow[j]);
-                    }
-
-                    for (int j = 0; j < Data.componentParameter.electrolyticCell[i].ps.Count; j++)
-                    {
-                        dt2.Rows.Add(Data.componentParameter.electrolyticCell[i].ps[j]);
-                    }
-
-                    dt3.Rows.Add(Data.componentParameter.electrolyticCell[i].current);
-
                     // 数据表flow/ps 显示所有
                     PopulateAllFlowAndPs(dt4, dt5);
 
-                    dataGridView1.DataSource = dt1;
-                    dataGridView2.DataSource = dt2;
-                    dataGridView3.DataSource = dt3;
                     dataGridView4.DataSource = dt4;
                     dataGridView5.DataSource = dt5;
 
@@ -295,25 +265,9 @@ namespace ElectCell_HMI
                 }
                 else if (selectedNode == $"泵{i + 1}")
                 {
-                    dataGridView3.Visible = false;
-                    tableLayoutPanel3.ColumnStyles[2].Width = 0;
-
-                    for (int j = 0; j < Data.componentParameter.pump[i].flow.Count; j++)
-                    {
-                        dt1.Rows.Add(Data.componentParameter.pump[i].flow[j]);
-                    }
-
-                    for (int j = 0; j < Data.componentParameter.pump[i].ps.Count; j++)
-                    {
-                        dt2.Rows.Add(Data.componentParameter.pump[i].ps[j]);
-                    }
-
                     // 数据表flow/ps 显示所有
                     PopulateAllFlowAndPs(dt4, dt5);
 
-                    dataGridView1.DataSource = dt1;
-                    dataGridView2.DataSource = dt2;
-                    dataGridView3.DataSource = dt3;
                     dataGridView4.DataSource = dt4;
                     dataGridView5.DataSource = dt5;
 
@@ -350,25 +304,9 @@ namespace ElectCell_HMI
             }
             if (selectedNode == "阴极分离器")
             {
-                dataGridView3.Visible = false;
-                tableLayoutPanel3.ColumnStyles[2].Width = 0;
-
-                for (int j = 0; j < Data.componentParameter.cathodeSeparator.flow.Count; j++)
-                {
-                    dt1.Rows.Add(Data.componentParameter.cathodeSeparator.flow[j]);
-                }
-
-                for (int j = 0; j < Data.componentParameter.cathodeSeparator.ps.Count; j++)
-                {
-                    dt2.Rows.Add(Data.componentParameter.cathodeSeparator.ps[j]);
-                }
-
                 // 数据表flow/ps 显示所有
                 PopulateAllFlowAndPs(dt4, dt5);
 
-                dataGridView1.DataSource = dt1;
-                dataGridView2.DataSource = dt2;
-                dataGridView3.DataSource = dt3;
                 dataGridView4.DataSource = dt4;
                 dataGridView5.DataSource = dt5;
 
@@ -404,25 +342,9 @@ namespace ElectCell_HMI
             }
             else if (selectedNode == "阳极分离器")
             {
-                dataGridView3.Visible = false;
-                tableLayoutPanel3.ColumnStyles[2].Width = 0;
-
-                for (int j = 0; j < Data.componentParameter.anodeSeparator.flow.Count; j++)
-                {
-                    dt1.Rows.Add(Data.componentParameter.anodeSeparator.flow[j]);
-                }
-
-                for (int j = 0; j < Data.componentParameter.anodeSeparator.ps.Count; j++)
-                {
-                    dt2.Rows.Add(Data.componentParameter.anodeSeparator.ps[j]);
-                }
-
                 // 数据表flow/ps 显示所有
                 PopulateAllFlowAndPs(dt4, dt5);
 
-                dataGridView1.DataSource = dt1;
-                dataGridView2.DataSource = dt2;
-                dataGridView3.DataSource = dt3;
                 dataGridView4.DataSource = dt4;
                 dataGridView5.DataSource = dt5;
 
@@ -458,25 +380,9 @@ namespace ElectCell_HMI
             }
             else if (selectedNode == "阴极阀门")
             {
-                dataGridView3.Visible = false;
-                tableLayoutPanel3.ColumnStyles[2].Width = 0;
-
-                for (int j = 0; j < Data.componentParameter.cathodeValve.flow.Count; j++)
-                {
-                    dt1.Rows.Add(Data.componentParameter.cathodeValve.flow[j]);
-                }
-
-                for (int j = 0; j < Data.componentParameter.cathodeValve.ps.Count; j++)
-                {
-                    dt2.Rows.Add(Data.componentParameter.cathodeValve.ps[j]);
-                }
-
                 // 数据表flow/ps 显示所有
                 PopulateAllFlowAndPs(dt4, dt5);
 
-                dataGridView1.DataSource = dt1;
-                dataGridView2.DataSource = dt2;
-                dataGridView3.DataSource = dt3;
                 dataGridView4.DataSource = dt4;
                 dataGridView5.DataSource = dt5;
 
@@ -512,25 +418,9 @@ namespace ElectCell_HMI
             }
             else if (selectedNode == "阳极阀门")
             {
-                dataGridView3.Visible = false;
-                tableLayoutPanel3.ColumnStyles[2].Width = 0;
-
-                for (int j = 0; j < Data.componentParameter.anodeValve.flow.Count; j++)
-                {
-                    dt1.Rows.Add(Data.componentParameter.anodeValve.flow[j]);
-                }
-
-                for (int j = 0; j < Data.componentParameter.anodeValve.ps.Count; j++)
-                {
-                    dt2.Rows.Add(Data.componentParameter.anodeValve.ps[j]);
-                }
-
                 // 数据表flow/ps 显示所有
                 PopulateAllFlowAndPs(dt4, dt5);
 
-                dataGridView1.DataSource = dt1;
-                dataGridView2.DataSource = dt2;
-                dataGridView3.DataSource = dt3;
                 dataGridView4.DataSource = dt4;
                 dataGridView5.DataSource = dt5;
 
@@ -566,25 +456,9 @@ namespace ElectCell_HMI
             }
             else if (selectedNode == "平衡管线")
             {
-                dataGridView3.Visible = false;
-                tableLayoutPanel3.ColumnStyles[2].Width = 0;
-
-                for (int j = 0; j < Data.componentParameter.balancePipe.flow.Count; j++)
-                {
-                    dt1.Rows.Add(Data.componentParameter.balancePipe.flow[j]);
-                }
-
-                for (int j = 0; j < Data.componentParameter.balancePipe.ps.Count; j++)
-                {
-                    dt2.Rows.Add(Data.componentParameter.balancePipe.ps[j]);
-                }
-
                 // 数据表flow/ps 显示所有
                 PopulateAllFlowAndPs(dt4, dt5);
 
-                dataGridView1.DataSource = dt1;
-                dataGridView2.DataSource = dt2;
-                dataGridView3.DataSource = dt3;
                 dataGridView4.DataSource = dt4;
                 dataGridView5.DataSource = dt5;
 
