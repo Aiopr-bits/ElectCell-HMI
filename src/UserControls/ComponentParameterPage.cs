@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ElectCell_HMI
 {
@@ -20,7 +21,6 @@ namespace ElectCell_HMI
         {
             InitializeComponent();
             initTreeview();
-            // 启动后选择在 OnLoad 中进行
         }
 
         protected override void OnLoad(EventArgs e)
@@ -201,8 +201,65 @@ namespace ElectCell_HMI
             }
         }
 
+        public void UpdateDataFromUI()
+        {
+            // 回写 dataGridView4 到 Data.flowParameter.flow
+            Data.flowParameter.flow.Clear();
+            foreach (DataGridViewRow row in dataGridView4.Rows)
+            {
+                if (row.IsNewRow) continue;
+                if (row.Cells["流股编号"].Value == null ||
+                    row.Cells["氢气占比"].Value == null ||
+                    row.Cells["氧气占比"].Value == null ||
+                    row.Cells["水占比"].Value == null ||
+                    row.Cells["直径（m）"].Value == null ||
+                    row.Cells["长度（m）"].Value == null)
+                    continue;
+                var list = new List<double>
+                {
+                    Convert.ToDouble(row.Cells["流股编号"].Value),
+                    Convert.ToDouble(row.Cells["氢气占比"].Value),
+                    Convert.ToDouble(row.Cells["氧气占比"].Value),
+                    Convert.ToDouble(row.Cells["水占比"].Value),
+                    Convert.ToDouble(row.Cells["直径（m）"].Value),
+                    Convert.ToDouble(row.Cells["长度（m）"].Value)
+                };
+                Data.flowParameter.flow.Add(list);
+            }
+
+            // 回写 dataGridView5 到 Data.psParameter.ps
+            Data.psParameter.ps.Clear();
+            foreach (DataGridViewRow row in dataGridView5.Rows)
+            {
+                if (row.IsNewRow) continue;
+                if (row.Cells["过程系统编号"].Value == null ||
+                    row.Cells["总物质量"].Value == null ||
+                    row.Cells["摩尔体积（m³/mol）"].Value == null ||
+                    row.Cells["压力"].Value == null ||
+                    row.Cells["液体高度（m）"].Value == null ||
+                    row.Cells["气体高度（m）"].Value == null ||
+                    row.Cells["氢气占比"].Value == null ||
+                    row.Cells["氧气占比"].Value == null)
+                    continue;
+                var list = new List<double>
+                {
+                    Convert.ToDouble(row.Cells["过程系统编号"].Value),
+                    Convert.ToDouble(row.Cells["总物质量"].Value),
+                    Convert.ToDouble(row.Cells["摩尔体积（m³/mol）"].Value),
+                    Convert.ToDouble(row.Cells["压力"].Value),
+                    Convert.ToDouble(row.Cells["液体高度（m）"].Value),
+                    Convert.ToDouble(row.Cells["气体高度（m）"].Value),
+                    Convert.ToDouble(row.Cells["氢气占比"].Value),
+                    Convert.ToDouble(row.Cells["氧气占比"].Value)
+                };
+                Data.psParameter.ps.Add(list);
+            }
+        }
+
         public void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
+           // UpdateDataFromUI();
+
             string selectedNode = e.Node.Text;
             DataTable dt4 = new DataTable();
             DataTable dt5 = new DataTable();
@@ -229,7 +286,6 @@ namespace ElectCell_HMI
                 {
                     // 数据表flow/ps 显示所有
                     PopulateAllFlowAndPs(dt4, dt5);
-
                     dataGridView4.DataSource = dt4;
                     dataGridView5.DataSource = dt5;
 
@@ -259,15 +315,49 @@ namespace ElectCell_HMI
                     int[] flowDefaultNum = Data.componentParameter.electrolyticCell[i].flow.Select(f => (int)f).ToArray();
                     int[] psDefaultNum = Data.componentParameter.electrolyticCell[i].ps.Select(p => (int)p).ToArray();
                     float current = (float)Data.componentParameter.electrolyticCell[i].current;
-                    dianjiecao.InitCombox(flowNumPool, psNumPool, flowDefaultNum, psDefaultNum, current);
+
+                    dianjiecao.comboBox1.Items.Clear();
+                    dianjiecao.comboBox2.Items.Clear();
+                    dianjiecao.comboBox3.Items.Clear();
+                    dianjiecao.comboBox4.Items.Clear();
+                    dianjiecao.comboBox5.Items.Clear();
+                    dianjiecao.comboBox6.Items.Clear();
+                    dianjiecao.comboBox7.Items.Clear();
+                    dianjiecao.comboBox8.Items.Clear();
+                    dianjiecao.comboBox9.Items.Clear();
+
+                    foreach (var item in flowNumPool)
+                    {
+                        dianjiecao.comboBox1.Items.Add(item);
+                        dianjiecao.comboBox2.Items.Add(item);
+                        dianjiecao.comboBox3.Items.Add(item);
+                        dianjiecao.comboBox4.Items.Add(item);
+                        dianjiecao.comboBox5.Items.Add(item);
+                        dianjiecao.comboBox6.Items.Add(item);
+                    }
+                    dianjiecao.comboBox1.SelectedItem = flowDefaultNum[0];
+                    dianjiecao.comboBox2.SelectedItem = flowDefaultNum[1];
+                    dianjiecao.comboBox3.SelectedItem = flowDefaultNum[2];
+                    dianjiecao.comboBox4.SelectedItem = flowDefaultNum[3];
+                    dianjiecao.comboBox5.SelectedItem = flowDefaultNum[4];
+                    dianjiecao.comboBox6.SelectedItem = flowDefaultNum[5];
+
+                    foreach (var item in psNumPool)
+                    {
+                        dianjiecao.comboBox7.Items.Add(item);
+                        dianjiecao.comboBox8.Items.Add(item);
+                    }
+                    dianjiecao.comboBox7.SelectedItem = psDefaultNum[0];
+                    dianjiecao.comboBox8.SelectedItem = psDefaultNum[1];
+
+                    dianjiecao.comboBox9.Items.Add(current.ToString());
+                    dianjiecao.comboBox9.SelectedItem = current.ToString();
 
                     return;
                 }
                 else if (selectedNode == $"泵{i + 1}")
                 {
-                    // 数据表flow/ps 显示所有
                     PopulateAllFlowAndPs(dt4, dt5);
-
                     dataGridView4.DataSource = dt4;
                     dataGridView5.DataSource = dt5;
 
@@ -297,7 +387,23 @@ namespace ElectCell_HMI
                     int[] flowDefaultNum = Data.componentParameter.pump[i].flow.Select(f => (int)f).ToArray();
                     int[] psDefaultNum = Data.componentParameter.pump[i].ps.Select(p => (int)p).ToArray();
 
-                    beng.InitCombox(flowNumPool, psNumPool, flowDefaultNum, psDefaultNum);
+                    beng.comboBox1.Items.Clear();
+                    beng.comboBox7.Items.Clear();
+                    beng.comboBox3.Items.Clear();
+
+                    foreach (var item in flowNumPool)
+                    {
+                        beng.comboBox1.Items.Add(item);
+                        beng.comboBox3.Items.Add(item);
+                    }
+                    beng.comboBox1.SelectedItem = flowDefaultNum[0];
+                    beng.comboBox3.SelectedItem = flowDefaultNum[1];
+
+                    foreach (var item in psNumPool)
+                    {
+                        beng.comboBox7.Items.Add(item);
+                    }
+                    beng.comboBox7.SelectedItem = psDefaultNum[0];
 
                     return;
                 }
@@ -336,7 +442,35 @@ namespace ElectCell_HMI
                 int[] flowDefaultNum = Data.componentParameter.cathodeSeparator.flow.Select(f => (int)f).ToArray();
                 int[] psDefaultNum = Data.componentParameter.cathodeSeparator.ps.Select(p => (int)p).ToArray();
 
-                fenliqi1.InitCombox(flowNumPool, psNumPool, flowDefaultNum, psDefaultNum);
+                fenliqi1.comboBox10.Items.Clear();
+                fenliqi1.comboBox16.Items.Clear();
+                fenliqi1.comboBox13.Items.Clear();
+                fenliqi1.comboBox11.Items.Clear();
+                fenliqi1.comboBox12.Items.Clear();
+                fenliqi1.comboBox15.Items.Clear();
+                fenliqi1.comboBox16.Items.Clear();
+
+                foreach (var item in flowNumPool)
+                {
+                    fenliqi1.comboBox10.Items.Add(item);
+                    fenliqi1.comboBox16.Items.Add(item);
+                    fenliqi1.comboBox13.Items.Add(item);
+                    fenliqi1.comboBox11.Items.Add(item);
+                    fenliqi1.comboBox12.Items.Add(item);
+                }
+                fenliqi1.comboBox10.SelectedItem = flowDefaultNum[0];
+                fenliqi1.comboBox16.SelectedItem = flowDefaultNum[1];
+                fenliqi1.comboBox13.SelectedItem = flowDefaultNum[2];
+                fenliqi1.comboBox11.SelectedItem = flowDefaultNum[3];
+                fenliqi1.comboBox12.SelectedItem = flowDefaultNum[4];
+
+                foreach (var item in psNumPool)
+                {
+                    fenliqi1.comboBox15.Items.Add(item);
+                    fenliqi1.comboBox14.Items.Add(item);
+                }
+                fenliqi1.comboBox15.SelectedItem = psDefaultNum[0];
+                fenliqi1.comboBox14.SelectedItem = psDefaultNum[1];
 
                 return;
             }
@@ -374,7 +508,35 @@ namespace ElectCell_HMI
                 int[] flowDefaultNum = Data.componentParameter.anodeSeparator.flow.Select(f => (int)f).ToArray();
                 int[] psDefaultNum = Data.componentParameter.anodeSeparator.ps.Select(p => (int)p).ToArray();
 
-                fenliqi1.InitCombox(flowNumPool, psNumPool, flowDefaultNum, psDefaultNum);
+                fenliqi1.comboBox10.Items.Clear();
+                fenliqi1.comboBox16.Items.Clear();
+                fenliqi1.comboBox13.Items.Clear();
+                fenliqi1.comboBox11.Items.Clear();
+                fenliqi1.comboBox12.Items.Clear();
+                fenliqi1.comboBox15.Items.Clear();
+                fenliqi1.comboBox16.Items.Clear();
+
+                foreach (var item in flowNumPool)
+                {
+                    fenliqi1.comboBox10.Items.Add(item);
+                    fenliqi1.comboBox16.Items.Add(item);
+                    fenliqi1.comboBox13.Items.Add(item);
+                    fenliqi1.comboBox11.Items.Add(item);
+                    fenliqi1.comboBox12.Items.Add(item);
+                }
+                fenliqi1.comboBox10.SelectedItem = flowDefaultNum[0];
+                fenliqi1.comboBox16.SelectedItem = flowDefaultNum[1];
+                fenliqi1.comboBox13.SelectedItem = flowDefaultNum[2];
+                fenliqi1.comboBox11.SelectedItem = flowDefaultNum[3];
+                fenliqi1.comboBox12.SelectedItem = flowDefaultNum[4];
+
+                foreach (var item in psNumPool)
+                {
+                    fenliqi1.comboBox15.Items.Add(item);
+                    fenliqi1.comboBox14.Items.Add(item);
+                }
+                fenliqi1.comboBox15.SelectedItem = psDefaultNum[0];
+                fenliqi1.comboBox14.SelectedItem = psDefaultNum[1];
 
                 return;
             }
@@ -412,7 +574,23 @@ namespace ElectCell_HMI
                 int[] flowDefaultNum = Data.componentParameter.cathodeValve.flow.Select(f => (int)f).ToArray();
                 int[] psDefaultNum = Data.componentParameter.cathodeValve.ps.Select(p => (int)p).ToArray();
 
-                famen.InitCombox(flowNumPool, psNumPool, flowDefaultNum, psDefaultNum);
+                famen.comboBox10.Items.Clear();
+                famen.comboBox11.Items.Clear();
+                famen.comboBox15.Items.Clear();
+
+                foreach (var item in flowNumPool)
+                {
+                    famen.comboBox10.Items.Add(item.ToString());
+                    famen.comboBox11.Items.Add(item.ToString());
+                }
+                famen.comboBox10.SelectedItem = flowDefaultNum[0].ToString();
+                famen.comboBox11.SelectedItem = flowDefaultNum[1].ToString();
+
+                foreach (var item in psNumPool)
+                {
+                    famen.comboBox15.Items.Add(item.ToString());
+                }
+                famen.comboBox15.SelectedItem = psDefaultNum[0].ToString();
 
                 return;
             }
@@ -450,7 +628,23 @@ namespace ElectCell_HMI
                 int[] flowDefaultNum = Data.componentParameter.anodeValve.flow.Select(f => (int)f).ToArray();
                 int[] psDefaultNum = Data.componentParameter.anodeValve.ps.Select(p => (int)p).ToArray();
 
-                famen.InitCombox(flowNumPool, psNumPool, flowDefaultNum, psDefaultNum);
+                famen.comboBox10.Items.Clear();
+                famen.comboBox11.Items.Clear();
+                famen.comboBox15.Items.Clear();
+
+                foreach (var item in flowNumPool)
+                {
+                    famen.comboBox10.Items.Add(item.ToString());
+                    famen.comboBox11.Items.Add(item.ToString());
+                }
+                famen.comboBox10.SelectedItem = flowDefaultNum[0].ToString();
+                famen.comboBox11.SelectedItem = flowDefaultNum[1].ToString();
+
+                foreach (var item in psNumPool)
+                {
+                    famen.comboBox15.Items.Add(item.ToString());
+                }
+                famen.comboBox15.SelectedItem = psDefaultNum[0].ToString();
 
                 return;
             }
@@ -488,8 +682,23 @@ namespace ElectCell_HMI
                 int[] flowDefaultNum = Data.componentParameter.balancePipe.flow.Select(f => (int)f).ToArray();
                 int[] psDefaultNum = Data.componentParameter.balancePipe.ps.Select(p => (int)p).ToArray();
 
-                pipe.InitCombox(flowNumPool, psNumPool, flowDefaultNum, psDefaultNum);
+                pipe.comboBox1.Items.Clear();
+                pipe.comboBox3.Items.Clear();
+                pipe.comboBox7.Items.Clear();
 
+                foreach (var item in flowNumPool)
+                {
+                    pipe.comboBox1.Items.Add(item.ToString());
+                    pipe.comboBox3.Items.Add(item.ToString());
+                }
+                pipe.comboBox1.SelectedItem = flowDefaultNum[0].ToString();
+                pipe.comboBox3.SelectedItem = flowDefaultNum[1].ToString();
+
+                foreach (var item in psNumPool)
+                {
+                    pipe.comboBox7.Items.Add(item.ToString());
+                }
+                pipe.comboBox7.SelectedItem = psDefaultNum[0].ToString();
                 return;
             }
         }
