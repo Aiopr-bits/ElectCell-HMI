@@ -22,6 +22,89 @@ namespace ElectCell_HMI
         {
             InitializeComponent();
             initTreeview();
+
+            numericUpDown1.ValueChanged += numericUpDown1_ValueChanged;
+            numericUpDown2.ValueChanged += numericUpDown2_ValueChanged;
+            numericUpDown3.ValueChanged += numericUpDown3_ValueChanged;
+            numericUpDown5.ValueChanged += numericUpDown5_ValueChanged;
+            numericUpDown6.ValueChanged += numericUpDown6_ValueChanged;
+            numericUpDown7.ValueChanged += numericUpDown7_ValueChanged;
+            numericUpDown8.ValueChanged += numericUpDown8_ValueChanged;
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            int count = (int)numericUpDown1.Value;
+            // flow: 每项6个参数，编号递增
+            while (Data.flowParameter.flow.Count < count)
+            {
+                int index = Data.flowParameter.flow.Count + 1;
+                Data.flowParameter.flow.Add(new List<double> { index, 0, 0, 0, 0, 0 });
+            }
+            while (Data.flowParameter.flow.Count > count)
+            {
+                Data.flowParameter.flow.RemoveAt(Data.flowParameter.flow.Count - 1);
+            }
+            if (_lastSelectedNodeText != null)
+                UpdateUIFromData(_lastSelectedNodeText);
+        }
+
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+            int count = (int)numericUpDown2.Value;
+            // ps: 每项8个参数，编号递增
+            while (Data.psParameter.ps.Count < count)
+            {
+                int index = Data.psParameter.ps.Count + 1;
+                Data.psParameter.ps.Add(new List<double> { index, 0, 0, 0, 0, 0, 0, 0 });
+            }
+            while (Data.psParameter.ps.Count > count)
+            {
+                Data.psParameter.ps.RemoveAt(Data.psParameter.ps.Count - 1);
+            }
+            if (_lastSelectedNodeText != null)
+                UpdateUIFromData(_lastSelectedNodeText);
+        }
+
+        private void numericUpDown3_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void numericUpDown5_ValueChanged(object sender, EventArgs e)
+        {
+            if (numericUpDown5.Value == 0)
+            {
+                MessageBox.Show("阴极分离器数量不能为0", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                numericUpDown5.Value = 1;
+            }
+        }
+
+        private void numericUpDown6_ValueChanged(object sender, EventArgs e)
+        {
+            if (numericUpDown6.Value == 0)
+            {
+                MessageBox.Show("阳极分离器数量不能为0", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                numericUpDown6.Value = 1;
+            }
+        }
+
+        private void numericUpDown7_ValueChanged(object sender, EventArgs e)
+        {
+            if (numericUpDown7.Value == 0)
+            {
+                MessageBox.Show("阴极阀门数量不能为0", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                numericUpDown7.Value = 1;
+            }
+        }
+
+        private void numericUpDown8_ValueChanged(object sender, EventArgs e)
+        {
+            if (numericUpDown8.Value == 0)
+            {
+                MessageBox.Show("阳极阀门数量不能为0", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                numericUpDown8.Value = 1;
+            }
         }
 
         protected override void OnLoad(EventArgs e)
@@ -257,9 +340,9 @@ namespace ElectCell_HMI
             }
 
             // 回写界面上的combox到Data.componentParameter
-            for (int i =0; i < Data.componentParameter.nElectrolyticCell; i++)
+            for (int i = 0; i < Data.componentParameter.nElectrolyticCell; i++)
             {
-                if (selectedNode == $"电解槽{i +1}")
+                if (selectedNode == $"电解槽{i + 1}")
                 {
                     // 找到dianjiecao控件
                     var ctrl = tableLayoutPanel2.Controls.OfType<dianjiecao>().FirstOrDefault();
@@ -279,13 +362,13 @@ namespace ElectCell_HMI
                         cell.ps.Add(Convert.ToInt32(ctrl.comboBox7.SelectedItem));
                         cell.ps.Add(Convert.ToInt32(ctrl.comboBox8.SelectedItem));
                         // 电流
-                        float current =0;
+                        float current = 0;
                         float.TryParse(ctrl.comboBox9.SelectedItem?.ToString(), out current);
                         cell.current = current;
                         Data.componentParameter.electrolyticCell[i] = cell;
                     }
                 }
-                else if (selectedNode == $"泵{i +1}")
+                else if (selectedNode == $"泵{i + 1}")
                 {
                     var ctrl = tableLayoutPanel2.Controls.OfType<beng>().FirstOrDefault();
                     if (ctrl != null)
@@ -382,6 +465,14 @@ namespace ElectCell_HMI
 
         public void UpdateUIFromData(string selectedNode)
         {
+            numericUpDown1.Value = Data.flowParameter.flow.Count;
+            numericUpDown2.Value = Data.psParameter.ps.Count;
+            numericUpDown3.Value = Data.componentParameter.nElectrolyticCell;
+            numericUpDown5.Value = 1;
+            numericUpDown6.Value = 1;
+            numericUpDown7.Value = 1;
+            numericUpDown8.Value = 1;
+
             DataTable dt4 = new DataTable();
             DataTable dt5 = new DataTable();
 
