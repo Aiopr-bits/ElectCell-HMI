@@ -68,7 +68,48 @@ namespace ElectCell_HMI
 
         private void numericUpDown3_ValueChanged(object sender, EventArgs e)
         {
+            int count = (int)numericUpDown3.Value;
 
+            // 电解槽
+            while (Data.componentParameter.electrolyticCell.Count < count)
+            {
+                var cell = new ElectrolyticCell
+                {
+                    current = 0,
+                    flow = new List<double> { 1, 2, 3, 4, 5, 6 }, 
+                    ps = new List<double> { 1, 2 } 
+                };
+                Data.componentParameter.electrolyticCell.Add(cell);
+            }
+            while (Data.componentParameter.electrolyticCell.Count > count)
+            {
+                Data.componentParameter.electrolyticCell.RemoveAt(Data.componentParameter.electrolyticCell.Count - 1);
+            }
+
+            // 泵
+            while (Data.componentParameter.pump.Count < count)
+            {
+                var pump = new Pump
+                {
+                    flow = new List<double> { 1, 2 },
+                    ps = new List<double> { 1 } 
+                };
+                Data.componentParameter.pump.Add(pump);
+            }
+            while (Data.componentParameter.pump.Count > count)
+            {
+                Data.componentParameter.pump.RemoveAt(Data.componentParameter.pump.Count - 1);
+            }
+
+            // 更新数量
+            Data.componentParameter.nElectrolyticCell = count;
+
+            // 重新初始化树
+            initTreeview();
+
+            // 刷新界面显示
+            if (_lastSelectedNodeText != null)
+                UpdateUIFromData(_lastSelectedNodeText);
         }
 
         private void numericUpDown5_ValueChanged(object sender, EventArgs e)
