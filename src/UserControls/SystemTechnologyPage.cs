@@ -40,6 +40,30 @@ namespace ElectCell_HMI
             DrawGraph(new List<PointF>(), pictureBox2, false);
             DrawGraph(new List<PointF>(), pictureBox3, false);
             DrawGraph(new List<PointF>(), pictureBox4, false);
+
+            hideAllLabel();
+        }
+
+        public void hideAllLabel()
+        {
+            label1.Visible = false;
+            label2.Visible = false;
+            label3.Visible = false;
+            label4.Visible = false;
+            label5.Visible = false;
+            label6.Visible = false;
+            label7.Visible = false;
+        }
+
+        public void showAllLabel()
+        {
+            label1.Visible = true;
+            label2.Visible = true;
+            label3.Visible = true;
+            label4.Visible = true;
+            label5.Visible = true;
+            label6.Visible = true;
+            label7.Visible = true;
         }
 
         public void MainWindow_TimerTicked(object sender, EventArgs e)
@@ -47,6 +71,137 @@ namespace ElectCell_HMI
             if (Data.result.result == null || Data.result.result.Count == 0)
             {
                 return;
+            }
+
+
+            try
+            {
+                showAllLabel();
+
+                // 电解槽1
+                var sb = new StringBuilder();
+                sb.AppendLine("电解槽1");
+                int rowIndex = 1;
+                for (int j = 1; j < Data.result.header.Count; j++)
+                {
+                    string variableName = Data.result.header[j].Trim();
+                    if (variableName.StartsWith("ec 1-"))
+                    {
+                        var value = Data.result.result.LastOrDefault()?[j];
+                        string valueStr = value != null ? $"{value:F4}" : "";
+                        sb.AppendLine($"{rowIndex}. {variableName}: {valueStr}");
+                        rowIndex++;
+                    }
+                }
+                label1.Text = sb.ToString();
+
+                // 电解槽2
+                var sb2 = new StringBuilder();
+                sb2.AppendLine("电解槽2");
+                int rowIndex2 = 7;
+                for (int j = 1; j < Data.result.header.Count; j++)
+                {
+                    string variableName = Data.result.header[j].Trim();
+                    if (variableName.StartsWith("ec 2-"))
+                    {
+                        var value = Data.result.result.LastOrDefault()?[j];
+                        string valueStr = value != null ? $"{value:F4}" : "";
+                        sb2.AppendLine($"{rowIndex2}. {variableName}: {valueStr}");
+                        rowIndex2++;
+                    }
+                }
+                label2.Text = sb2.ToString();
+
+                // 电解槽3
+                var sb3 = new StringBuilder();
+                sb3.AppendLine("电解槽3");
+                int rowIndex3 = 13;
+                for (int j = 1; j < Data.result.header.Count; j++)
+                {
+                    string variableName = Data.result.header[j].Trim();
+                    if (variableName.StartsWith("ec 3-"))
+                    {
+                        var value = Data.result.result.LastOrDefault()?[j];
+                        string valueStr = value != null ? $"{value:F4}" : "";
+                        sb3.AppendLine($"{rowIndex3}. {variableName}: {valueStr}");
+                        rowIndex3++;
+                    }
+                }
+                label3.Text = sb3.ToString();
+
+                // 电解槽4
+                var sb4 = new StringBuilder();
+                sb4.AppendLine("电解槽4");
+                int rowIndex4 = 19;
+                for (int j = 1; j < Data.result.header.Count; j++)
+                {
+                    string variableName = Data.result.header[j].Trim();
+                    if (variableName.StartsWith("ec 4-"))
+                    {
+                        var value = Data.result.result.LastOrDefault()?[j];
+                        string valueStr = value != null ? $"{value:F4}" : "";
+                        sb4.AppendLine($"{rowIndex4}. {variableName}: {valueStr}");
+                        rowIndex4++;
+                    }
+                }
+                label4.Text = sb4.ToString();
+
+                // 阴极分离器
+                var sb5 = new StringBuilder();
+                sb5.AppendLine("阴极分离器");
+                string[] cathodeVars = { "cs 1n", "cs 1n-h2", "cs 1n-o2", "cs 1-l_g", "cs 2-p", "cs 2n", "cs 2n-h2", "cs 2n-o2" };
+                int rowIndex5 = 25;
+                for (int j = 1; j < Data.result.header.Count; j++)
+                {
+                    string variableName = Data.result.header[j].Trim();
+                    if (cathodeVars.Contains(variableName))
+                    {
+                        var value = Data.result.result.LastOrDefault()?[j];
+                        string valueStr = value != null ? $"{value:F4}" : "";
+                        sb5.AppendLine($"{rowIndex5}. {variableName}: {valueStr}");
+                        rowIndex5++;
+                    }
+                }
+                label5.Text = sb5.ToString();
+
+                // 阳极分离器
+                var sb6 = new StringBuilder();
+                sb6.AppendLine("阳极分离器");
+                string[] anodeVars = { "as 1n", "as 1n-h2", "as 1n-o2", "as 1-l_g", "as 2-p", "as 2n", "as 2n-h2", "as 2n-o2" };
+                int rowIndex6 = 33;
+                for (int j = 1; j < Data.result.header.Count; j++)
+                {
+                    string variableName = Data.result.header[j].Trim();
+                    if (anodeVars.Contains(variableName))
+                    {
+                        var value = Data.result.result.LastOrDefault()?[j];
+                        string valueStr = value != null ? $"{value:F4}" : "";
+                        sb6.AppendLine($"{rowIndex6}. {variableName}: {valueStr}");
+                        rowIndex6++;
+                    }
+                }
+                label6.Text = sb6.ToString();
+
+                // 平衡管线
+                var sb7 = new StringBuilder();
+                sb7.AppendLine("平衡管线");
+                string[] pipeVars = { "bp 1n", "bp 1n-h2", "bp 1n-o2" };
+                int rowIndex7 = 41;
+                for (int j = 1; j < Data.result.header.Count; j++)
+                {
+                    string variableName = Data.result.header[j].Trim();
+                    if (pipeVars.Contains(variableName))
+                    {
+                        var value = Data.result.result.LastOrDefault()?[j];
+                        string valueStr = value != null ? $"{value:F4}" : "";
+                        sb7.AppendLine($"{rowIndex7}. {variableName}: {valueStr}");
+                        rowIndex7++;
+                    }
+                }
+                label7.Text = sb7.ToString();
+            }
+            catch
+            {
             }
 
             dataPoints1.Clear();
