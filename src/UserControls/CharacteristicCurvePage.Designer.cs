@@ -24,7 +24,6 @@
         /// </summary>
         public void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
@@ -35,9 +34,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.添加一行数据ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.删除一行数据ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -45,7 +41,6 @@
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -162,33 +157,12 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.ContextMenuStrip = this.contextMenuStrip1;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 23);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(388, 253);
             this.dataGridView1.TabIndex = 2;
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.添加一行数据ToolStripMenuItem,
-            this.删除一行数据ToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(147, 48);
-            // 
-            // 添加一行数据ToolStripMenuItem
-            // 
-            this.添加一行数据ToolStripMenuItem.Name = "添加一行数据ToolStripMenuItem";
-            this.添加一行数据ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.添加一行数据ToolStripMenuItem.Text = "添加一行数据";
-            // 
-            // 删除一行数据ToolStripMenuItem
-            // 
-            this.删除一行数据ToolStripMenuItem.Name = "删除一行数据ToolStripMenuItem";
-            this.删除一行数据ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.删除一行数据ToolStripMenuItem.Text = "删除一行数据";
             // 
             // CharacteristicCurvePage
             // 
@@ -207,7 +181,6 @@
             this.tableLayoutPanel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -225,8 +198,5 @@
         public System.Windows.Forms.DataGridView dataGridView2;
         public System.Windows.Forms.DataGridView dataGridView1;
         public System.ComponentModel.IContainer components;
-        public System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        public System.Windows.Forms.ToolStripMenuItem 添加一行数据ToolStripMenuItem;
-        public System.Windows.Forms.ToolStripMenuItem 删除一行数据ToolStripMenuItem;
     }
 }

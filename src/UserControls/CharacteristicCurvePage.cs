@@ -14,12 +14,88 @@ namespace ElectCell_HMI
     {
         List<PointF> dataPointsQH = new List<PointF>();
         List<PointF> dataPointsQP = new List<PointF>();
+        ContextMenuStrip contextMenu1;
+        ContextMenuStrip contextMenu2;
+        ToolStripMenuItem addRowMenuItem1;
+        ToolStripMenuItem deleteRowMenuItem1;
+        ToolStripMenuItem addRowMenuItem2;
+        ToolStripMenuItem deleteRowMenuItem2;
         public CharacteristicCurvePage()
         {
             this.Resize += TrendMonitorPage_Resize;
             InitializeComponent();
+            InitContextMenus();
             dataGridView1LoadData();
             drawCurve();
+        }
+
+        private void InitContextMenus()
+        {
+            // dataGridView1
+            contextMenu1 = new ContextMenuStrip();
+            addRowMenuItem1 = new ToolStripMenuItem("添加一行数据");
+            deleteRowMenuItem1 = new ToolStripMenuItem("删除一行数据");
+            contextMenu1.Items.AddRange(new ToolStripItem[] { addRowMenuItem1, deleteRowMenuItem1 });
+            addRowMenuItem1.Click += AddRowMenuItem1_Click;
+            deleteRowMenuItem1.Click += DeleteRowMenuItem1_Click;
+            dataGridView1.ContextMenuStrip = contextMenu1;
+
+            // dataGridView2
+            contextMenu2 = new ContextMenuStrip();
+            addRowMenuItem2 = new ToolStripMenuItem("添加一行数据");
+            deleteRowMenuItem2 = new ToolStripMenuItem("删除一行数据");
+            contextMenu2.Items.AddRange(new ToolStripItem[] { addRowMenuItem2, deleteRowMenuItem2 });
+            addRowMenuItem2.Click += AddRowMenuItem2_Click;
+            deleteRowMenuItem2.Click += DeleteRowMenuItem2_Click;
+            dataGridView2.ContextMenuStrip = contextMenu2;
+        }
+
+        private void AddRowMenuItem1_Click(object sender, EventArgs e)
+        {
+            var dt = dataGridView1.DataSource as DataTable;
+            if (dt == null) return;
+            DataRow dr = dt.NewRow();
+            dr["序号"] = dt.Rows.Count +1;
+            dr["流量 (m^3/h)"] =0.0;
+            dr["扬程 (m)"] =0.0;
+            dt.Rows.Add(dr);
+            UpdateSerialNumbers(dt, "序号");
+        }
+
+        private void DeleteRowMenuItem1_Click(object sender, EventArgs e)
+        {
+            var dt = dataGridView1.DataSource as DataTable;
+            if (dt == null || dt.Rows.Count ==0) return;
+            dt.Rows.RemoveAt(dt.Rows.Count -1);
+            UpdateSerialNumbers(dt, "序号");
+        }
+
+        private void AddRowMenuItem2_Click(object sender, EventArgs e)
+        {
+            var dt = dataGridView2.DataSource as DataTable;
+            if (dt == null) return;
+            DataRow dr = dt.NewRow();
+            dr["序号"] = dt.Rows.Count +1;
+            dr["流量 (m^3/h)"] =0.0;
+            dr["压力 (Pa)"] =0.0;
+            dt.Rows.Add(dr);
+            UpdateSerialNumbers(dt, "序号");
+        }
+
+        private void DeleteRowMenuItem2_Click(object sender, EventArgs e)
+        {
+            var dt = dataGridView2.DataSource as DataTable;
+            if (dt == null || dt.Rows.Count ==0) return;
+            dt.Rows.RemoveAt(dt.Rows.Count -1);
+            UpdateSerialNumbers(dt, "序号");
+        }
+
+        private void UpdateSerialNumbers(DataTable dt, string serialColName)
+        {
+            for (int i =0; i < dt.Rows.Count; i++)
+            {
+                dt.Rows[i][serialColName] = i +1;
+            }
         }
 
         public void TrendMonitorPage_Resize(object sender, EventArgs e)

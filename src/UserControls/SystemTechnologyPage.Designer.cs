@@ -31,6 +31,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SystemTechnologyPage));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
@@ -39,23 +48,14 @@
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -82,6 +82,103 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1400, 732);
             this.tableLayoutPanel1.TabIndex = 3;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.label5);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.pictureBox5);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1394, 506);
+            this.panel1.TabIndex = 5;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("宋体", 7F);
+            this.label7.Location = new System.Drawing.Point(1078, 391);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(45, 10);
+            this.label7.TabIndex = 6;
+            this.label7.Text = "平衡管线";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("宋体", 7F);
+            this.label4.Location = new System.Drawing.Point(210, 360);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(40, 10);
+            this.label4.TabIndex = 6;
+            this.label4.Text = "电解槽4";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("宋体", 7F);
+            this.label6.Location = new System.Drawing.Point(1078, 202);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(55, 10);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "阳极分离器";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("宋体", 7F);
+            this.label3.Location = new System.Drawing.Point(210, 246);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(40, 10);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "电解槽3";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("宋体", 7F);
+            this.label5.Location = new System.Drawing.Point(1078, 22);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(55, 10);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "阴极分离器";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("宋体", 7F);
+            this.label2.Location = new System.Drawing.Point(210, 131);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(40, 10);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "电解槽2";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("宋体", 7F);
+            this.label1.Location = new System.Drawing.Point(210, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(40, 10);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "电解槽1";
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
+            this.pictureBox5.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(1394, 506);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox5.TabIndex = 5;
+            this.pictureBox5.TabStop = false;
             // 
             // tableLayoutPanel2
             // 
@@ -174,103 +271,6 @@
             this.pictureBox2.TabIndex = 2;
             this.pictureBox2.TabStop = false;
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.label6);
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.label5);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.pictureBox5);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1394, 506);
-            this.panel1.TabIndex = 5;
-            // 
-            // pictureBox5
-            // 
-            this.pictureBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
-            this.pictureBox5.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(1394, 506);
-            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox5.TabIndex = 5;
-            this.pictureBox5.TabStop = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 7F);
-            this.label1.Location = new System.Drawing.Point(210, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(40, 10);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "电解槽1";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("宋体", 7F);
-            this.label2.Location = new System.Drawing.Point(210, 131);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(40, 10);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "电解槽2";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("宋体", 7F);
-            this.label3.Location = new System.Drawing.Point(210, 246);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(40, 10);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "电解槽3";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("宋体", 7F);
-            this.label4.Location = new System.Drawing.Point(210, 360);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(40, 10);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "电解槽4";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("宋体", 7F);
-            this.label5.Location = new System.Drawing.Point(1078, 22);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(55, 10);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "阴极分离器";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("宋体", 7F);
-            this.label6.Location = new System.Drawing.Point(1078, 202);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(55, 10);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "阳极分离器";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("宋体", 7F);
-            this.label7.Location = new System.Drawing.Point(1078, 391);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(45, 10);
-            this.label7.TabIndex = 6;
-            this.label7.Text = "平衡管线";
-            // 
             // SystemTechnologyPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -280,13 +280,13 @@
             this.Size = new System.Drawing.Size(1400, 732);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.tableLayoutPanel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.ResumeLayout(false);
 
         }
