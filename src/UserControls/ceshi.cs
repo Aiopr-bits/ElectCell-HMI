@@ -64,12 +64,12 @@ namespace ElectCell_HMI.Forms
             {
                 DataRow dr = dt.NewRow();
                 dr["序号"] = dt.Rows.Count +1;
-                dr["类型"] = "";
-                dr["编号"] = "";
-                dr["成分"] = "";
-                dr["最小"] = "";
-                dr["最大"] = "";
-                dr["个数"] = "";
+                dr["类型"] = "flow";
+                dr["编号"] = "1";
+                dr["成分"] = "h2";
+                dr["最小"] = "0.1";
+                dr["最大"] = "0.5";
+                dr["个数"] = "5";
                 dt.Rows.Add(dr);
                 UpdateSerialNumbers(dt, "序号");
             }
@@ -77,7 +77,7 @@ namespace ElectCell_HMI.Forms
             {
                 // DataSource为null或未绑定DataTable时，直接添加到Rows
                 int newIndex = dataGridView2.Rows.Count +1;
-                dataGridView2.Rows.Add(newIndex, "", "", "", "", "", "");
+                dataGridView2.Rows.Add(newIndex, "flow", "1", "h2", "0.1", "0.5", "5");
                 UpdateSerialNumbersGridView();
             }
         }
@@ -187,6 +187,7 @@ namespace ElectCell_HMI.Forms
 
         public void button1_Click(object sender, EventArgs e)
         {
+            SaveDataGridViewToConfig("AutoTestConfig.ini");
             string filePath = "AutoTestConfig.ini";
 
             try
