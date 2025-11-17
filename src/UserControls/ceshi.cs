@@ -19,6 +19,9 @@ namespace ElectCell_HMI.Forms
         public int numCaseFinished;
         public Process currentProcess; 
         public string currentTestFolder;
+        private ContextMenuStrip contextMenu2;
+        private ToolStripMenuItem addRowMenuItem2;
+        private ToolStripMenuItem deleteRowMenuItem2;
         public ceshi()
         {
             InitializeComponent();
@@ -41,6 +44,81 @@ namespace ElectCell_HMI.Forms
             }
 
             dataGridView2.CellValueChanged += DataGridView2_CellValueChanged;
+            InitContextMenu2();
+        }
+
+        private void InitContextMenu2()
+        {
+            contextMenu2 = new ContextMenuStrip();
+            addRowMenuItem2 = new ToolStripMenuItem("添加一行数据");
+            deleteRowMenuItem2 = new ToolStripMenuItem("删除一行数据");
+            contextMenu2.Items.AddRange(new ToolStripItem[] { addRowMenuItem2, deleteRowMenuItem2 });
+            addRowMenuItem2.Click += AddRowMenuItem2_Click;
+            deleteRowMenuItem2.Click += DeleteRowMenuItem2_Click;
+            dataGridView2.ContextMenuStrip = contextMenu2;
+        }
+
+        private void AddRowMenuItem2_Click(object sender, EventArgs e)
+        {
+            if (dataGridView2.DataSource is DataTable dt)
+            {
+                DataRow dr = dt.NewRow();
+                dr["序号"] = dt.Rows.Count +1;
+                dr["类型"] = "";
+                dr["编号"] = "";
+                dr["成分"] = "";
+                dr["最小"] = "";
+                dr["最大"] = "";
+                dr["个数"] = "";
+                dt.Rows.Add(dr);
+                UpdateSerialNumbers(dt, "序号");
+            }
+            else
+            {
+                // DataSource为null或未绑定DataTable时，直接添加到Rows
+                int newIndex = dataGridView2.Rows.Count +1;
+                dataGridView2.Rows.Add(newIndex, "", "", "", "", "", "");
+                UpdateSerialNumbersGridView();
+            }
+        }
+
+        private void DeleteRowMenuItem2_Click(object sender, EventArgs e)
+        {
+            if (dataGridView2.DataSource is DataTable dt)
+            {
+                if (dt.Rows.Count >0)
+                {
+                    dt.Rows.RemoveAt(dt.Rows.Count -1);
+                    UpdateSerialNumbers(dt, "序号");
+                }
+            }
+            else
+            {
+                if (dataGridView2.Rows.Count >0)
+                {
+                    dataGridView2.Rows.RemoveAt(dataGridView2.Rows.Count -1);
+                    UpdateSerialNumbersGridView();
+                }
+            }
+        }
+
+        private void UpdateSerialNumbers(DataTable dt, string serialColName)
+        {
+            for (int i =0; i < dt.Rows.Count; i++)
+            {
+                dt.Rows[i][serialColName] = i +1;
+            }
+        }
+
+        private void UpdateSerialNumbersGridView()
+        {
+            for (int i =0; i < dataGridView2.Rows.Count; i++)
+            {
+                if (!dataGridView2.Rows[i].IsNewRow)
+                {
+                    dataGridView2.Rows[i].Cells[0].Value = i +1;
+                }
+            }
         }
 
         private void DataGridView2_CellValueChanged(object sender, DataGridViewCellEventArgs e)
