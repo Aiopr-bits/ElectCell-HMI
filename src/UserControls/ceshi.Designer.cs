@@ -9,9 +9,19 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                //释放aeSLN.exe进程
+                if (currentProcess != null && !currentProcess.HasExited)
+                {
+                    try { currentProcess.Kill(); } catch { }
+                    currentProcess.Dispose();
+                    currentProcess = null;
+                }
+                if (components != null)
+                {
+                    components.Dispose();
+                }
             }
             base.Dispose(disposing);
         }

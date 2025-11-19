@@ -187,6 +187,13 @@ namespace ElectCell_HMI.Forms
 
         public void button1_Click(object sender, EventArgs e)
         {
+            // 强制终止aeSLN.exe进程
+            if (currentProcess != null && !currentProcess.HasExited)
+            {
+                try { currentProcess.Kill(); } catch { }
+                currentProcess.Dispose();
+                currentProcess = null;
+            }
             SaveDataGridViewToConfig("AutoTestConfig.ini");
             string filePath = "AutoTestConfig.ini";
 
@@ -575,6 +582,14 @@ namespace ElectCell_HMI.Forms
 
         private void button3_Click(object sender, EventArgs e)
         {
+            // 强制终止aeSLN.exe进程
+            if (currentProcess != null && !currentProcess.HasExited)
+            {
+                try { currentProcess.Kill(); } catch { }
+                currentProcess.Dispose();
+                currentProcess = null;
+            }
+            
             try
             {
                 if (timer1.Enabled)
