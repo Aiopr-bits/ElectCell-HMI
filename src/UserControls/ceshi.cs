@@ -481,8 +481,12 @@ namespace ElectCell_HMI.Forms
                 {
                     this.numCaseFinished++;
                     richTextBox1.AppendText("开始执行测试样本" + this.numCaseFinished.ToString() + "...\r\n");
+                    if (allCombinations != null && this.numCaseFinished -1 < allCombinations.Count)
+                    {
+                        var currentCombo = allCombinations[this.numCaseFinished -1];
+                        richTextBox1.AppendText($"样本排列: [ {string.Join(", ", currentCombo)} ]\r\n");
+                    }
                     System.IO.File.Delete(@"debug.flg");
-
                     RunExeAsync(fnExe);
                 }
                 else

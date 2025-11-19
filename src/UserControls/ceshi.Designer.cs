@@ -32,10 +32,10 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.button3 = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.button3 = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -58,10 +58,10 @@
             // button1
             // 
             this.button1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button1.Location = new System.Drawing.Point(50, 18);
-            this.button1.Margin = new System.Windows.Forms.Padding(50, 3, 50, 3);
+            this.button1.Location = new System.Drawing.Point(40, 18);
+            this.button1.Margin = new System.Windows.Forms.Padding(40, 3, 40, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(65, 23);
+            this.button1.Size = new System.Drawing.Size(85, 23);
             this.button1.TabIndex = 0;
             this.button1.Text = "测试方案生成";
             this.button1.UseVisualStyleBackColor = true;
@@ -130,6 +130,18 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1158, 44);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
+            // button3
+            // 
+            this.button3.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.button3.Location = new System.Drawing.Point(380, 18);
+            this.button3.Margin = new System.Windows.Forms.Padding(50, 3, 50, 3);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(65, 23);
+            this.button3.TabIndex = 1;
+            this.button3.Text = "停止测试";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 1;
@@ -150,18 +162,6 @@
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // button3
-            // 
-            this.button3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.button3.Location = new System.Drawing.Point(380, 18);
-            this.button3.Margin = new System.Windows.Forms.Padding(50, 3, 50, 3);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(65, 23);
-            this.button3.TabIndex = 1;
-            this.button3.Text = "停止测试";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // ceshi
             // 
