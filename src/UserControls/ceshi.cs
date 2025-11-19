@@ -494,6 +494,10 @@ namespace ElectCell_HMI.Forms
                         richTextBox1.AppendText($"样本排列: [ {string.Join(", ", currentCombo)} ]\r\n");
                     }
                     System.IO.File.Delete(@"debug.flg");
+                    if (!File.Exists(@"debug.flg"))
+                    {
+                        CreateFlagFile();
+                    }
                     RunExeAsync(fnExe);
                 }
                 else
